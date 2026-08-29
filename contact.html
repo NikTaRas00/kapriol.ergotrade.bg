@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Contact | Kapriol Bulgaria</title>
+<meta name="description" content="Dealer enquiries, bulk orders and technical questions for the Kapriol range in Bulgaria. Ergotrade replies within one business day." />
+<meta http-equiv="Cache-Control" content="no-cache" />
+
+<link rel="canonical" href="https://kapriol.ergotrade.bg/contact" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Kapriol Bulgaria" />
+<meta property="og:title" content="Contact | Kapriol Bulgaria" />
+<meta property="og:description" content="Dealer enquiries, bulk orders and technical questions for the Kapriol range in Bulgaria. Ergotrade replies within one business day." />
+<meta property="og:url" content="https://kapriol.ergotrade.bg/contact" />
+<meta property="og:image" content="https://kapriol.ergotrade.bg/assets/img/apple-touch-icon.png" />
+<link rel="icon" href="assets/img/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png" />
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
+
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/clash-display-700.woff2" crossorigin />
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/saira-stencil-latin.woff2" crossorigin />
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/inter-latin.woff2" crossorigin />
+<script>document.documentElement.className+=" js";</script>
+<link rel="stylesheet" href="assets/css/style.css?v=72" />
+</head>
+
+<body data-page="contact">
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="head">
+  <div class="wrap head__inner">
+    <a class="brand" href="index.html">
+      <span class="brand__mark">KAPRIOL<i>.</i></span>
+      <span class="brand__tag">Bulgaria</span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="Product ranges">
+      <a href="products.html?cat=footwear" data-cat="footwear">Footwear</a>
+      <a href="products.html?cat=footwear-accessories" data-cat="footwear-accessories">Footwear Accessories</a>
+      <a href="products.html?cat=clothing" data-cat="clothing">Work Wear</a>
+      <a href="products.html?cat=clothing-accessories" data-cat="clothing-accessories">Work Wear Accessories</a>
+      <a href="products.html?cat=ppe" data-cat="ppe">PPE</a>
+      <a href="products.html?cat=ppe-accessories" data-cat="ppe-accessories">PPE Accessories</a>
+    </nav>
+
+    <div class="head__actions">
+      <a class="btn btn--primary" href="contact.html" aria-current="page">Contact</a>
+      <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open menu">
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="pagehero">
+    <div class="wrap">
+      <h1>Talk to Ergotrade</h1>
+      <p>Dealer enquiries, bulk orders, technical questions. We reply within one business day.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap contact">
+
+      <div>
+        <h2 class="sec__title sec__title--sub">Send a message</h2>
+
+        <form class="form" id="contactForm" novalidate>
+          <div class="hp" aria-hidden="true">
+            <label>Website<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+          </div>
+
+          <div class="form__row">
+            <div class="field">
+              <label for="cf-name">Full name</label>
+              <input id="cf-name" name="name" type="text" autocomplete="name" required />
+              <p class="field__err" id="cf-name-err" hidden></p>
+            </div>
+            <div class="field">
+              <label for="cf-company">Company <span class="sr-only">(optional)</span></label>
+              <input id="cf-company" name="company" type="text" autocomplete="organization" />
+            </div>
+          </div>
+
+          <div class="form__row">
+            <div class="field">
+              <label for="cf-email">Email</label>
+              <input id="cf-email" name="email" type="email" autocomplete="email" required />
+              <p class="field__err" id="cf-email-err" hidden></p>
+            </div>
+            <div class="field">
+              <label for="cf-phone">Phone</label>
+              <input id="cf-phone" name="phone" type="tel" autocomplete="tel" required />
+              <p class="field__err" id="cf-phone-err" hidden></p>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="cf-message">Message</label>
+            <textarea id="cf-message" name="message" rows="6" required></textarea>
+            <p class="field__err" id="cf-message-err" hidden></p>
+          </div>
+
+          <div>
+            <button class="btn btn--primary btn--lg" type="submit">Send message</button>
+          </div>
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
+
+        <div class="form-success" id="formSuccess" tabindex="-1" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" /><path d="M8 12.5l2.6 2.6L16 9.5" />
+          </svg>
+          <h2>Message sent</h2>
+          <p>Thank you. We will reply within one business day.</p>
+        </div>
+      </div>
+
+      <aside class="infocard">
+        <h2>Ergotrade Ltd.</h2>
+
+        <div class="inforow" id="info-addr" hidden>
+          <div class="inforow__label">Address</div>
+          <div class="inforow__value"></div>
+        </div>
+        <div class="inforow" id="info-phone" hidden>
+          <div class="inforow__label">Phone</div>
+          <div class="inforow__value"></div>
+        </div>
+        <div class="inforow" id="info-email" hidden>
+          <div class="inforow__label">Email</div>
+          <div class="inforow__value"></div>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__cols">
+      <div>
+        <div class="foot__mark">KAPRIOL<i>.</i></div>
+        <p class="foot__about">Exclusive distributor of Kapriol work wear, footwear and PPE for the Bulgarian market.</p>
+      </div>
+      <div>
+        <div class="foot__h">Company</div>
+        <ul class="foot__list">
+          <li><a href="products.html">Catalogue</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="https://ergotrade.bg" rel="noopener">ergotrade.bg</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="foot__h">Ranges</div>
+        <ul class="foot__list">
+          <li><a href="products.html?cat=footwear">Footwear</a></li>
+          <li><a href="products.html?cat=footwear-accessories">Footwear Accessories</a></li>
+          <li><a href="products.html?cat=clothing">Work Wear</a></li>
+          <li><a href="products.html?cat=clothing-accessories">Work Wear Accessories</a></li>
+          <li><a href="products.html?cat=ppe">PPE</a></li>
+          <li><a href="products.html?cat=ppe-accessories">PPE Accessories</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="foot__h">Distributor</div>
+        <p class="foot__contact">Ergotrade Ltd.<br />info@kapriol.ergotrade.bg</p>
+      </div>
+    </div>
+    <div class="foot__bottom">
+      <span id="footCopy">&copy; 2026 Ergotrade Ltd. All rights reserved.</span>
+      <span id="footPowered">Kapriol is exclusively distributed in Bulgaria by ergotrade.bg</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js?v=72"></script>
+</body>
+</html>

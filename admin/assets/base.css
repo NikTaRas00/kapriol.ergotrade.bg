@@ -1,0 +1,162 @@
+/* ============================================================================
+   test1 admin - base layer.
+
+   The existing admin.css is reused verbatim, and it consumes design tokens
+   plus the .btn / .field / .form-status primitives that the OLD public
+   stylesheet used to provide. This file supplies the same token names bound to
+   the NEW brand palette, so every existing admin rule re-themes itself without
+   being rewritten. Load order: base.css -> admin.css -> theme.css.
+   ========================================================================== */
+
+@font-face {
+  font-family: "Barlow Condensed"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("../../assets/fonts/barlow-condensed-700-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Barlow Condensed"; font-style: normal; font-weight: 800; font-display: swap;
+  src: url("../../assets/fonts/barlow-condensed-800-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Barlow Condensed"; font-style: normal; font-weight: 900; font-display: swap;
+  src: url("../../assets/fonts/barlow-condensed-900-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter"; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url("../../assets/fonts/inter-latin.woff2") format("woff2");
+}
+
+:root {
+  /* --- token names the existing admin.css already references --- */
+  --bg: #F7F4EF;
+  --bg-alt: #f0ece4;
+  --surface: #ffffff;
+  --surface-2: #f0ece4;
+  --ink: #14110f;
+  --ink-dim: #463f38;
+  --ink-mute: #6d655c;
+  --hairline: rgba(0, 0, 0, 0.10);
+  --stroke: #d8d2c8;
+  --stroke-soft: #e8e3dc;
+  /* The accent slot. #C9500F rather than the display orange so white button
+     labels clear WCAG AA (4.5:1); --red-ink is the AA-safe orange for text. */
+  --red: #C9500F;
+  --red-ink: #B4460A;
+  --maxw: 1400px;
+  --pad-x: clamp(16px, 3vw, 28px);
+  --r-btn: 2px;
+  --r-card: 2px;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+  /* --- new brand additions --- */
+  --orange: #E35D15;
+  --yellow: #F4B400;
+  --ink-deep: #0a0806;
+  --font-display: "Barlow Condensed", "Arial Narrow", Helvetica, Arial, sans-serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --hazard: repeating-linear-gradient(135deg, var(--ink) 0 8px, var(--yellow) 8px 16px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { display: block; max-width: 100%; }
+a { color: var(--red-ink); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+h1, h2, h3 { font-family: var(--font-display); text-transform: uppercase; margin: 0; line-height: 1.05; }
+
+:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+
+/* ------------------------------------------------------------- Buttons -- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  font: 700 14px/1 var(--font-sans);
+  padding: 11px 18px; border-radius: var(--r-btn);
+  border: 2px solid transparent; background: none; color: var(--ink);
+  cursor: pointer; white-space: nowrap;
+  transition: transform 160ms var(--ease-out), background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.btn--red { background: var(--red); border-color: var(--red); color: #fff; }
+.btn--outline { border-color: var(--ink); color: var(--ink); }
+.btn--ghost { border-color: var(--stroke); color: var(--ink-dim); }
+.btn--sm { font-size: 13px; padding: 8px 13px; }
+.btn--block { width: 100%; }
+.btn--del { border-color: var(--red-ink); color: var(--red-ink); }
+
+@media (hover: hover) and (pointer: fine) {
+  .btn--red:hover { background: #a93d07; border-color: #a93d07; }
+  .btn--outline:hover { background: var(--ink); color: #fff; }
+  .btn--ghost:hover { border-color: var(--ink); color: var(--ink); }
+  .btn--del:hover { background: var(--red-ink); color: #fff; }
+}
+
+/* --------------------------------------------------------------- Forms -- */
+.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.field label {
+  font-size: 11.5px; font-weight: 700; letter-spacing: 0.6px;
+  text-transform: uppercase; color: var(--ink-mute);
+}
+.field input, .field textarea, .field select {
+  font: 400 15px var(--font-sans); color: var(--ink);
+  background: var(--surface); border: 1px solid var(--stroke); border-radius: var(--r-btn);
+  padding: 10px 12px; width: 100%;
+  transition: border-color 170ms ease;
+}
+.field textarea { min-height: 120px; resize: vertical; }
+.field input:focus, .field textarea:focus, .field select:focus { border-color: var(--ink); }
+.field input::placeholder, .field textarea::placeholder { color: var(--ink-mute); }
+.field input[aria-invalid="true"], .field textarea[aria-invalid="true"] {
+  border-color: var(--red-ink); border-width: 2px;
+}
+
+.form-status { margin-top: 10px; font-size: 14px; min-height: 1.3em; font-weight: 600; }
+.form-status.is-error { color: var(--red-ink); }
+.form-status.is-ok { color: #1d6b32; }
+
+/* Honeypot: off-screen, never focusable by design. */
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* ---------------------------------------------------------- Login card -- */
+.admin--auth {
+  min-height: 100vh; display: grid; place-items: center;
+  background: var(--ink-deep); padding: 24px;
+}
+/* The hazard stripe is painted as a layer rather than a border-image: a
+   border-image that fails to resolve leaves a 6px transparent gap, whereas a
+   background layer just falls back to the card's own surface. */
+.auth-card {
+  position: relative;
+  width: 100%; max-width: 380px; background: var(--surface);
+  border-radius: var(--r-card); padding: 40px 30px 30px;
+  overflow: hidden;
+}
+.auth-card::before {
+  content: ""; position: absolute; inset: 0 0 auto; height: 6px;
+  background: var(--hazard);
+}
+.auth-card__brand {
+  display: inline-block; font-family: var(--font-display); font-weight: 900;
+  font-size: 30px; color: var(--ink); letter-spacing: 0.5px; line-height: 1;
+}
+.auth-card__brand:hover { text-decoration: none; }
+.auth-card__brand i { color: var(--orange); font-style: normal; }
+.auth-card__title { font-size: 1.5rem; font-weight: 800; margin: 18px 0 6px; }
+.auth-card__sub { color: var(--ink-mute); font-size: 14px; margin: 0 0 22px; }
+.auth-form .field { margin-bottom: 18px; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: 0.001ms !important; animation-duration: 0.001ms !important; }
+  .btn:active { transform: none; }
+}

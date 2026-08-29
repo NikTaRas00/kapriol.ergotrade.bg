@@ -1,0 +1,149 @@
+/* ============================================================================
+   test1 admin - layout skin.
+
+   Loaded LAST so it wins at equal specificity over admin.css. Converts the
+   top-tab shell into the dark 230px sidebar + white content area from the
+   design, without touching admin.js: the nav buttons keep their .admin-tab
+   class and data-tab attribute, and the panels keep their #tab-* ids.
+   ========================================================================== */
+
+.admin-shell {
+  display: grid;
+  grid-template-columns: 230px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+/* ------------------------------------------------------------- Sidebar -- */
+.admin-side {
+  background: var(--ink);
+  color: #fff;
+  position: sticky; top: 0; align-self: start;
+  height: 100vh; overflow-y: auto;
+  display: flex; flex-direction: column;
+  padding: 22px 0 18px;
+}
+.admin-side__brand {
+  padding: 0 20px 18px;
+  display: block;
+}
+.admin-side__brand:hover { text-decoration: none; }
+.admin-side__mark {
+  font-family: var(--font-display); font-weight: 900; font-size: 27px;
+  color: #fff; line-height: 1; letter-spacing: 0.5px; display: block;
+}
+.admin-side__mark i { color: var(--orange); font-style: normal; }
+.admin-side__sub {
+  display: block; margin-top: 4px;
+  font-size: 10.5px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: #8a8177;
+}
+.admin-side__rule { height: 6px; background: var(--hazard); margin: 0 0 18px; }
+
+.admin-shell .admin-tabs {
+  display: flex; flex-direction: column; align-items: stretch;
+  gap: 0; flex: 1; padding: 0;
+  border: 0; background: none; overflow: visible;
+}
+.admin-shell .admin-tab {
+  position: relative;
+  text-align: left; width: 100%;
+  font: 600 14.5px/1.2 var(--font-sans);
+  color: #cfc9c2; background: none; border: 0; border-radius: 0;
+  padding: 13px 20px 13px 20px;
+  cursor: pointer;
+  transition: background-color 170ms ease, color 170ms ease;
+}
+.admin-shell .admin-tab::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: var(--orange);
+  transform: scaleY(0); transform-origin: center;
+  transition: transform 200ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .admin-shell .admin-tab:hover { background: rgba(255, 255, 255, 0.06); color: #fff; }
+}
+.admin-shell .admin-tab.is-active {
+  background: rgba(255, 255, 255, 0.08); color: #fff;
+}
+.admin-shell .admin-tab.is-active::before { transform: scaleY(1); }
+
+.admin-side__foot {
+  padding: 16px 20px 0; margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  display: grid; gap: 8px;
+}
+.admin-side__foot .btn { width: 100%; }
+.admin-side__foot .btn--outline { border-color: rgba(255, 255, 255, 0.35); color: #fff; }
+.admin-side__foot .btn--ghost { border-color: transparent; color: #8a8177; }
+@media (hover: hover) and (pointer: fine) {
+  .admin-side__foot .btn--outline:hover { background: #fff; color: var(--ink); }
+  .admin-side__foot .btn--ghost:hover { color: #fff; border-color: rgba(255, 255, 255, 0.35); }
+}
+
+/* -------------------------------------------------------- Content area -- */
+.admin-shell .admin-main {
+  background: var(--surface);
+  padding: clamp(20px, 3vw, 34px);
+  max-width: none; margin: 0;
+  min-width: 0;
+}
+.admin-shell .admin-h2 {
+  font-family: var(--font-display); font-weight: 800; text-transform: uppercase;
+  font-size: 1.75rem; letter-spacing: 0.3px;
+}
+.admin-shell .admin-section__head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap;
+  padding-bottom: 14px; margin-bottom: 18px;
+  border-bottom: 3px solid var(--ink);
+}
+.admin-shell .admin-meta { color: var(--ink-mute); font-size: 13.5px; }
+.admin-shell .admin-fieldset {
+  border: 1px solid var(--stroke-soft); border-radius: var(--r-card);
+  padding: 20px; margin: 0 0 20px; background: var(--bg);
+}
+.admin-shell .admin-fieldset legend {
+  font-family: var(--font-display); font-weight: 800; text-transform: uppercase;
+  font-size: 1.05rem; letter-spacing: 0.4px; color: var(--ink);
+  padding: 0 8px;
+}
+.admin-shell .admin-list,
+.admin-shell .admin-editor,
+.admin-shell .admin-table-wrap {
+  border-color: var(--stroke-soft); border-radius: var(--r-card);
+}
+.admin-shell .admin-item.is-active {
+  background: var(--ink); color: #fff;
+}
+.admin-shell .admin-item.is-active .admin-item__sub { color: #b3aa9e; }
+
+/* ------------------------------------------------------------- Mobile -- */
+/* The sidebar becomes a horizontally scrollable bar above the content. */
+@media (max-width: 860px) {
+  .admin-shell { grid-template-columns: minmax(0, 1fr); }
+  .admin-side {
+    position: static; height: auto; padding: 16px 0 0;
+    flex-direction: column;
+  }
+  .admin-side__brand { padding: 0 16px 12px; }
+  .admin-side__rule { margin-bottom: 0; }
+  .admin-shell .admin-tabs {
+    flex-direction: row; overflow-x: auto; gap: 2px;
+    padding: 8px 12px; flex: none;
+    scrollbar-width: thin;
+  }
+  .admin-shell .admin-tab {
+    width: auto; flex: none; white-space: nowrap;
+    padding: 11px 14px; border-radius: var(--r-btn);
+  }
+  .admin-shell .admin-tab::before { top: auto; bottom: 0; left: 0; right: 0; width: auto; height: 3px; transform: scaleX(0); }
+  .admin-shell .admin-tab.is-active::before { transform: scaleX(1); }
+  .admin-side__foot {
+    margin-top: 0; padding: 12px 16px;
+    grid-auto-flow: column; grid-auto-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-shell .admin-tab::before { transition: none; }
+}

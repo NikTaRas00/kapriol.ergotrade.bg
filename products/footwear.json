@@ -1,0 +1,4787 @@
+[
+  {
+    "category": "footwear",
+    "slug": "dune-rock-green",
+    "name": "Dune Rock Green",
+    "img": "",
+    "description": "High-cut safety trainer with anti-abrasion mesh upper and Ultra Rebound technology midsole. BOA-style quick-lace closure system.",
+    "features": [
+      "Anti-abrasion mesh upper",
+      "Ultra Rebound technology",
+      "NHP rubber sole",
+      "Relaxed fit",
+      "High-cut ankle protection",
+      "PS High Flex outsole"
+    ],
+    "overview": [
+      "The Dune Rock Green is a high-performance safety mid-cut shoe from the Dune Ultra Rebound Technology line. Designed for demanding work environments, it combines an anti-abrasion mesh upper with Kapriol's proprietary Ultra Rebound cushioning system.",
+      "Featuring a BOA-style rotary lace closure for a secure, adjustable fit, the shoe meets EN ISO 20345:2022 at the S3S FO SR HRO level, providing slip resistance, fuel oil resistance, and heat resistance of the outsole."
+    ],
+    "productLine": "DUNE Ultra Rebound Technology",
+    "articleCodes": [
+      {
+        "code": "44330",
+        "size": "40"
+      },
+      {
+        "code": "44331",
+        "size": "41"
+      },
+      {
+        "code": "44332",
+        "size": "42"
+      },
+      {
+        "code": "44333",
+        "size": "43"
+      },
+      {
+        "code": "44334",
+        "size": "44"
+      },
+      {
+        "code": "44335",
+        "size": "45"
+      },
+      {
+        "code": "44336",
+        "size": "46"
+      },
+      {
+        "code": "44337",
+        "size": "47"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47"
+    ],
+    "colors": [
+      "Green/Black/Orange"
+    ],
+    "material": "Anti-Abrasion Mesh",
+    "materialComposition": null,
+    "certifications": [
+      "S3S",
+      "FO",
+      "SR",
+      "HRO"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S3S",
+    "weightGrams": 560,
+    "fit": "Relaxed",
+    "toeCap": "Composite (NHP)",
+    "midsole": null,
+    "sole": "NHP Rubber",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "HRO"
+    ],
+    "isNew": true,
+    "pageRef": 66,
+    "sourceNames": [
+      "DUNE ROCK GREEN"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "dune-rock-black",
+    "name": "Dune Rock Black",
+    "img": "",
+    "description": "High-cut safety trainer with anti-abrasion mesh upper and Ultra Rebound technology. BOA-style rotary closure for precise fit adjustment.",
+    "features": [
+      "Anti-abrasion mesh upper",
+      "Ultra Rebound technology",
+      "NHP rubber sole",
+      "Relaxed fit",
+      "High-cut ankle protection",
+      "BOA-style rotary lace system"
+    ],
+    "overview": [
+      "The Dune Rock Black is the black colourway of the Rock series within Kapriol's Dune Ultra Rebound Technology line. It shares the same construction as the Green version, with an anti-abrasion mesh upper and Ultra Rebound cushioning.",
+      "Certified to EN ISO 20345:2022 S3S FO SR HRO, it offers antistatic properties, fuel oil resistance, slip resistance, and outsole heat resistance up to 300°C."
+    ],
+    "productLine": "DUNE Ultra Rebound Technology",
+    "articleCodes": [
+      {
+        "code": "44340",
+        "size": "40"
+      },
+      {
+        "code": "44341",
+        "size": "41"
+      },
+      {
+        "code": "44342",
+        "size": "42"
+      },
+      {
+        "code": "44343",
+        "size": "43"
+      },
+      {
+        "code": "44344",
+        "size": "44"
+      },
+      {
+        "code": "44345",
+        "size": "45"
+      },
+      {
+        "code": "44346",
+        "size": "46"
+      },
+      {
+        "code": "44347",
+        "size": "47"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47"
+    ],
+    "colors": [
+      "Black/Orange"
+    ],
+    "material": "Anti-Abrasion Mesh",
+    "materialComposition": null,
+    "certifications": [
+      "S3S",
+      "FO",
+      "SR",
+      "HRO"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S3S",
+    "weightGrams": 560,
+    "fit": "Relaxed",
+    "toeCap": "Composite (NHP)",
+    "midsole": null,
+    "sole": "NHP Rubber",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "HRO"
+    ],
+    "isNew": true,
+    "pageRef": 66,
+    "sourceNames": [
+      "DUNE ROCK BLACK"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "dune-jaq",
+    "name": "Dune JAQ",
+    "img": "",
+    "description": "Low-cut ESD safety trainer with Jaquard + TPU upper construction. Available in multiple colours and extended sizes including 36–46.",
+    "features": [
+      "Jaquard + TPU upper",
+      "Ultra Rebound technology",
+      "ESD antistatic properties",
+      "PS High Flex sole",
+      "NHP rubber compound",
+      "Relaxed fit",
+      "Extended size range (36–46)"
+    ],
+    "overview": [
+      "The Dune JAQ is a versatile low-cut safety shoe designed for light to medium work environments. Its Jaquard + TPU upper provides a balance of breathability and structural support, while the ESD certification makes it suitable for electronics and sensitive environments.",
+      "Available in three colourways (yellow/black, lime/black, grey/black) and an extended size range starting from 36, the JAQ covers a wide audience. New sizes 36–39 have been added to the range."
+    ],
+    "productLine": "DUNE Ultra Rebound Technology",
+    "articleCodes": [
+      {
+        "code": "44160",
+        "size": "40"
+      },
+      {
+        "code": "44161",
+        "size": "41"
+      },
+      {
+        "code": "44162",
+        "size": "42"
+      },
+      {
+        "code": "44163",
+        "size": "43"
+      },
+      {
+        "code": "44164",
+        "size": "44"
+      },
+      {
+        "code": "44165",
+        "size": "45"
+      },
+      {
+        "code": "44166",
+        "size": "46"
+      },
+      {
+        "code": "44140",
+        "size": "40"
+      },
+      {
+        "code": "44141",
+        "size": "41"
+      },
+      {
+        "code": "44142",
+        "size": "42"
+      },
+      {
+        "code": "44143",
+        "size": "43"
+      },
+      {
+        "code": "44144",
+        "size": "44"
+      },
+      {
+        "code": "44145",
+        "size": "45"
+      },
+      {
+        "code": "44146",
+        "size": "46"
+      },
+      {
+        "code": "44157",
+        "size": "36"
+      },
+      {
+        "code": "44147",
+        "size": "37"
+      },
+      {
+        "code": "44148",
+        "size": "38"
+      },
+      {
+        "code": "44149",
+        "size": "39"
+      },
+      {
+        "code": "44150",
+        "size": "40"
+      },
+      {
+        "code": "44151",
+        "size": "41"
+      },
+      {
+        "code": "44152",
+        "size": "42"
+      },
+      {
+        "code": "44153",
+        "size": "43"
+      },
+      {
+        "code": "44154",
+        "size": "44"
+      },
+      {
+        "code": "44155",
+        "size": "45"
+      },
+      {
+        "code": "44156",
+        "size": "46"
+      }
+    ],
+    "sizes": [
+      "36",
+      "37",
+      "38",
+      "39",
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46"
+    ],
+    "colors": [
+      "Yellow/Black",
+      "Lime/Black",
+      "Grey/Black"
+    ],
+    "material": "Jaquard + TPU",
+    "materialComposition": null,
+    "certifications": [
+      "S3S",
+      "FO",
+      "SR",
+      "ESD"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S3S",
+    "weightGrams": 450,
+    "fit": "Relaxed",
+    "toeCap": "Composite (NHP)",
+    "midsole": null,
+    "sole": "NHP Rubber",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "ESD"
+    ],
+    "isNew": false,
+    "newSizes": true,
+    "pageRef": 66,
+    "sourceNames": [
+      "DUNE JAQ"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "dune-smesh",
+    "name": "Dune Smesh",
+    "img": "",
+    "description": "Low-cut safety runner with strong mesh + TPU upper. Available in three colourways with ESD-free HRO certification.",
+    "features": [
+      "Strong Mesh + TPU upper",
+      "Ultra Rebound technology",
+      "HRO heat-resistant outsole",
+      "PS High Flex",
+      "NHP rubber sole",
+      "Relaxed fit"
+    ],
+    "overview": [
+      "The Dune Smesh is a lightweight running-inspired safety shoe featuring a strong mesh and TPU upper for breathability and durability. Part of the Dune Ultra Rebound Technology line, it offers excellent cushioning for long shifts.",
+      "Available in three colourways — grey/yellow, black/lime, and black/orange — and certified to EN ISO 20345:2022 S3S FO SR HRO."
+    ],
+    "productLine": "DUNE Ultra Rebound Technology",
+    "articleCodes": [
+      {
+        "code": "44230",
+        "size": "40"
+      },
+      {
+        "code": "44231",
+        "size": "41"
+      },
+      {
+        "code": "44232",
+        "size": "42"
+      },
+      {
+        "code": "44233",
+        "size": "43"
+      },
+      {
+        "code": "44234",
+        "size": "44"
+      },
+      {
+        "code": "44235",
+        "size": "45"
+      },
+      {
+        "code": "44236",
+        "size": "46"
+      },
+      {
+        "code": "44220",
+        "size": "40"
+      },
+      {
+        "code": "44221",
+        "size": "41"
+      },
+      {
+        "code": "44222",
+        "size": "42"
+      },
+      {
+        "code": "44223",
+        "size": "43"
+      },
+      {
+        "code": "44224",
+        "size": "44"
+      },
+      {
+        "code": "44225",
+        "size": "45"
+      },
+      {
+        "code": "44226",
+        "size": "46"
+      },
+      {
+        "code": "44210",
+        "size": "40"
+      },
+      {
+        "code": "44211",
+        "size": "41"
+      },
+      {
+        "code": "44212",
+        "size": "42"
+      },
+      {
+        "code": "44213",
+        "size": "43"
+      },
+      {
+        "code": "44214",
+        "size": "44"
+      },
+      {
+        "code": "44215",
+        "size": "45"
+      },
+      {
+        "code": "44216",
+        "size": "46"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46"
+    ],
+    "colors": [
+      "Grey/Yellow",
+      "Black/Lime",
+      "Black/Orange"
+    ],
+    "material": "Strong Mesh + TPU",
+    "materialComposition": null,
+    "certifications": [
+      "S3S",
+      "FO",
+      "SR",
+      "HRO"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S3S",
+    "weightGrams": 480,
+    "fit": "Relaxed",
+    "toeCap": "Composite (NHP)",
+    "midsole": null,
+    "sole": "NHP Rubber",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "HRO"
+    ],
+    "isNew": false,
+    "pageRef": 66,
+    "sourceNames": [
+      "DUNE SMESH"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "dune-stone",
+    "name": "Dune Stone",
+    "img": "",
+    "description": "High-cut safety trekking boot with nubuck upper. S7S rated with cold insulation (CI), waterproof (WR) and slip resistance.",
+    "features": [
+      "Nubuck upper",
+      "Cold insulation (CI)",
+      "Waterproof (WR)",
+      "High-cut ankle protection",
+      "NHP rubber sole",
+      "Relaxed fit"
+    ],
+    "overview": [
+      "The Dune Stone is a premium high-cut safety boot built for demanding outdoor and construction environments. Its nubuck upper delivers robustness and a professional appearance, while CI and WR ratings ensure comfort in cold and wet conditions.",
+      "Rated S7S FO CI HRO SR to EN ISO 20345:2022, the Stone is one of the highest-rated safety boots in the Dune line."
+    ],
+    "productLine": "DUNE Ultra Rebound Technology",
+    "articleCodes": [
+      {
+        "code": "44350",
+        "size": "40"
+      },
+      {
+        "code": "44351",
+        "size": "41"
+      },
+      {
+        "code": "44352",
+        "size": "42"
+      },
+      {
+        "code": "44353",
+        "size": "43"
+      },
+      {
+        "code": "44354",
+        "size": "44"
+      },
+      {
+        "code": "44355",
+        "size": "45"
+      },
+      {
+        "code": "44356",
+        "size": "46"
+      },
+      {
+        "code": "44357",
+        "size": "47"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47"
+    ],
+    "colors": [
+      "Beige/Brown"
+    ],
+    "material": "Nubuck",
+    "materialComposition": null,
+    "certifications": [
+      "S7S",
+      "FO",
+      "CI",
+      "HRO",
+      "SR"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S7S",
+    "weightGrams": 555,
+    "fit": "Relaxed",
+    "toeCap": "Composite (NHP)",
+    "midsole": null,
+    "sole": "NHP Rubber",
+    "gender": "Unisex",
+    "season": "Winter",
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "CI",
+      "WR",
+      "HRO"
+    ],
+    "isNew": true,
+    "pageRef": 67,
+    "sourceNames": [
+      "DUNE STONE"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "dune-mount-occupational",
+    "name": "Dune Mount Occupational",
+    "img": "",
+    "description": "Mid-cut occupational safety shoe with anti-abrasion mesh upper. 06 SR rated, suitable for general occupational use.",
+    "features": [
+      "Anti-abrasion mesh upper",
+      "NHP rubber sole",
+      "Relaxed fit",
+      "Mid-cut design",
+      "06 SR occupational rating"
+    ],
+    "overview": [
+      "The Dune Mount Occupational is designed for workers needing safety footwear at occupational level (06 SR) rather than full safety-shoe certification. It features the same anti-abrasion mesh upper found in the Dune safety range.",
+      "Certified to EN ISO 20347:2022+A1:2024, it provides slip resistance (SR) without a mandatory toecap, making it lighter and more comfortable for light-duty occupational use."
+    ],
+    "productLine": "DUNE Ultra Rebound Technology",
+    "articleCodes": [
+      {
+        "code": "44370",
+        "size": "40"
+      },
+      {
+        "code": "44371",
+        "size": "41"
+      },
+      {
+        "code": "44372",
+        "size": "42"
+      },
+      {
+        "code": "44373",
+        "size": "43"
+      },
+      {
+        "code": "44374",
+        "size": "44"
+      },
+      {
+        "code": "44375",
+        "size": "45"
+      },
+      {
+        "code": "44376",
+        "size": "46"
+      },
+      {
+        "code": "44377",
+        "size": "47"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47"
+    ],
+    "colors": [
+      "Black/Orange"
+    ],
+    "material": "Anti-Abrasion Mesh",
+    "materialComposition": null,
+    "certifications": [
+      "06",
+      "SR"
+    ],
+    "standards": [
+      "EN ISO 20347:2022+A1:2024"
+    ],
+    "safetyClass": "06 SR",
+    "weightGrams": null,
+    "fit": "Relaxed",
+    "toeCap": null,
+    "midsole": null,
+    "sole": "NHP Rubber",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "ESD"
+    ],
+    "isNew": true,
+    "pageRef": 67,
+    "sourceNames": [
+      "DUNE MOUNT OCCUPATIONAL"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "dune-micro",
+    "name": "Dune Micro",
+    "img": "",
+    "description": "Low-cut S3S safety shoe with microfiber + TPU upper. Lightweight design for light to medium work environments.",
+    "features": [
+      "Microfiber + TPU upper",
+      "PS High Flex sole",
+      "NHP rubber compound",
+      "Relaxed fit",
+      "S3S FO SR certified"
+    ],
+    "overview": [
+      "The Dune Micro is a sleek low-cut safety shoe combining a microfiber and TPU upper for durability and a premium look. It is part of the Dune Ultra Rebound Technology family.",
+      "Available in two colourways (brown/yellow and black), certified to EN ISO 20345:2022 S3S FO SR, weighing just 460g."
+    ],
+    "productLine": "DUNE Ultra Rebound Technology",
+    "articleCodes": [
+      {
+        "code": "44190",
+        "size": "40"
+      },
+      {
+        "code": "44191",
+        "size": "41"
+      },
+      {
+        "code": "44192",
+        "size": "42"
+      },
+      {
+        "code": "44193",
+        "size": "43"
+      },
+      {
+        "code": "44194",
+        "size": "44"
+      },
+      {
+        "code": "44195",
+        "size": "45"
+      },
+      {
+        "code": "44196",
+        "size": "46"
+      },
+      {
+        "code": "44170",
+        "size": "40"
+      },
+      {
+        "code": "44171",
+        "size": "41"
+      },
+      {
+        "code": "44172",
+        "size": "42"
+      },
+      {
+        "code": "44173",
+        "size": "43"
+      },
+      {
+        "code": "44174",
+        "size": "44"
+      },
+      {
+        "code": "44175",
+        "size": "45"
+      },
+      {
+        "code": "44176",
+        "size": "46"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46"
+    ],
+    "colors": [
+      "Brown/Yellow",
+      "Black"
+    ],
+    "material": "Microfiber + TPU",
+    "materialComposition": null,
+    "certifications": [
+      "S3S",
+      "FO",
+      "SR"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S3S",
+    "weightGrams": 460,
+    "fit": "Relaxed",
+    "toeCap": "Composite (NHP)",
+    "midsole": null,
+    "sole": "NHP Rubber",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "ESD"
+    ],
+    "isNew": false,
+    "pageRef": 67,
+    "sourceNames": [
+      "DUNE MICRO"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "dune-micro-sock",
+    "name": "Dune Micro Sock",
+    "img": "",
+    "description": "Low-cut safety shoe with sock-style microfiber + TPU upper for a snug, seamless fit. S3S FO SR certified.",
+    "features": [
+      "Microfiber + TPU sock-style upper",
+      "Seamless sock construction",
+      "PS High Flex sole",
+      "NHP rubber compound",
+      "Relaxed fit"
+    ],
+    "overview": [
+      "The Dune Micro Sock takes the Micro's microfiber + TPU construction and adds a sock-style collar for a closer, more comfortable ankle fit without laces tightening over the instep.",
+      "Available in two colourways, certified EN ISO 20345:2022 S3S FO SR, 460g."
+    ],
+    "productLine": "DUNE Ultra Rebound Technology",
+    "articleCodes": [
+      {
+        "code": "44200",
+        "size": "40"
+      },
+      {
+        "code": "44201",
+        "size": "41"
+      },
+      {
+        "code": "44202",
+        "size": "42"
+      },
+      {
+        "code": "44203",
+        "size": "43"
+      },
+      {
+        "code": "44204",
+        "size": "44"
+      },
+      {
+        "code": "44205",
+        "size": "45"
+      },
+      {
+        "code": "44206",
+        "size": "46"
+      },
+      {
+        "code": "44180",
+        "size": "40"
+      },
+      {
+        "code": "44181",
+        "size": "41"
+      },
+      {
+        "code": "44182",
+        "size": "42"
+      },
+      {
+        "code": "44183",
+        "size": "43"
+      },
+      {
+        "code": "44184",
+        "size": "44"
+      },
+      {
+        "code": "44185",
+        "size": "45"
+      },
+      {
+        "code": "44186",
+        "size": "46"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46"
+    ],
+    "colors": [
+      "Brown/Yellow",
+      "Black"
+    ],
+    "material": "Microfiber + TPU",
+    "materialComposition": null,
+    "certifications": [
+      "S3S",
+      "FO",
+      "SR"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S3S",
+    "weightGrams": 460,
+    "fit": "Relaxed",
+    "toeCap": "Composite (NHP)",
+    "midsole": null,
+    "sole": "NHP Rubber",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO"
+    ],
+    "isNew": false,
+    "pageRef": 67,
+    "sourceNames": [
+      "DUNE MICRO SOCK"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "dune-jaq-pink",
+    "name": "Dune JAQ (Women / Pink)",
+    "img": "",
+    "description": "Women's colourway of the Dune JAQ ESD safety trainer. Jaquard + TPU upper in black/pink, extended sizes 36–41.",
+    "features": [
+      "Jaquard + TPU upper",
+      "ESD antistatic",
+      "Ultra Rebound technology",
+      "PS High Flex sole",
+      "NHP rubber",
+      "Relaxed fit",
+      "Women's sizing 36–41"
+    ],
+    "overview": [
+      "The Dune JAQ in the pink/black colourway is aimed at women workers and extends down to size 36. It shares the full S3S FO SR ESD certification of the standard JAQ.",
+      "Listed as New in the catalogue, this colourway expands the Dune JAQ range to better cover female workers in industrial and logistics environments."
+    ],
+    "productLine": "DUNE Ultra Rebound Technology",
+    "articleCodes": [
+      {
+        "code": "44300",
+        "size": "36"
+      },
+      {
+        "code": "44301",
+        "size": "37"
+      },
+      {
+        "code": "44302",
+        "size": "38"
+      },
+      {
+        "code": "44303",
+        "size": "39"
+      },
+      {
+        "code": "44304",
+        "size": "40"
+      },
+      {
+        "code": "44305",
+        "size": "41"
+      }
+    ],
+    "sizes": [
+      "36",
+      "37",
+      "38",
+      "39",
+      "40",
+      "41"
+    ],
+    "colors": [
+      "Black/Pink"
+    ],
+    "material": "Jaquard + TPU",
+    "materialComposition": null,
+    "certifications": [
+      "S3S",
+      "FO",
+      "SR",
+      "ESD"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S3S",
+    "weightGrams": 450,
+    "fit": "Relaxed",
+    "toeCap": "Composite (NHP)",
+    "midsole": null,
+    "sole": "NHP Rubber",
+    "gender": "Women",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "ESD"
+    ],
+    "isNew": true,
+    "pageRef": 67,
+    "sourceNames": [
+      "DUNE JAQ (women colourway)"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "dune-occupational",
+    "name": "Dune Occupational",
+    "img": "",
+    "description": "Low-cut occupational shoe (02 SR) with Jaquard + TPU upper. No mandatory toecap, lightweight for general occupational use.",
+    "features": [
+      "Jaquard + TPU upper",
+      "NHP rubber sole",
+      "02 SR occupational rating",
+      "Relaxed fit",
+      "Lightweight construction"
+    ],
+    "overview": [
+      "The Dune Occupational is certified to EN ISO 20347:2022 at 02 SR level, making it an occupational shoe rather than a full safety shoe. It shares the Jaquard + TPU upper of the JAQ but without a mandatory protective toecap.",
+      "Ideal for light work environments where comfort and breathability are priorities over heavy impact protection."
+    ],
+    "productLine": "DUNE Ultra Rebound Technology",
+    "articleCodes": [
+      {
+        "code": "44240",
+        "size": "40"
+      },
+      {
+        "code": "44241",
+        "size": "41"
+      },
+      {
+        "code": "44242",
+        "size": "42"
+      },
+      {
+        "code": "44243",
+        "size": "43"
+      },
+      {
+        "code": "44244",
+        "size": "44"
+      },
+      {
+        "code": "44245",
+        "size": "45"
+      },
+      {
+        "code": "44246",
+        "size": "46"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46"
+    ],
+    "colors": [
+      "Black/Orange"
+    ],
+    "material": "Jaquard + TPU",
+    "materialComposition": null,
+    "certifications": [
+      "02",
+      "SR"
+    ],
+    "standards": [
+      "EN ISO 20347:2022"
+    ],
+    "safetyClass": "02 SR",
+    "weightGrams": null,
+    "fit": "Relaxed",
+    "toeCap": null,
+    "midsole": null,
+    "sole": "NHP Rubber",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "ESD"
+    ],
+    "isNew": false,
+    "pageRef": 67,
+    "sourceNames": [
+      "DUNE OCCUPATIONAL"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "makalu",
+    "name": "Makalu",
+    "img": "",
+    "description": "Heavy-duty high-cut safety boot with nubuck upper. S7S HI CI WR HRO FO L6 SRC — maximum protection for extreme environments.",
+    "features": [
+      "Full nubuck upper",
+      "Heat insulation (HI)",
+      "Cold insulation (CI)",
+      "Waterproof (WR)",
+      "HRO heat-resistant outsole",
+      "Penetration-resistant midsole (L6)",
+      "EVA midsole",
+      "Regular fit"
+    ],
+    "overview": [
+      "The Makalu is Kapriol's flagship heavy-duty safety boot, delivering comprehensive protection with S7S HI CI WR HRO FO L6 SRC certification. Its full nubuck upper is robust and water resistant, while the multi-layer construction handles both heat and cold.",
+      "Weighing 870g per shoe, it is built for the most demanding sectors: steel, foundry, construction, and outdoor industrial work."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "42900",
+        "size": "40"
+      },
+      {
+        "code": "42901",
+        "size": "41"
+      },
+      {
+        "code": "42902",
+        "size": "42"
+      },
+      {
+        "code": "42903",
+        "size": "43"
+      },
+      {
+        "code": "42904",
+        "size": "44"
+      },
+      {
+        "code": "42905",
+        "size": "45"
+      },
+      {
+        "code": "42906",
+        "size": "46"
+      },
+      {
+        "code": "42907",
+        "size": "47"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47"
+    ],
+    "colors": [
+      "Brown/Tan"
+    ],
+    "material": "Nubuck",
+    "materialComposition": null,
+    "certifications": [
+      "S7S",
+      "HI",
+      "CI",
+      "WR",
+      "HRO",
+      "FO",
+      "L6",
+      "SRC"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S7S",
+    "weightGrams": 870,
+    "fit": "Regular",
+    "toeCap": "Steel",
+    "midsole": "EVA",
+    "sole": "Rubber",
+    "gender": "Unisex",
+    "season": "Winter",
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "WRU",
+      "HRO",
+      "CI"
+    ],
+    "isNew": false,
+    "pageRef": 68,
+    "sourceNames": [
+      "MAKALU"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "yosemite",
+    "name": "Yosemite",
+    "img": "",
+    "description": "High-cut heavy-work safety boot with nubuck upper. S3L SR FO WR CI certified — cold and waterproof protection.",
+    "features": [
+      "Nubuck upper",
+      "Waterproof (WR)",
+      "Cold insulation (CI)",
+      "PU sole",
+      "Relaxed fit"
+    ],
+    "overview": [
+      "The Yosemite is a high-cut safety boot for heavy work in cold and wet conditions. Its nubuck construction is reinforced with WR and CI ratings, while the PU sole provides durability and comfort.",
+      "Certified S3L SR FO WR CI to EN ISO 20345:2022, weighing 740g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "44110",
+        "size": "40"
+      },
+      {
+        "code": "44111",
+        "size": "41"
+      },
+      {
+        "code": "44112",
+        "size": "42"
+      },
+      {
+        "code": "44113",
+        "size": "43"
+      },
+      {
+        "code": "44114",
+        "size": "44"
+      },
+      {
+        "code": "44115",
+        "size": "45"
+      },
+      {
+        "code": "44116",
+        "size": "46"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46"
+    ],
+    "colors": [
+      "Brown/Tan"
+    ],
+    "material": "Nubuck",
+    "materialComposition": null,
+    "certifications": [
+      "S3L",
+      "SR",
+      "FO",
+      "WR",
+      "CI"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S3L",
+    "weightGrams": 740,
+    "fit": "Relaxed",
+    "toeCap": "Composite (PU)",
+    "midsole": null,
+    "sole": "PU",
+    "gender": "Unisex",
+    "season": "Winter",
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "WRU",
+      "HRO",
+      "CI"
+    ],
+    "isNew": false,
+    "pageRef": 68,
+    "sourceNames": [
+      "YOSEMITE"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "spencer-low",
+    "name": "Spencer Low",
+    "img": "",
+    "description": "Low-cut S3L ESD safety shoe with synthetic nubuck upper. Ideal for electronics and antistatic work environments.",
+    "features": [
+      "Synthetic nubuck upper",
+      "ESD antistatic",
+      "PU sole",
+      "Relaxed fit",
+      "S3L FO SR ESD"
+    ],
+    "overview": [
+      "The Spencer Low is a low-cut safety shoe with synthetic nubuck upper, suitable for workshops and electronics environments thanks to its ESD certification.",
+      "Certified S3L FO SR ESD to EN ISO 20345:2022, weighing 550g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "44070",
+        "size": "40"
+      },
+      {
+        "code": "44071",
+        "size": "41"
+      },
+      {
+        "code": "44072",
+        "size": "42"
+      },
+      {
+        "code": "44073",
+        "size": "43"
+      },
+      {
+        "code": "44074",
+        "size": "44"
+      },
+      {
+        "code": "44075",
+        "size": "45"
+      },
+      {
+        "code": "44076",
+        "size": "46"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46"
+    ],
+    "colors": [
+      "Dark Brown"
+    ],
+    "material": "Synthetic Nubuck",
+    "materialComposition": null,
+    "certifications": [
+      "S3L",
+      "FO",
+      "SR",
+      "ESD"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S3L",
+    "weightGrams": 550,
+    "fit": "Relaxed",
+    "toeCap": "Steel",
+    "midsole": null,
+    "sole": "PU",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "WRU"
+    ],
+    "isNew": false,
+    "pageRef": 68,
+    "sourceNames": [
+      "SPENCER LOW"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "spencer-high",
+    "name": "Spencer High",
+    "img": "",
+    "description": "High-cut S3L ESD safety boot with synthetic nubuck upper. Extended size range from 37.",
+    "features": [
+      "Synthetic nubuck upper",
+      "ESD antistatic",
+      "PU sole",
+      "High-cut ankle support",
+      "S3L FO SR ESD",
+      "Sizes 37–47"
+    ],
+    "overview": [
+      "The Spencer High is the high-cut variant of the Spencer range, sharing the synthetic nubuck upper and ESD certification. The extended size range starting at 37 improves accessibility.",
+      "Certified S3L FO SR ESD to EN ISO 20345:2022, weighing 620g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "41978",
+        "size": "37"
+      },
+      {
+        "code": "41968",
+        "size": "38"
+      },
+      {
+        "code": "41969",
+        "size": "39"
+      },
+      {
+        "code": "41970",
+        "size": "40"
+      },
+      {
+        "code": "41971",
+        "size": "41"
+      },
+      {
+        "code": "41972",
+        "size": "42"
+      },
+      {
+        "code": "41973",
+        "size": "43"
+      },
+      {
+        "code": "41974",
+        "size": "44"
+      },
+      {
+        "code": "41975",
+        "size": "45"
+      },
+      {
+        "code": "41976",
+        "size": "46"
+      },
+      {
+        "code": "41977",
+        "size": "47"
+      }
+    ],
+    "sizes": [
+      "37",
+      "38",
+      "39",
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47"
+    ],
+    "colors": [
+      "Dark Brown"
+    ],
+    "material": "Synthetic Nubuck",
+    "materialComposition": null,
+    "certifications": [
+      "S3L",
+      "FO",
+      "SR",
+      "ESD"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S3L",
+    "weightGrams": 620,
+    "fit": "Relaxed",
+    "toeCap": "Steel",
+    "midsole": null,
+    "sole": "PU",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "WRU"
+    ],
+    "isNew": false,
+    "pageRef": 68,
+    "sourceNames": [
+      "SPENCER HIGH"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "dakota-high",
+    "name": "Dakota High",
+    "img": "",
+    "description": "High-cut S3L HRO SR safety boot with nubuck upper. Heat-resistant outsole for work near hot surfaces.",
+    "features": [
+      "Nubuck upper",
+      "HRO heat-resistant outsole",
+      "Steel toecap",
+      "High-cut ankle support",
+      "Regular fit"
+    ],
+    "overview": [
+      "The Dakota High is a robust high-cut safety boot built for environments with hot surfaces. Its nubuck upper provides durability and the HRO-rated outsole resists contact heat up to 300°C.",
+      "Certified S3L HRO SR to EN ISO 20345:2022, weighing 665g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "41890",
+        "size": "40"
+      },
+      {
+        "code": "41891",
+        "size": "41"
+      },
+      {
+        "code": "41892",
+        "size": "42"
+      },
+      {
+        "code": "41893",
+        "size": "43"
+      },
+      {
+        "code": "41894",
+        "size": "44"
+      },
+      {
+        "code": "41895",
+        "size": "45"
+      },
+      {
+        "code": "41896",
+        "size": "46"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46"
+    ],
+    "colors": [
+      "Dark Brown"
+    ],
+    "material": "Nubuck",
+    "materialComposition": null,
+    "certifications": [
+      "S3L",
+      "HRO",
+      "SR"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S3L",
+    "weightGrams": 665,
+    "fit": "Regular",
+    "toeCap": "Steel",
+    "midsole": null,
+    "sole": "PU",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "WRU",
+      "HRO"
+    ],
+    "isNew": false,
+    "pageRef": 68,
+    "sourceNames": [
+      "DAKOTA HIGH"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "montreal",
+    "name": "Montreal",
+    "img": "",
+    "description": "High-cut S3L FO SR safety boot with nubuck upper. Classic work boot design with PU sole and regular fit.",
+    "features": [
+      "Nubuck upper",
+      "PU/PU sole",
+      "Steel toecap",
+      "High-cut ankle protection",
+      "Relaxed fit"
+    ],
+    "overview": [
+      "The Montreal is a classic high-cut safety boot with nubuck upper, offering reliable S3L protection for general heavy-work use. Its PU/PU construction provides cushioning and durability.",
+      "Certified S3L FO SR to EN ISO 20345:2022, weighing 775g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "41250",
+        "size": "40"
+      },
+      {
+        "code": "41251",
+        "size": "41"
+      },
+      {
+        "code": "41252",
+        "size": "42"
+      },
+      {
+        "code": "41253",
+        "size": "43"
+      },
+      {
+        "code": "41254",
+        "size": "44"
+      },
+      {
+        "code": "41255",
+        "size": "45"
+      },
+      {
+        "code": "41256",
+        "size": "46"
+      },
+      {
+        "code": "41257",
+        "size": "47"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47"
+    ],
+    "colors": [
+      "Tan/Nubuck"
+    ],
+    "material": "Nubuck",
+    "materialComposition": null,
+    "certifications": [
+      "S3L",
+      "FO",
+      "SR"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S3L",
+    "weightGrams": 775,
+    "fit": "Relaxed",
+    "toeCap": "Steel",
+    "midsole": null,
+    "sole": "PU/PU",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "WRU"
+    ],
+    "isNew": false,
+    "pageRef": 69,
+    "sourceNames": [
+      "MONTREAL"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "profil",
+    "name": "Profil",
+    "img": "",
+    "description": "High-cut S3 SRC safety boot with nubuck upper. Certified to the older EN ISO 20345:2011 standard.",
+    "features": [
+      "Nubuck upper",
+      "PU/PU sole",
+      "Steel toecap",
+      "High-cut design",
+      "Relaxed fit"
+    ],
+    "overview": [
+      "The Profil is a straightforward high-cut nubuck safety boot certified to S3 SRC under EN ISO 20345:2011. A reliable and cost-effective option for general heavy construction and industry.",
+      "Weighs 665g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "43180",
+        "size": "40"
+      },
+      {
+        "code": "43181",
+        "size": "41"
+      },
+      {
+        "code": "43182",
+        "size": "42"
+      },
+      {
+        "code": "43183",
+        "size": "43"
+      },
+      {
+        "code": "43184",
+        "size": "44"
+      },
+      {
+        "code": "43185",
+        "size": "45"
+      },
+      {
+        "code": "43186",
+        "size": "46"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46"
+    ],
+    "colors": [
+      "Tan/Nubuck"
+    ],
+    "material": "Nubuck",
+    "materialComposition": null,
+    "certifications": [
+      "S3",
+      "SRC"
+    ],
+    "standards": [
+      "EN ISO 20345:2011"
+    ],
+    "safetyClass": "S3",
+    "weightGrams": 665,
+    "fit": "Relaxed",
+    "toeCap": "Steel",
+    "midsole": null,
+    "sole": "PU/PU",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO"
+    ],
+    "isNew": false,
+    "pageRef": 69,
+    "sourceNames": [
+      "PROFIL"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "sioux-low",
+    "name": "Sioux Low",
+    "img": "",
+    "description": "Low-cut S3L FO SR safety shoe with split suede leather upper with inserts. Classic design for heavy work.",
+    "features": [
+      "Split suede leather upper with inserts",
+      "PU/PU sole",
+      "Steel toecap",
+      "Regular fit"
+    ],
+    "overview": [
+      "The Sioux Low is a traditional low-cut safety shoe with split suede leather upper, combining a classic look with solid S3L protection. Available from size 38.",
+      "Certified S3L FO SR to EN ISO 20345:2022, weighing 660g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "41028",
+        "size": "38"
+      },
+      {
+        "code": "41029",
+        "size": "39"
+      },
+      {
+        "code": "41030",
+        "size": "40"
+      },
+      {
+        "code": "41031",
+        "size": "41"
+      },
+      {
+        "code": "41032",
+        "size": "42"
+      },
+      {
+        "code": "41033",
+        "size": "43"
+      },
+      {
+        "code": "41034",
+        "size": "44"
+      },
+      {
+        "code": "41035",
+        "size": "45"
+      },
+      {
+        "code": "41036",
+        "size": "46"
+      },
+      {
+        "code": "41037",
+        "size": "47"
+      }
+    ],
+    "sizes": [
+      "38",
+      "39",
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47"
+    ],
+    "colors": [
+      "Brown/Tan"
+    ],
+    "material": "Split Suede Leather with Inserts",
+    "materialComposition": null,
+    "certifications": [
+      "S3L",
+      "FO",
+      "SR"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S3L",
+    "weightGrams": 660,
+    "fit": "Regular",
+    "toeCap": "Steel",
+    "midsole": null,
+    "sole": "PU/PU",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "WRU"
+    ],
+    "isNew": false,
+    "pageRef": 69,
+    "sourceNames": [
+      "SIOUX LOW"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "sioux-high",
+    "name": "Sioux High",
+    "img": "",
+    "description": "High-cut S3L FO SR safety boot with split suede leather upper with inserts. Extended ankle protection.",
+    "features": [
+      "Split suede leather upper with inserts",
+      "PU/PU sole",
+      "Steel toecap",
+      "High-cut ankle support",
+      "Regular fit"
+    ],
+    "overview": [
+      "The Sioux High extends the Sioux Low with a high-cut ankle collar for additional support and protection. Same split suede leather construction, slightly heavier at 680g.",
+      "Certified S3L FO SR to EN ISO 20345:2022."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "41038",
+        "size": "38"
+      },
+      {
+        "code": "41039",
+        "size": "39"
+      },
+      {
+        "code": "41040",
+        "size": "40"
+      },
+      {
+        "code": "41041",
+        "size": "41"
+      },
+      {
+        "code": "41042",
+        "size": "42"
+      },
+      {
+        "code": "41043",
+        "size": "43"
+      },
+      {
+        "code": "41044",
+        "size": "44"
+      },
+      {
+        "code": "41045",
+        "size": "45"
+      },
+      {
+        "code": "41046",
+        "size": "46"
+      },
+      {
+        "code": "41047",
+        "size": "47"
+      }
+    ],
+    "sizes": [
+      "38",
+      "39",
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47"
+    ],
+    "colors": [
+      "Brown/Tan"
+    ],
+    "material": "Split Suede Leather with Inserts",
+    "materialComposition": null,
+    "certifications": [
+      "S3L",
+      "FO",
+      "SR"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S3L",
+    "weightGrams": 680,
+    "fit": "Regular",
+    "toeCap": "Steel",
+    "midsole": null,
+    "sole": "PU/PU",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "WRU"
+    ],
+    "isNew": false,
+    "pageRef": 69,
+    "sourceNames": [
+      "SIOUX HIGH"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "kansas",
+    "name": "Kansas",
+    "img": "",
+    "description": "High-cut S3 SRC safety boot with nubuck + nylon upper. Two colourways available.",
+    "features": [
+      "Nubuck + Nylon upper",
+      "PU/PU sole",
+      "Steel toecap",
+      "High-cut design",
+      "Relaxed fit"
+    ],
+    "overview": [
+      "The Kansas is a high-cut safety boot combining nubuck and nylon in its upper for a balance of durability and breathability. Available in two colourways.",
+      "Certified S3 SRC to EN ISO 20345:2011, weighing 600g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "43930",
+        "size": "40"
+      },
+      {
+        "code": "43931",
+        "size": "41"
+      },
+      {
+        "code": "43932",
+        "size": "42"
+      },
+      {
+        "code": "43933",
+        "size": "43"
+      },
+      {
+        "code": "43934",
+        "size": "44"
+      },
+      {
+        "code": "43935",
+        "size": "45"
+      },
+      {
+        "code": "43936",
+        "size": "46"
+      },
+      {
+        "code": "43937",
+        "size": "47"
+      },
+      {
+        "code": "43920",
+        "size": "40"
+      },
+      {
+        "code": "43921",
+        "size": "41"
+      },
+      {
+        "code": "43922",
+        "size": "42"
+      },
+      {
+        "code": "43923",
+        "size": "43"
+      },
+      {
+        "code": "43924",
+        "size": "44"
+      },
+      {
+        "code": "43925",
+        "size": "45"
+      },
+      {
+        "code": "43926",
+        "size": "46"
+      },
+      {
+        "code": "43927",
+        "size": "47"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47"
+    ],
+    "colors": [
+      "Brown/Tan",
+      "Dark Brown"
+    ],
+    "material": "Nubuck + Nylon",
+    "materialComposition": null,
+    "certifications": [
+      "S3",
+      "SRC"
+    ],
+    "standards": [
+      "EN ISO 20345:2011"
+    ],
+    "safetyClass": "S3",
+    "weightGrams": 600,
+    "fit": "Relaxed",
+    "toeCap": "Steel",
+    "midsole": null,
+    "sole": "PU/PU",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "WRU"
+    ],
+    "isNew": false,
+    "pageRef": 69,
+    "sourceNames": [
+      "KANSAS"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "spider-high",
+    "name": "Spider High",
+    "img": "",
+    "description": "Mid-cut S3L FO SR safety shoe with mesh + KPU upper. Lightweight construction for heavy-work environments.",
+    "features": [
+      "Mesh + KPU upper",
+      "PU/PU sole",
+      "Steel toecap",
+      "Mid-cut design",
+      "Regular fit"
+    ],
+    "overview": [
+      "The Spider High is a new mid-cut safety shoe with a modern mesh and KPU upper, delivering light weight without compromising S3L protection. It bridges the gap between trainers and traditional boots.",
+      "Certified S3L FO SR to EN ISO 20345:2022, weighing 575g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "44310",
+        "size": "40"
+      },
+      {
+        "code": "44311",
+        "size": "41"
+      },
+      {
+        "code": "44312",
+        "size": "42"
+      },
+      {
+        "code": "44313",
+        "size": "43"
+      },
+      {
+        "code": "44314",
+        "size": "44"
+      },
+      {
+        "code": "44315",
+        "size": "45"
+      },
+      {
+        "code": "44316",
+        "size": "46"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46"
+    ],
+    "colors": [
+      "Black/Lime"
+    ],
+    "material": "Mesh + KPU",
+    "materialComposition": null,
+    "certifications": [
+      "S3L",
+      "FO",
+      "SR"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S3L",
+    "weightGrams": 575,
+    "fit": "Regular",
+    "toeCap": "Steel",
+    "midsole": null,
+    "sole": "PU/PU",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "WRU"
+    ],
+    "isNew": true,
+    "pageRef": 69,
+    "sourceNames": [
+      "SPIDER HIGH"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "hurricane-low",
+    "name": "Hurricane Low",
+    "img": "",
+    "description": "Low-cut S3L FO SR safety shoe with split suede leather upper. Classic heavy-work design.",
+    "features": [
+      "Split suede leather upper",
+      "PU/PU sole",
+      "Steel toecap",
+      "Regular fit"
+    ],
+    "overview": [
+      "The Hurricane Low is a low-cut split suede leather safety shoe for heavy industrial and construction environments. Sizes 40–47.",
+      "Certified S3L FO SR to EN ISO 20345:2022, weighing 570g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "42790",
+        "size": "40"
+      },
+      {
+        "code": "42791",
+        "size": "41"
+      },
+      {
+        "code": "42792",
+        "size": "42"
+      },
+      {
+        "code": "42793",
+        "size": "43"
+      },
+      {
+        "code": "42794",
+        "size": "44"
+      },
+      {
+        "code": "42795",
+        "size": "45"
+      },
+      {
+        "code": "42796",
+        "size": "46"
+      },
+      {
+        "code": "42797",
+        "size": "47"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47"
+    ],
+    "colors": [
+      "Brown/Tan"
+    ],
+    "material": "Split Suede Leather",
+    "materialComposition": null,
+    "certifications": [
+      "S3L",
+      "FO",
+      "SR"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S3L",
+    "weightGrams": 570,
+    "fit": "Regular",
+    "toeCap": "Steel",
+    "midsole": null,
+    "sole": "PU/PU",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "WRU"
+    ],
+    "isNew": false,
+    "pageRef": 70,
+    "sourceNames": [
+      "HURRICANE LOW"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "hurricane-high",
+    "name": "Hurricane High",
+    "img": "",
+    "description": "High-cut S3L FO SR safety boot with split suede leather upper. Extended ankle protection.",
+    "features": [
+      "Split suede leather upper",
+      "PU/PU sole",
+      "Steel toecap",
+      "High-cut ankle support",
+      "Regular fit"
+    ],
+    "overview": [
+      "The Hurricane High adds a high-cut collar to the Hurricane Low's proven split suede leather construction, ideal for ankle-intensive work on uneven terrain.",
+      "Certified S3L FO SR to EN ISO 20345:2022, weighing 600g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "42870",
+        "size": "40"
+      },
+      {
+        "code": "42871",
+        "size": "41"
+      },
+      {
+        "code": "42872",
+        "size": "42"
+      },
+      {
+        "code": "42873",
+        "size": "43"
+      },
+      {
+        "code": "42874",
+        "size": "44"
+      },
+      {
+        "code": "42875",
+        "size": "45"
+      },
+      {
+        "code": "42876",
+        "size": "46"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46"
+    ],
+    "colors": [
+      "Brown/Tan"
+    ],
+    "material": "Split Suede Leather",
+    "materialComposition": null,
+    "certifications": [
+      "S3L",
+      "FO",
+      "SR"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S3L",
+    "weightGrams": 600,
+    "fit": "Regular",
+    "toeCap": "Steel",
+    "midsole": null,
+    "sole": "PU/PU",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "WRU"
+    ],
+    "isNew": false,
+    "pageRef": 70,
+    "sourceNames": [
+      "HURRICANE HIGH"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "new-orleans-low",
+    "name": "New Orleans Low",
+    "img": "",
+    "description": "Low-cut S3 FO SR safety shoe with split suede leather upper and INOX steel toecap.",
+    "features": [
+      "Split suede leather upper",
+      "INOX steel toecap",
+      "PU/PU sole",
+      "Regular fit"
+    ],
+    "overview": [
+      "The New Orleans Low is a low-cut safety shoe with split suede leather and an INOX stainless steel toecap for superior corrosion resistance. Sizes 40–46.",
+      "Certified S3 FO SR to EN ISO 20345:2022, weighing 610g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "41380",
+        "size": "40"
+      },
+      {
+        "code": "41381",
+        "size": "41"
+      },
+      {
+        "code": "41382",
+        "size": "42"
+      },
+      {
+        "code": "41383",
+        "size": "43"
+      },
+      {
+        "code": "41384",
+        "size": "44"
+      },
+      {
+        "code": "41385",
+        "size": "45"
+      },
+      {
+        "code": "41386",
+        "size": "46"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46"
+    ],
+    "colors": [
+      "Brown/Tan"
+    ],
+    "material": "Split Suede Leather",
+    "materialComposition": null,
+    "certifications": [
+      "S3",
+      "FO",
+      "SR"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S3",
+    "weightGrams": 610,
+    "fit": "Regular",
+    "toeCap": "Steel (INOX)",
+    "midsole": null,
+    "sole": "PU/PU",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "WRU"
+    ],
+    "isNew": false,
+    "pageRef": 70,
+    "sourceNames": [
+      "NEW ORLEANS LOW"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "new-orleans-high",
+    "name": "New Orleans High",
+    "img": "",
+    "description": "High-cut S3 FO SR safety boot with split suede leather upper and INOX steel toecap.",
+    "features": [
+      "Split suede leather upper",
+      "INOX steel toecap",
+      "PU/PU sole",
+      "High-cut ankle support",
+      "Regular fit"
+    ],
+    "overview": [
+      "The New Orleans High adds high-cut ankle support to the New Orleans range. INOX stainless steel toecap for corrosion resistance in wet and chemically aggressive environments.",
+      "Certified S3 FO SR to EN ISO 20345:2022, weighing 620g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "41390",
+        "size": "40"
+      },
+      {
+        "code": "41391",
+        "size": "41"
+      },
+      {
+        "code": "41392",
+        "size": "42"
+      },
+      {
+        "code": "41393",
+        "size": "43"
+      },
+      {
+        "code": "41394",
+        "size": "44"
+      },
+      {
+        "code": "41395",
+        "size": "45"
+      },
+      {
+        "code": "41396",
+        "size": "46"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46"
+    ],
+    "colors": [
+      "Brown/Tan"
+    ],
+    "material": "Split Suede Leather",
+    "materialComposition": null,
+    "certifications": [
+      "S3",
+      "FO",
+      "SR"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S3",
+    "weightGrams": 620,
+    "fit": "Regular",
+    "toeCap": "Steel (INOX)",
+    "midsole": null,
+    "sole": "PU/PU",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "WRU"
+    ],
+    "isNew": false,
+    "pageRef": 70,
+    "sourceNames": [
+      "NEW ORLEANS HIGH"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "patrol-low",
+    "name": "Patrol Low",
+    "img": "",
+    "description": "Low-cut S3 FO SR safety shoe with split suede leather upper and INOX toecap. Slim profile.",
+    "features": [
+      "Split suede leather upper",
+      "INOX steel toecap",
+      "PU/PU sole",
+      "Regular fit"
+    ],
+    "overview": [
+      "The Patrol Low is a slim, low-cut safety shoe for general heavy work. Split suede leather upper with INOX toecap for corrosion resistance.",
+      "Certified S3 FO SR to EN ISO 20345:2022, weighing 525g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "43030",
+        "size": "40"
+      },
+      {
+        "code": "43031",
+        "size": "41"
+      },
+      {
+        "code": "43032",
+        "size": "42"
+      },
+      {
+        "code": "43033",
+        "size": "43"
+      },
+      {
+        "code": "43034",
+        "size": "44"
+      },
+      {
+        "code": "43035",
+        "size": "45"
+      },
+      {
+        "code": "43036",
+        "size": "46"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46"
+    ],
+    "colors": [
+      "Brown/Tan"
+    ],
+    "material": "Split Suede Leather",
+    "materialComposition": null,
+    "certifications": [
+      "S3",
+      "FO",
+      "SR"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S3",
+    "weightGrams": 525,
+    "fit": "Regular",
+    "toeCap": "Steel (INOX)",
+    "midsole": null,
+    "sole": "PU/PU",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "WRU"
+    ],
+    "isNew": false,
+    "pageRef": 70,
+    "sourceNames": [
+      "PATROL LOW"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "patrol-high",
+    "name": "Patrol High",
+    "img": "",
+    "description": "High-cut S3 FO SR safety boot with split suede leather upper and INOX toecap.",
+    "features": [
+      "Split suede leather upper",
+      "INOX steel toecap",
+      "PU/PU sole",
+      "High-cut ankle support",
+      "Regular fit"
+    ],
+    "overview": [
+      "The Patrol High is the high-cut version of the Patrol range, adding ankle support while maintaining the same INOX toecap and split suede leather construction. Sizes 40–47.",
+      "Certified S3 FO SR to EN ISO 20345:2022, weighing 550g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "43040",
+        "size": "40"
+      },
+      {
+        "code": "43041",
+        "size": "41"
+      },
+      {
+        "code": "43042",
+        "size": "42"
+      },
+      {
+        "code": "43043",
+        "size": "43"
+      },
+      {
+        "code": "43044",
+        "size": "44"
+      },
+      {
+        "code": "43045",
+        "size": "45"
+      },
+      {
+        "code": "43046",
+        "size": "46"
+      },
+      {
+        "code": "43009",
+        "size": "47"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47"
+    ],
+    "colors": [
+      "Brown/Tan"
+    ],
+    "material": "Split Suede Leather",
+    "materialComposition": null,
+    "certifications": [
+      "S3",
+      "FO",
+      "SR"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S3",
+    "weightGrams": 550,
+    "fit": "Regular",
+    "toeCap": "Steel (INOX)",
+    "midsole": null,
+    "sole": "PU/PU",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "WRU"
+    ],
+    "isNew": false,
+    "pageRef": 70,
+    "sourceNames": [
+      "PATROL HIGH"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "hornet-low",
+    "name": "Hornet Low",
+    "img": "",
+    "description": "Low-cut S3 FO SR safety shoe with coated split leather upper. Wide size range 37–48.",
+    "features": [
+      "Coated split leather upper",
+      "INOX steel toecap",
+      "PU/PU sole",
+      "Regular fit",
+      "Sizes 37–48"
+    ],
+    "overview": [
+      "The Hornet Low features a coated split leather upper for easy cleaning and enhanced water resistance. Its wide size range (37–48) makes it one of the most accessible shoes in the range.",
+      "Certified S3 FO SR to EN ISO 20345:2022, weighing 600g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "42669",
+        "size": "37"
+      },
+      {
+        "code": "42670",
+        "size": "38"
+      },
+      {
+        "code": "42671",
+        "size": "39"
+      },
+      {
+        "code": "42672",
+        "size": "40"
+      },
+      {
+        "code": "42673",
+        "size": "41"
+      },
+      {
+        "code": "42674",
+        "size": "42"
+      },
+      {
+        "code": "42675",
+        "size": "43"
+      },
+      {
+        "code": "42676",
+        "size": "44"
+      },
+      {
+        "code": "42677",
+        "size": "45"
+      },
+      {
+        "code": "42678",
+        "size": "46"
+      },
+      {
+        "code": "42679",
+        "size": "47"
+      },
+      {
+        "code": "42667",
+        "size": "48"
+      }
+    ],
+    "sizes": [
+      "37",
+      "38",
+      "39",
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47",
+      "48"
+    ],
+    "colors": [
+      "Black"
+    ],
+    "material": "Coated Split Leather",
+    "materialComposition": null,
+    "certifications": [
+      "S3",
+      "FO",
+      "SR"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S3",
+    "weightGrams": 600,
+    "fit": "Regular",
+    "toeCap": "Steel (INOX)",
+    "midsole": null,
+    "sole": "PU/PU",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "WRU"
+    ],
+    "isNew": false,
+    "pageRef": 71,
+    "sourceNames": [
+      "HORNET LOW"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "hornet-high",
+    "name": "Hornet High",
+    "img": "",
+    "description": "High-cut S3 FO SR safety boot with coated split leather upper. Wide size range 37–48.",
+    "features": [
+      "Coated split leather upper",
+      "INOX steel toecap",
+      "PU/PU sole",
+      "High-cut ankle support",
+      "Regular fit",
+      "Sizes 37–48"
+    ],
+    "overview": [
+      "The Hornet High shares the coated split leather construction of the Low version with an added high-cut ankle collar. Available in the same wide range 37–48.",
+      "Certified S3 FO SR to EN ISO 20345:2022, weighing 600g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "42689",
+        "size": "37"
+      },
+      {
+        "code": "42690",
+        "size": "38"
+      },
+      {
+        "code": "42691",
+        "size": "39"
+      },
+      {
+        "code": "42692",
+        "size": "40"
+      },
+      {
+        "code": "42693",
+        "size": "41"
+      },
+      {
+        "code": "42694",
+        "size": "42"
+      },
+      {
+        "code": "42695",
+        "size": "43"
+      },
+      {
+        "code": "42696",
+        "size": "44"
+      },
+      {
+        "code": "42697",
+        "size": "45"
+      },
+      {
+        "code": "42698",
+        "size": "46"
+      },
+      {
+        "code": "42699",
+        "size": "47"
+      },
+      {
+        "code": "42659",
+        "size": "48"
+      }
+    ],
+    "sizes": [
+      "37",
+      "38",
+      "39",
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47",
+      "48"
+    ],
+    "colors": [
+      "Black"
+    ],
+    "material": "Coated Split Leather",
+    "materialComposition": null,
+    "certifications": [
+      "S3",
+      "FO",
+      "SR"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S3",
+    "weightGrams": 600,
+    "fit": "Regular",
+    "toeCap": "Steel (INOX)",
+    "midsole": null,
+    "sole": "PU/PU",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "WRU"
+    ],
+    "isNew": false,
+    "pageRef": 71,
+    "sourceNames": [
+      "HORNET HIGH"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "derby",
+    "name": "Derby",
+    "img": "",
+    "description": "Low-cut S3L FO SR safety trainer with nylon + KPU upper. Lightweight light-work safety shoe.",
+    "features": [
+      "Nylon + KPU upper",
+      "PU/PU sole",
+      "Steel toecap",
+      "Relaxed fit"
+    ],
+    "overview": [
+      "The Derby is a lightweight low-cut safety trainer for light and medium work environments. Its nylon + KPU upper keeps weight down while the S3L certification provides full protection.",
+      "Certified S3L FO SR to EN ISO 20345:2022, weighing 600g. Available in two colourways."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "41980",
+        "size": "40"
+      },
+      {
+        "code": "41981",
+        "size": "41"
+      },
+      {
+        "code": "41982",
+        "size": "42"
+      },
+      {
+        "code": "41983",
+        "size": "43"
+      },
+      {
+        "code": "41984",
+        "size": "44"
+      },
+      {
+        "code": "41985",
+        "size": "45"
+      },
+      {
+        "code": "41986",
+        "size": "46"
+      },
+      {
+        "code": "41987",
+        "size": "47"
+      },
+      {
+        "code": "41990",
+        "size": "40"
+      },
+      {
+        "code": "41991",
+        "size": "41"
+      },
+      {
+        "code": "41992",
+        "size": "42"
+      },
+      {
+        "code": "41993",
+        "size": "43"
+      },
+      {
+        "code": "41994",
+        "size": "44"
+      },
+      {
+        "code": "41995",
+        "size": "45"
+      },
+      {
+        "code": "41996",
+        "size": "46"
+      },
+      {
+        "code": "41997",
+        "size": "47"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47"
+    ],
+    "colors": [
+      "Blue/Orange",
+      "Black/Orange"
+    ],
+    "material": "Nylon + KPU",
+    "materialComposition": null,
+    "certifications": [
+      "S3L",
+      "FO",
+      "SR"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S3L",
+    "weightGrams": 600,
+    "fit": "Relaxed",
+    "toeCap": "Steel",
+    "midsole": null,
+    "sole": "PU/PU",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "WRU"
+    ],
+    "isNew": false,
+    "pageRef": 72,
+    "sourceNames": [
+      "DERBY"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "spider",
+    "name": "Spider",
+    "img": "",
+    "description": "Low-cut S1 PL FO SR safety trainer with mesh + KPU upper with split leather inserts. Three colourways.",
+    "features": [
+      "Mesh + KPU upper with split leather inserts",
+      "PU/PU sole",
+      "Steel toecap",
+      "Regular fit"
+    ],
+    "overview": [
+      "The Spider is a popular light-work safety trainer featuring a mesh and KPU upper with split leather inserts for structure. Available in three colourways including black/green, black/yellow, and black/black.",
+      "Certified S1 PL FO SR to EN ISO 20345:2022, weighing 575g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "43289",
+        "size": "39"
+      },
+      {
+        "code": "43290",
+        "size": "40"
+      },
+      {
+        "code": "43291",
+        "size": "41"
+      },
+      {
+        "code": "43292",
+        "size": "42"
+      },
+      {
+        "code": "43293",
+        "size": "43"
+      },
+      {
+        "code": "43294",
+        "size": "44"
+      },
+      {
+        "code": "43295",
+        "size": "45"
+      },
+      {
+        "code": "43296",
+        "size": "46"
+      },
+      {
+        "code": "43297",
+        "size": "47"
+      },
+      {
+        "code": "43990",
+        "size": "40"
+      },
+      {
+        "code": "43991",
+        "size": "41"
+      },
+      {
+        "code": "43992",
+        "size": "42"
+      },
+      {
+        "code": "43993",
+        "size": "43"
+      },
+      {
+        "code": "43994",
+        "size": "44"
+      },
+      {
+        "code": "43995",
+        "size": "45"
+      },
+      {
+        "code": "43996",
+        "size": "46"
+      },
+      {
+        "code": "44010",
+        "size": "40"
+      },
+      {
+        "code": "44011",
+        "size": "41"
+      },
+      {
+        "code": "44012",
+        "size": "42"
+      },
+      {
+        "code": "44013",
+        "size": "43"
+      },
+      {
+        "code": "44014",
+        "size": "44"
+      },
+      {
+        "code": "44015",
+        "size": "45"
+      },
+      {
+        "code": "44016",
+        "size": "46"
+      }
+    ],
+    "sizes": [
+      "39",
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47"
+    ],
+    "colors": [
+      "Black/Green",
+      "Black/Yellow",
+      "Black/Black"
+    ],
+    "material": "Mesh + KPU with Split Leather Inserts",
+    "materialComposition": null,
+    "certifications": [
+      "S1",
+      "PL",
+      "FO",
+      "SR"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S1 PL",
+    "weightGrams": 575,
+    "fit": "Regular",
+    "toeCap": "Steel",
+    "midsole": null,
+    "sole": "PU/PU",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO"
+    ],
+    "isNew": false,
+    "pageRef": 72,
+    "sourceNames": [
+      "SPIDER"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "mars",
+    "name": "Mars",
+    "img": "",
+    "description": "Low-cut S1 P SRC safety trainer with nylon + KPU upper and aluminium toecap.",
+    "features": [
+      "Nylon + KPU upper",
+      "Aluminium toecap",
+      "PU/PU sole",
+      "Regular fit"
+    ],
+    "overview": [
+      "The Mars is a lightweight S1 P SRC safety trainer with an aluminium toecap for reduced weight. Certified to EN ISO 20345:2011.",
+      "Weighs 585g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "43900",
+        "size": "40"
+      },
+      {
+        "code": "43901",
+        "size": "41"
+      },
+      {
+        "code": "43902",
+        "size": "42"
+      },
+      {
+        "code": "43903",
+        "size": "43"
+      },
+      {
+        "code": "43904",
+        "size": "44"
+      },
+      {
+        "code": "43905",
+        "size": "45"
+      },
+      {
+        "code": "43906",
+        "size": "46"
+      },
+      {
+        "code": "43907",
+        "size": "47"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47"
+    ],
+    "colors": [
+      "Black/Grey"
+    ],
+    "material": "Nylon + KPU",
+    "materialComposition": null,
+    "certifications": [
+      "S1",
+      "P",
+      "SRC"
+    ],
+    "standards": [
+      "EN ISO 20345:2011"
+    ],
+    "safetyClass": "S1 P",
+    "weightGrams": 585,
+    "fit": "Regular",
+    "toeCap": "Aluminium",
+    "midsole": null,
+    "sole": "PU/PU",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO"
+    ],
+    "isNew": false,
+    "pageRef": 72,
+    "sourceNames": [
+      "MARS"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "typhoon",
+    "name": "Typhoon",
+    "img": "",
+    "description": "Low-cut S1 PL FO SR safety shoe with crosta scamosciata (rough suede) upper. Classic tan appearance.",
+    "features": [
+      "Rough suede (crosta scamosciata) upper",
+      "Steel toecap",
+      "PU/PU sole",
+      "Regular fit"
+    ],
+    "overview": [
+      "The Typhoon offers a classic work-shoe appearance with a rough suede upper, suitable for light work environments. S1 PL FO SR certified.",
+      "Certified to EN ISO 20345:2022, weighing 520g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "42800",
+        "size": "40"
+      },
+      {
+        "code": "42801",
+        "size": "41"
+      },
+      {
+        "code": "42802",
+        "size": "42"
+      },
+      {
+        "code": "42803",
+        "size": "43"
+      },
+      {
+        "code": "42804",
+        "size": "44"
+      },
+      {
+        "code": "42805",
+        "size": "45"
+      },
+      {
+        "code": "42806",
+        "size": "46"
+      },
+      {
+        "code": "42807",
+        "size": "47"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47"
+    ],
+    "colors": [
+      "Tan/Brown"
+    ],
+    "material": "Rough Suede (Crosta Scamosciata)",
+    "materialComposition": null,
+    "certifications": [
+      "S1",
+      "PL",
+      "FO",
+      "SR"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S1 PL",
+    "weightGrams": 520,
+    "fit": "Regular",
+    "toeCap": "Steel",
+    "midsole": null,
+    "sole": "PU/PU",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO"
+    ],
+    "isNew": false,
+    "pageRef": 72,
+    "sourceNames": [
+      "TYPHOON"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "walker",
+    "name": "Walker",
+    "img": "",
+    "description": "Low-cut S3L FO SR metal-free safety shoe with split suede leather upper. Completely metal-free construction.",
+    "features": [
+      "Split suede leather upper",
+      "Metal-free construction (Scarpe Metal Free)",
+      "EVA/NHP rubber sole",
+      "Relaxed fit",
+      "S3L certified"
+    ],
+    "overview": [
+      "The Walker is specifically designed as a metal-free safety shoe for environments where metal detectors are used or metallic contamination is a concern. All protective components are non-metallic.",
+      "Certified S3L FO SR to EN ISO 20345:2022, weighing 510g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "43600",
+        "size": "40"
+      },
+      {
+        "code": "43601",
+        "size": "41"
+      },
+      {
+        "code": "43602",
+        "size": "42"
+      },
+      {
+        "code": "43603",
+        "size": "43"
+      },
+      {
+        "code": "43604",
+        "size": "44"
+      },
+      {
+        "code": "43605",
+        "size": "45"
+      },
+      {
+        "code": "43606",
+        "size": "46"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46"
+    ],
+    "colors": [
+      "Dark Blue/Orange"
+    ],
+    "material": "Split Suede Leather",
+    "materialComposition": null,
+    "certifications": [
+      "S3L",
+      "FO",
+      "SR"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S3L",
+    "weightGrams": 510,
+    "fit": "Relaxed",
+    "toeCap": "Composite (EVA/NHP)",
+    "midsole": null,
+    "sole": "EVA/NHP Rubber",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "WRU"
+    ],
+    "isNew": false,
+    "metalFree": true,
+    "pageRef": 73,
+    "sourceNames": [
+      "WALKER"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "plat",
+    "name": "Plat",
+    "img": "",
+    "description": "S1PL ESD FO SR sandal-style safety shoe with split suede leather + mesh inserts upper.",
+    "features": [
+      "Split suede leather + mesh inserts upper",
+      "ESD antistatic",
+      "PU/PU sole",
+      "Relaxed fit",
+      "Open sandal-style design"
+    ],
+    "overview": [
+      "The Plat is a sandal-style safety shoe designed for hot work environments where ventilation is paramount. Its split suede leather and mesh upper maximises airflow while maintaining S1PL ESD protection.",
+      "Certified S1PL ESD FO SR to EN ISO 20345:2022, weighing 580g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "44089",
+        "size": "39"
+      },
+      {
+        "code": "44090",
+        "size": "40"
+      },
+      {
+        "code": "44091",
+        "size": "41"
+      },
+      {
+        "code": "44092",
+        "size": "42"
+      },
+      {
+        "code": "44093",
+        "size": "43"
+      },
+      {
+        "code": "44094",
+        "size": "44"
+      },
+      {
+        "code": "44095",
+        "size": "45"
+      },
+      {
+        "code": "44096",
+        "size": "46"
+      },
+      {
+        "code": "44097",
+        "size": "47"
+      }
+    ],
+    "sizes": [
+      "39",
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47"
+    ],
+    "colors": [
+      "Grey/Orange"
+    ],
+    "material": "Split Suede Leather + Mesh Inserts",
+    "materialComposition": null,
+    "certifications": [
+      "S1PL",
+      "ESD",
+      "FO",
+      "SR"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S1PL ESD",
+    "weightGrams": 580,
+    "fit": "Relaxed",
+    "toeCap": "Composite",
+    "midsole": null,
+    "sole": "PU/PU",
+    "gender": "Unisex",
+    "season": "Summer",
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "ESD"
+    ],
+    "isNew": false,
+    "pageRef": 73,
+    "sourceNames": [
+      "PLAT"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "spider-women",
+    "name": "Spider (Women)",
+    "img": "",
+    "description": "Women's S1 PL FO SR low-cut safety trainer with mesh + KPU upper in pink colourway. Sizes 36–42.",
+    "features": [
+      "Mesh + KPU upper with split leather inserts",
+      "Steel toecap",
+      "PU/PU sole",
+      "Regular fit",
+      "Women's sizing 36–42"
+    ],
+    "overview": [
+      "The women's Spider is designed specifically for female workers, featuring the same mesh + KPU construction as the unisex version but in a pink/black colourway and sized 36–42.",
+      "Certified S1 PL FO SR to EN ISO 20345:2022, weighing 575g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "44056",
+        "size": "36"
+      },
+      {
+        "code": "44057",
+        "size": "37"
+      },
+      {
+        "code": "44058",
+        "size": "38"
+      },
+      {
+        "code": "44059",
+        "size": "39"
+      },
+      {
+        "code": "44060",
+        "size": "40"
+      },
+      {
+        "code": "44061",
+        "size": "41"
+      },
+      {
+        "code": "44062",
+        "size": "42"
+      }
+    ],
+    "sizes": [
+      "36",
+      "37",
+      "38",
+      "39",
+      "40",
+      "41",
+      "42"
+    ],
+    "colors": [
+      "Black/Pink"
+    ],
+    "material": "Mesh + KPU with Split Leather Inserts",
+    "materialComposition": null,
+    "certifications": [
+      "S1",
+      "PL",
+      "FO",
+      "SR"
+    ],
+    "standards": [
+      "EN ISO 20345:2022"
+    ],
+    "safetyClass": "S1 PL",
+    "weightGrams": 575,
+    "fit": "Regular",
+    "toeCap": "Steel",
+    "midsole": null,
+    "sole": "PU/PU",
+    "gender": "Women",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO"
+    ],
+    "isNew": false,
+    "pageRef": 73,
+    "sourceNames": [
+      "SPIDER (Women)"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "emma",
+    "name": "Emma",
+    "img": "",
+    "description": "Women's S3 SRC low-cut safety shoe with split suede leather + inserts upper. Compact women's sizing 36–42.",
+    "features": [
+      "Split suede leather upper with inserts",
+      "Steel toecap",
+      "PU/PU sole",
+      "Regular fit",
+      "Women's sizing 36–42"
+    ],
+    "overview": [
+      "Emma is Kapriol's women's classic safety shoe with split suede leather construction. Its compact size range 36–42 ensures a proper fit for female workers.",
+      "Certified S3 SRC to EN ISO 20345:2011, weighing 400g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "43576",
+        "size": "36"
+      },
+      {
+        "code": "43577",
+        "size": "37"
+      },
+      {
+        "code": "43578",
+        "size": "38"
+      },
+      {
+        "code": "43579",
+        "size": "39"
+      },
+      {
+        "code": "43580",
+        "size": "40"
+      },
+      {
+        "code": "43581",
+        "size": "41"
+      },
+      {
+        "code": "43582",
+        "size": "42"
+      }
+    ],
+    "sizes": [
+      "36",
+      "37",
+      "38",
+      "39",
+      "40",
+      "41",
+      "42"
+    ],
+    "colors": [
+      "Grey/Blue"
+    ],
+    "material": "Split Suede Leather with Inserts",
+    "materialComposition": null,
+    "certifications": [
+      "S3",
+      "SRC"
+    ],
+    "standards": [
+      "EN ISO 20345:2011"
+    ],
+    "safetyClass": "S3",
+    "weightGrams": 400,
+    "fit": "Regular",
+    "toeCap": "Steel",
+    "midsole": null,
+    "sole": "PU/PU",
+    "gender": "Women",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "WRU"
+    ],
+    "isNew": false,
+    "pageRef": 73,
+    "sourceNames": [
+      "EMMA"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "alaska",
+    "name": "Alaska",
+    "img": "",
+    "description": "High-cut S3 SRC safety boot made from Crazy Horse leather. Classic boot construction.",
+    "features": [
+      "Crazy Horse leather upper",
+      "INOX steel toecap",
+      "PU/PU sole",
+      "Relaxed fit"
+    ],
+    "overview": [
+      "The Alaska is a classic high-cut safety boot using Crazy Horse leather — a treated pull-up leather that develops character with use. Suitable for construction and general heavy industry.",
+      "Certified S3 SRC to EN ISO 20345:2011, weighing 835g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "43630",
+        "size": "40"
+      },
+      {
+        "code": "43631",
+        "size": "41"
+      },
+      {
+        "code": "43632",
+        "size": "42"
+      },
+      {
+        "code": "43633",
+        "size": "43"
+      },
+      {
+        "code": "43634",
+        "size": "44"
+      },
+      {
+        "code": "43635",
+        "size": "45"
+      },
+      {
+        "code": "43636",
+        "size": "46"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46"
+    ],
+    "colors": [
+      "Brown (Crazy Horse)"
+    ],
+    "material": "Crazy Horse Leather",
+    "materialComposition": null,
+    "certifications": [
+      "S3",
+      "SRC"
+    ],
+    "standards": [
+      "EN ISO 20345:2011"
+    ],
+    "safetyClass": "S3",
+    "weightGrams": 835,
+    "fit": "Relaxed",
+    "toeCap": "Steel (INOX)",
+    "midsole": null,
+    "sole": "PU/PU",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "WRU"
+    ],
+    "isNew": false,
+    "pageRef": 74,
+    "sourceNames": [
+      "ALASKA"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "ontario-winter",
+    "name": "Ontario Winter",
+    "img": "",
+    "description": "Tall winter safety boot with coated split leather upper. S3 SRC for wet and cold outdoor environments.",
+    "features": [
+      "Coated split leather upper",
+      "INOX steel toecap",
+      "PU/PU sole",
+      "Tall boot construction",
+      "Relaxed fit",
+      "Winter-suitable"
+    ],
+    "overview": [
+      "The Ontario Winter is a tall-shaft safety boot built for cold and wet outdoor environments. The coated split leather upper resists water penetration while the tall shaft protects the ankle and lower leg.",
+      "Certified S3 SRC to EN ISO 20345:2011, weighing 830g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "41910",
+        "size": "40"
+      },
+      {
+        "code": "41911",
+        "size": "41"
+      },
+      {
+        "code": "41912",
+        "size": "42"
+      },
+      {
+        "code": "41913",
+        "size": "43"
+      },
+      {
+        "code": "41914",
+        "size": "44"
+      },
+      {
+        "code": "41915",
+        "size": "45"
+      },
+      {
+        "code": "41916",
+        "size": "46"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46"
+    ],
+    "colors": [
+      "Brown/Tan"
+    ],
+    "material": "Coated Split Leather",
+    "materialComposition": null,
+    "certifications": [
+      "S3",
+      "SRC"
+    ],
+    "standards": [
+      "EN ISO 20345:2011"
+    ],
+    "safetyClass": "S3",
+    "weightGrams": 830,
+    "fit": "Relaxed",
+    "toeCap": "Steel (INOX)",
+    "midsole": null,
+    "sole": "PU/PU",
+    "gender": "Unisex",
+    "season": "Winter",
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "WRU"
+    ],
+    "isNew": false,
+    "pageRef": 74,
+    "sourceNames": [
+      "ONTARIO WINTER"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "jaguar",
+    "name": "Jaguar",
+    "img": "",
+    "description": "Tall S5 CI SRC safety rubber boot with polyurethane upper. CI cold insulation for outdoor winter use.",
+    "features": [
+      "Polyurethane upper",
+      "Cold insulation (CI)",
+      "INOX steel toecap",
+      "PU sole",
+      "Relaxed fit",
+      "Long lasting construction"
+    ],
+    "overview": [
+      "The Jaguar is a tall safety boot moulded entirely in polyurethane, offering excellent chemical and water resistance. CI insulation keeps feet warm in cold environments.",
+      "Certified S5 CI SRC to EN ISO 20345:2011, weighing 1040g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "43860",
+        "size": "40"
+      },
+      {
+        "code": "43861",
+        "size": "41"
+      },
+      {
+        "code": "43862",
+        "size": "42"
+      },
+      {
+        "code": "43863",
+        "size": "43"
+      },
+      {
+        "code": "43864",
+        "size": "44"
+      },
+      {
+        "code": "43865",
+        "size": "45"
+      },
+      {
+        "code": "43866",
+        "size": "46"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46"
+    ],
+    "colors": [
+      "Black/Orange"
+    ],
+    "material": "Polyurethane",
+    "materialComposition": null,
+    "certifications": [
+      "S5",
+      "CI",
+      "SRC"
+    ],
+    "standards": [
+      "EN ISO 20345:2011"
+    ],
+    "safetyClass": "S5",
+    "weightGrams": 1040,
+    "fit": "Relaxed",
+    "toeCap": "Steel (INOX)",
+    "midsole": null,
+    "sole": "PU",
+    "gender": "Unisex",
+    "season": "Winter",
+    "features_pictograms": [
+      "Long-lasting",
+      "Comfort",
+      "CI",
+      "Light"
+    ],
+    "isNew": false,
+    "pageRef": 74,
+    "sourceNames": [
+      "JAGUAR"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "rigger",
+    "name": "Rigger",
+    "img": "",
+    "description": "Tall S5 SRC safety rubber boot with PVC upper. Heavy-duty wet environment protection.",
+    "features": [
+      "PVC upper",
+      "INOX steel toecap",
+      "PVC sole",
+      "Relaxed fit"
+    ],
+    "overview": [
+      "The Rigger is a traditional tall PVC safety boot for agriculture, construction, and utilities. Its PVC construction is fully waterproof and easy to clean.",
+      "Certified S5 SRC to EN ISO 20345:2011, weighing 1300g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "42130",
+        "size": "40"
+      },
+      {
+        "code": "42131",
+        "size": "41"
+      },
+      {
+        "code": "42132",
+        "size": "42"
+      },
+      {
+        "code": "42133",
+        "size": "43"
+      },
+      {
+        "code": "42134",
+        "size": "44"
+      },
+      {
+        "code": "42135",
+        "size": "45"
+      },
+      {
+        "code": "42136",
+        "size": "46"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46"
+    ],
+    "colors": [
+      "Brown/Tan"
+    ],
+    "material": "PVC",
+    "materialComposition": null,
+    "certifications": [
+      "S5",
+      "SRC"
+    ],
+    "standards": [
+      "EN ISO 20345:2011"
+    ],
+    "safetyClass": "S5",
+    "weightGrams": 1300,
+    "fit": "Relaxed",
+    "toeCap": "Steel (INOX)",
+    "midsole": null,
+    "sole": "PVC",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "WRU"
+    ],
+    "isNew": false,
+    "pageRef": 74,
+    "sourceNames": [
+      "RIGGER"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "panther",
+    "name": "Panther",
+    "img": "",
+    "description": "Tall S5 SRA safety rubber boot with PVC upper. Available in green and yellow colourways.",
+    "features": [
+      "PVC upper",
+      "INOX steel toecap",
+      "PVC sole",
+      "Relaxed fit",
+      "Sizes 39–47"
+    ],
+    "overview": [
+      "The Panther is a versatile PVC safety boot for agriculture and outdoor work. Available in classic green and high-visibility yellow. Sizes 39–47.",
+      "Certified S5 SRA to EN ISO 20345:2011, weighing 1120g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "42009",
+        "size": "39"
+      },
+      {
+        "code": "42010",
+        "size": "40"
+      },
+      {
+        "code": "42011",
+        "size": "41"
+      },
+      {
+        "code": "42012",
+        "size": "42"
+      },
+      {
+        "code": "42013",
+        "size": "43"
+      },
+      {
+        "code": "42014",
+        "size": "44"
+      },
+      {
+        "code": "42015",
+        "size": "45"
+      },
+      {
+        "code": "42016",
+        "size": "46"
+      },
+      {
+        "code": "42017",
+        "size": "47"
+      },
+      {
+        "code": "42000",
+        "size": "40"
+      },
+      {
+        "code": "42001",
+        "size": "41"
+      },
+      {
+        "code": "42002",
+        "size": "42"
+      },
+      {
+        "code": "42003",
+        "size": "43"
+      },
+      {
+        "code": "42004",
+        "size": "44"
+      },
+      {
+        "code": "42005",
+        "size": "45"
+      },
+      {
+        "code": "42006",
+        "size": "46"
+      }
+    ],
+    "sizes": [
+      "39",
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47"
+    ],
+    "colors": [
+      "Green",
+      "Yellow"
+    ],
+    "material": "PVC",
+    "materialComposition": null,
+    "certifications": [
+      "S5",
+      "SRA"
+    ],
+    "standards": [
+      "EN ISO 20345:2011"
+    ],
+    "safetyClass": "S5",
+    "weightGrams": 1120,
+    "fit": "Relaxed",
+    "toeCap": "Steel (INOX)",
+    "midsole": null,
+    "sole": "PVC",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "WRU"
+    ],
+    "isNew": false,
+    "pageRef": 74,
+    "sourceNames": [
+      "PANTHER"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "hunter",
+    "name": "Hunter",
+    "img": "",
+    "description": "Tall occupational rubber boot (no safety toecap) with PVC upper. 0B FO SRL for agriculture and outdoor use.",
+    "features": [
+      "PVC upper",
+      "No safety toecap (occupational)",
+      "PVC sole",
+      "Relaxed fit",
+      "Sizes 36–47"
+    ],
+    "overview": [
+      "The Hunter is a non-safety tall rubber boot for occupational use in agriculture, horticulture, and outdoor environments where a safety toecap is not required. PVC construction is fully waterproof.",
+      "Certified 0B FO SRL to EN ISO 20347:2012, weighing 765g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "42028",
+        "size": "36"
+      },
+      {
+        "code": "42029",
+        "size": "37"
+      },
+      {
+        "code": "42018",
+        "size": "38"
+      },
+      {
+        "code": "42019",
+        "size": "39"
+      },
+      {
+        "code": "42020",
+        "size": "40"
+      },
+      {
+        "code": "42021",
+        "size": "41"
+      },
+      {
+        "code": "42022",
+        "size": "42"
+      },
+      {
+        "code": "42023",
+        "size": "43"
+      },
+      {
+        "code": "42024",
+        "size": "44"
+      },
+      {
+        "code": "42025",
+        "size": "45"
+      },
+      {
+        "code": "42026",
+        "size": "46"
+      },
+      {
+        "code": "42027",
+        "size": "47"
+      }
+    ],
+    "sizes": [
+      "36",
+      "37",
+      "38",
+      "39",
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47"
+    ],
+    "colors": [
+      "Green"
+    ],
+    "material": "PVC",
+    "materialComposition": null,
+    "certifications": [
+      "0B",
+      "FO",
+      "SRL"
+    ],
+    "standards": [
+      "EN ISO 20347:2012"
+    ],
+    "safetyClass": "0B",
+    "weightGrams": 765,
+    "fit": "Relaxed",
+    "toeCap": null,
+    "midsole": null,
+    "sole": "PVC",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "FO",
+      "WRU"
+    ],
+    "isNew": false,
+    "pageRef": 74,
+    "sourceNames": [
+      "HUNTER"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "dart-01",
+    "name": "Dart 01",
+    "img": "",
+    "description": "Low-cut occupational safety trainer (01 FO SRC) with sturdy synthetic fabric + air mesh upper.",
+    "features": [
+      "Sturdy synthetic fabric + air mesh upper",
+      "PU/PU sole",
+      "Regular fit",
+      "01 FO SRC occupational rating"
+    ],
+    "overview": [
+      "The Dart 01 is a lightweight occupational trainer for environments where a safety toecap is not required. Available in two colourways (black/lime and orange/black).",
+      "Certified 01 FO SRC to EN ISO 20345:2011, weighing 500g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "43940",
+        "size": "40"
+      },
+      {
+        "code": "43941",
+        "size": "41"
+      },
+      {
+        "code": "43942",
+        "size": "42"
+      },
+      {
+        "code": "43943",
+        "size": "43"
+      },
+      {
+        "code": "43944",
+        "size": "44"
+      },
+      {
+        "code": "43945",
+        "size": "45"
+      },
+      {
+        "code": "43946",
+        "size": "46"
+      },
+      {
+        "code": "43947",
+        "size": "47"
+      },
+      {
+        "code": "43950",
+        "size": "40"
+      },
+      {
+        "code": "43951",
+        "size": "41"
+      },
+      {
+        "code": "43952",
+        "size": "42"
+      },
+      {
+        "code": "43953",
+        "size": "43"
+      },
+      {
+        "code": "43954",
+        "size": "44"
+      },
+      {
+        "code": "43955",
+        "size": "45"
+      },
+      {
+        "code": "43956",
+        "size": "46"
+      },
+      {
+        "code": "43957",
+        "size": "47"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47"
+    ],
+    "colors": [
+      "Black/Lime",
+      "Orange/Black"
+    ],
+    "material": "Sturdy Synthetic Fabric + Air Mesh",
+    "materialComposition": null,
+    "certifications": [
+      "01",
+      "FO",
+      "SRC"
+    ],
+    "standards": [
+      "EN ISO 20345:2011"
+    ],
+    "safetyClass": "01 FO",
+    "weightGrams": 500,
+    "fit": "Regular",
+    "toeCap": null,
+    "midsole": null,
+    "sole": "PU/PU",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO"
+    ],
+    "isNew": false,
+    "pageRef": 75,
+    "sourceNames": [
+      "DART 01"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "dart-02",
+    "name": "Dart 02",
+    "img": "",
+    "description": "Mid-cut occupational safety trainer (02 FO SRC) with sturdy synthetic fabric + air mesh upper.",
+    "features": [
+      "Sturdy synthetic fabric + air mesh upper",
+      "PU/PU sole",
+      "Regular fit",
+      "Mid-cut design",
+      "WRU water-resistant upper"
+    ],
+    "overview": [
+      "The Dart 02 is the mid-cut version of the Dart occupational range, adding ankle support for rougher terrain. Available in two colourways.",
+      "Certified 02 FO SRC to EN ISO 20345:2011, weighing 500g."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "43980",
+        "size": "40"
+      },
+      {
+        "code": "43981",
+        "size": "41"
+      },
+      {
+        "code": "43982",
+        "size": "42"
+      },
+      {
+        "code": "43983",
+        "size": "43"
+      },
+      {
+        "code": "43984",
+        "size": "44"
+      },
+      {
+        "code": "43985",
+        "size": "45"
+      },
+      {
+        "code": "43986",
+        "size": "46"
+      },
+      {
+        "code": "43987",
+        "size": "47"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47"
+    ],
+    "colors": [
+      "Black/Orange",
+      "Black/Black"
+    ],
+    "material": "Sturdy Synthetic Fabric + Air Mesh",
+    "materialComposition": null,
+    "certifications": [
+      "02",
+      "FO",
+      "SRC"
+    ],
+    "standards": [
+      "EN ISO 20345:2011"
+    ],
+    "safetyClass": "02 FO",
+    "weightGrams": 500,
+    "fit": "Regular",
+    "toeCap": null,
+    "midsole": null,
+    "sole": "PU/PU",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "WRU"
+    ],
+    "isNew": false,
+    "pageRef": 75,
+    "sourceNames": [
+      "DART 02"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "makalu-urban",
+    "name": "Makalu Urban",
+    "img": "",
+    "description": "Urban trekking shoe with nubuck upper. Non-safety occupational use.",
+    "features": [
+      "Nubuck upper",
+      "EVA/rubber sole",
+      "Regular fit",
+      "CI rated",
+      "WRU water-resistant upper"
+    ],
+    "overview": [
+      "The Makalu Urban is the non-safety version of the Makalu trekking boot, designed for outdoor and urban use. Nubuck upper with a durable rubber sole.",
+      "Weighs 745g. Not a safety shoe — no protective toecap."
+    ],
+    "productLine": "Urban",
+    "articleCodes": [
+      {
+        "code": "42890",
+        "size": "40"
+      },
+      {
+        "code": "42891",
+        "size": "41"
+      },
+      {
+        "code": "42892",
+        "size": "42"
+      },
+      {
+        "code": "42893",
+        "size": "43"
+      },
+      {
+        "code": "42894",
+        "size": "44"
+      },
+      {
+        "code": "42895",
+        "size": "45"
+      },
+      {
+        "code": "42896",
+        "size": "46"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46"
+    ],
+    "colors": [
+      "Brown/Tan"
+    ],
+    "material": "Nubuck",
+    "materialComposition": null,
+    "certifications": [],
+    "standards": [],
+    "safetyClass": null,
+    "weightGrams": 745,
+    "fit": "Regular",
+    "toeCap": null,
+    "midsole": null,
+    "sole": "EVA/Rubber",
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [
+      "Antistatic",
+      "FO",
+      "WRU",
+      "CI"
+    ],
+    "isNew": false,
+    "pageRef": 75,
+    "sourceNames": [
+      "MAKALU (Urban)"
+    ]
+  },
+  {
+    "category": "footwear",
+    "slug": "running",
+    "name": "Running",
+    "img": "",
+    "description": "Lightweight urban running/leisure shoe with mesh upper. Non-safety.",
+    "features": [
+      "Mesh upper",
+      "EVA sole",
+      "Regular fit",
+      "Lightweight construction"
+    ],
+    "overview": [
+      "The Running is a lightweight leisure shoe in the Kapriol Urban line. Pure mesh upper for maximum breathability, EVA sole for cushioning.",
+      "Non-safety shoe. Weighs 340g."
+    ],
+    "productLine": "Urban",
+    "articleCodes": [
+      {
+        "code": "43550",
+        "size": "40"
+      },
+      {
+        "code": "43551",
+        "size": "41"
+      },
+      {
+        "code": "43552",
+        "size": "42"
+      },
+      {
+        "code": "43553",
+        "size": "43"
+      },
+      {
+        "code": "43554",
+        "size": "44"
+      },
+      {
+        "code": "43555",
+        "size": "45"
+      },
+      {
+        "code": "43556",
+        "size": "46"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46"
+    ],
+    "colors": [
+      "Black/Green"
+    ],
+    "material": "Mesh",
+    "materialComposition": null,
+    "certifications": [],
+    "standards": [],
+    "safetyClass": null,
+    "weightGrams": 340,
+    "fit": "Regular",
+    "toeCap": null,
+    "midsole": null,
+    "sole": "EVA",
+    "gender": "Unisex",
+    "season": "Summer",
+    "features_pictograms": [],
+    "isNew": false,
+    "pageRef": 75,
+    "sourceNames": [
+      "RUNNING (Urban)"
+    ]
+  }
+]

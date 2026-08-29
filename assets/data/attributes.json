@@ -1,0 +1,76 @@
+{
+    "performance": [
+        {
+            "code": "FO",
+            "name": "Fuel-oil resistant outsole",
+            "img": "assets/img/certs/fo.png"
+        },
+        {
+            "code": "HRO",
+            "name": "Heat-resistant outsole (300°C contact)",
+            "img": "assets/img/certs/hro.png"
+        },
+        {
+            "code": "CI",
+            "name": "Cold insulation of the sole complex",
+            "img": "assets/img/certs/ci.png"
+        },
+        {
+            "code": "HI",
+            "name": "Heat insulation of the sole complex",
+            "img": "assets/img/certs/hi.png"
+        },
+        {
+            "code": "WR",
+            "name": "Water-resistant footwear",
+            "img": "assets/img/certs/wr.png"
+        },
+        {
+            "code": "SR",
+            "name": "Slip resistant",
+            "img": "assets/img/certs/sr.png"
+        },
+        {
+            "code": "P",
+            "name": "Penetration resistance (steel midsole)",
+            "img": ""
+        },
+        {
+            "code": "PL",
+            "name": "Penetration resistance (non-metallic, 4.5 mm nail)",
+            "img": ""
+        },
+        {
+            "code": "ESD",
+            "name": "Electrostatic dissipative",
+            "img": ""
+        }
+    ],
+    "safetyClass": [
+        {
+            "code": "O1",
+            "name": "Occupational class O1"
+        },
+        {
+            "code": "O2",
+            "name": "Occupational class O2"
+        },
+        {
+            "code": "S1",
+            "name": "Protection class S1"
+        },
+        {
+            "code": "S1P",
+            "name": "Protection class S1P"
+        },
+        {
+            "code": "S3",
+            "name": "Protection class S3"
+        },
+        {
+            "code": "S5",
+            "name": "Protection class S5"
+        }
+    ],
+    "technologies": []
+}

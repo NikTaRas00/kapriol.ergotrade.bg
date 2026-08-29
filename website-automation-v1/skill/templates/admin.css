@@ -1,0 +1,60 @@
+/* Admin dashboard — minimal, functional starter styles. Restyle per project. */
+:root {
+  --ink: #14110f; --muted: #6a6f76; --line: #d9dbde;
+  --surface: #ffffff; --bg: #f4f5f6; --accent: #e8000d; --accent-ink: #c10010;
+}
+* { box-sizing: border-box; }
+body.admin { margin: 0; font: 15px/1.5 system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color: var(--ink); background: var(--bg); }
+
+/* Auth card */
+.admin--auth { display: grid; place-items: center; min-height: 100vh; }
+.auth-card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 32px; width: min(360px, 92vw); }
+.auth-card__title { margin: 0 0 16px; font-size: 1.3rem; }
+
+/* Header + tabs */
+.admin-head { display: flex; align-items: center; gap: 16px; padding: 12px 20px; background: var(--surface); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 5; }
+.admin-head__brand { font-size: 1.05rem; }
+.admin-tabs { display: flex; gap: 4px; margin-left: 8px; }
+.admin-tab { border: 1px solid transparent; background: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; color: var(--muted); font: inherit; }
+.admin-tab.is-active { color: var(--ink); background: var(--bg); border-color: var(--line); }
+.admin-logout { margin-left: auto; color: var(--accent-ink); text-decoration: none; }
+
+/* Panels */
+.admin-main { padding: 20px; max-width: 1100px; margin: 0 auto; }
+.admin-panel { display: none; }
+.admin-panel.is-active { display: block; }
+.admin-panel[hidden] { display: none; }
+.admin-toolbar { display: flex; gap: 10px; margin-bottom: 14px; }
+.admin-split { display: grid; grid-template-columns: 280px 1fr; gap: 20px; align-items: start; }
+@media (max-width: 720px) { .admin-split { grid-template-columns: 1fr; } }
+
+/* Item list */
+.admin-list { list-style: none; margin: 0; padding: 0; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); max-height: 70vh; overflow: auto; }
+.admin-list__row { padding: 10px 12px; border-bottom: 1px solid var(--line); cursor: pointer; }
+.admin-list__row:hover { background: var(--bg); }
+.admin-list__row.is-hidden { color: var(--muted); font-style: italic; }
+
+/* Forms */
+.admin-form { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 18px; }
+.admin-form[hidden] { display: none; }
+.field { margin-bottom: 12px; display: block; }
+.field label { display: block; font-weight: 600; margin-bottom: 4px; }
+.field input, .field textarea, .admin-toolbar input { width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 6px; font: inherit; }
+.field .chk, .field input[type="checkbox"] { width: auto; font-weight: 400; }
+.admin-form__actions { display: flex; gap: 10px; margin-top: 8px; }
+#itemImagePreview { max-width: 160px; margin-top: 8px; display: block; border-radius: 6px; }
+#itemImagePreview:not([src]), #itemImagePreview[src=""] { display: none; }
+
+/* Buttons + status */
+.btn { border: 1px solid var(--accent); background: var(--accent); color: #fff; padding: 9px 16px; border-radius: 6px; cursor: pointer; font: inherit; }
+.btn--ghost { background: none; color: var(--accent-ink); }
+.btn--block { width: 100%; }
+.form-status { min-height: 1.2em; margin: 10px 0 0; color: var(--muted); }
+.form-status.is-error { color: var(--accent-ink); }
+
+/* Enquiries */
+.admin-enquiries { list-style: none; margin: 0; padding: 0; }
+.admin-enquiries__row { padding: 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); margin-bottom: 10px; }
+
+fieldset { border: 1px solid var(--line); border-radius: 8px; margin: 0 0 16px; padding: 14px; }
+legend { padding: 0 6px; font-weight: 600; }

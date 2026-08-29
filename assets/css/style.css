@@ -1,0 +1,1560 @@
+/* ============================================================================
+   Kapriol Bulgaria - test1 redesign
+   Industrial / utilitarian language: cream surface, near-black ink,
+   safety orange accent, hazard-yellow motif. Flat, no shadows, 2px radius.
+
+   Contrast notes (all measured against the palette, not guessed):
+     ink   #14110f on cream  17.3:1
+     body  #463f38 on cream   9.4:1
+     muted #6d655c on cream   5.2:1   <- the AA-safe secondary text colour
+     #8a8177 on cream is only 3.5:1, so it is used on DARK panels only (5.2:1)
+     brand orange #E35D15 on cream is 3.3:1  -> large display text / fills only
+     --orange-ink #B4460A on cream 5.0:1     -> orange as small text
+     white on --orange-cta #C9500F 4.5:1     -> solid orange buttons
+     yellow #F4B400 is legible on dark only (10.3:1); never on cream
+   ========================================================================== */
+
+/* ------------------------------------------------------------------ Fonts -- */
+/* Self-hosted (no Google CDN) so the site stays GDPR-clean, matching the
+   convention already used by the main site. latin-ext is unicode-range gated
+   so English visitors download the latin subsets only. */
+@font-face {
+  font-family: "Barlow Condensed"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("../fonts/barlow-condensed-700-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Barlow Condensed"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("../fonts/barlow-condensed-700-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Barlow Condensed"; font-style: normal; font-weight: 800; font-display: swap;
+  src: url("../fonts/barlow-condensed-800-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Barlow Condensed"; font-style: normal; font-weight: 800; font-display: swap;
+  src: url("../fonts/barlow-condensed-800-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Barlow Condensed"; font-style: normal; font-weight: 900; font-display: swap;
+  src: url("../fonts/barlow-condensed-900-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Barlow Condensed"; font-style: normal; font-weight: 900; font-display: swap;
+  src: url("../fonts/barlow-condensed-900-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Inter"; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url("../fonts/inter-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter"; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url("../fonts/inter-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* Clash Display (Fontshare, ITF Free Font License) — the display face. Single
+   Latin woff2 per weight; the site is lang=en, so no latin-ext/Cyrillic split. */
+@font-face {
+  font-family: "Clash Display"; font-style: normal; font-weight: 500; font-display: swap;
+  src: url("../fonts/clash-display-500.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Clash Display"; font-style: normal; font-weight: 600; font-display: swap;
+  src: url("../fonts/clash-display-600.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Clash Display"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("../fonts/clash-display-700.woff2") format("woff2");
+}
+/* Saira Stencil One (Google Fonts, OFL) — stencil accent, wordmark only. */
+@font-face {
+  font-family: "Saira Stencil One"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("../fonts/saira-stencil-latin.woff2") format("woff2");
+}
+
+/* ----------------------------------------------------------------- Tokens -- */
+:root {
+  --bg: #F7F4EF;
+  --surface: #ffffff;
+  --surface-2: #f0ece4;
+
+  --ink: #14110f;
+  --ink-deep: #0a0806;
+  --body: #463f38;
+  --muted: #6d655c;        /* AA secondary text on cream */
+  --muted-soft: #8a8177;   /* secondary text on DARK panels only */
+
+  --line: #e8e3dc;
+  --line-strong: #d8d2c8;
+  --line-dark: #241f1a;
+
+  /* Text ON the dark panels (hero, rotator, trust strip, footer, proshop).
+     Kept as its own pair rather than reusing --line, which happens to share a
+     value but means "hairline" and would drift the moment either one moved. */
+  --on-dark: #e8e3dc;      /* 14.6:1 on --ink: body copy over dark */
+  --on-dark-soft: #cfc9c2; /* 11.4:1 on --ink: secondary copy over dark */
+
+  --orange: #E35D15;       /* brand accent: fills, borders, display text */
+  --orange-cta: #C9500F;   /* solid button fill so a white label passes AA */
+  --orange-cta-hover: #a93d07;
+  --orange-ink: #B4460A;   /* orange as small text on cream */
+  --orange-tint: #fcece2;  /* ~orange 10% on white: soft hover fill */
+  --yellow: #F4B400;       /* hazard motif + accents on dark only */
+  --ink-hover: #2b2521;    /* the dark button, lifted */
+  --ph-ink: #a1978a;       /* the KAPRIOL watermark on a photo-less card */
+  --sk-sheen: #f2eee8;     /* the pass of light across a loading skeleton */
+
+  /* The one recurring brand device. */
+  --hazard: repeating-linear-gradient(135deg, var(--ink) 0 8px, var(--yellow) 8px 16px);
+
+  --r: 2px;                /* single radius for the whole page: sharp */
+  --wrap: 1320px;
+  --pad: clamp(20px, 4vw, 40px);
+  --sec: clamp(56px, 8vw, 90px);
+
+  --font-display: "Clash Display", "Barlow Condensed", "Arial Narrow", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-stencil: "Saira Stencil One", "Clash Display", "Barlow Condensed", Impact, sans-serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  /* Entering elements decelerate (ease-out); things moving across the screen
+     accelerate and settle (ease-in-out). No bounce or elastic anywhere: on a
+     tool brand it reads as a toy. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-move: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --product-ratio: 4 / 3;
+}
+
+/* ------------------------------------------------------------------- Base -- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img, svg, video { display: block; max-width: 100%; }
+
+a { color: var(--orange-ink); text-decoration: none; }
+
+::selection { background: var(--orange); color: #fff; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1.02;
+  letter-spacing: 0.2px;
+  text-wrap: balance;
+}
+
+p { margin: 0; text-wrap: pretty; }
+
+/* Visible keyboard focus everywhere. */
+:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 2px;
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding-inline: var(--pad);
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* Skip link: visible only when focused. */
+.skip {
+  position: absolute; left: 8px; top: -60px; z-index: 200;
+  background: var(--ink); color: #fff; padding: 12px 18px;
+  font: 700 14px/1 var(--font-sans); border-radius: var(--r);
+  transition: top 160ms var(--ease-out);
+}
+.skip:focus { top: 8px; color: #fff; }
+
+/* The brand device. */
+.hazard {
+  width: 181px; height: 10px;
+  background: var(--hazard);
+  flex: none;
+}
+.hazard--sm { width: 120px; height: 8px; }
+
+/* ----------------------------------------------------------------- Header -- */
+.head {
+  position: sticky; top: 0; z-index: 60;
+  background: var(--surface);
+  border-bottom: 3px solid var(--ink);
+}
+.head__inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px; padding-block: 14px;
+  min-height: 62px;
+}
+.brand { display: flex; align-items: baseline; gap: 10px; flex: none; }
+.brand__mark {
+  font-family: var(--font-stencil); font-weight: 400; font-size: 30px;
+  letter-spacing: 1px; color: var(--ink); line-height: 1;
+}
+.brand__mark i { color: var(--orange); font-style: normal; }
+.brand__tag {
+  font-size: 11px; font-weight: 700; letter-spacing: 2px;
+  color: var(--muted); text-transform: uppercase;
+}
+
+.nav { display: flex; gap: 26px; align-items: center; }
+.nav a {
+  font-size: 14.5px; font-weight: 600; color: var(--ink);
+  padding-block: 6px; position: relative;
+}
+.nav a::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+  background: var(--orange);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 200ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .nav a:hover::after { transform: scaleX(1); }
+}
+.nav a[aria-current="true"] { color: var(--orange-ink); }
+.nav a[aria-current="true"]::after { transform: scaleX(1); }
+
+.head__actions { display: flex; align-items: center; gap: 12px; flex: none; }
+
+/* Hamburger: shown below the breakpoint where the 6 category links stop
+   fitting on one line. */
+.burger {
+  display: none;
+  width: 44px; height: 44px; padding: 0;
+  background: none; border: 2px solid var(--ink); border-radius: var(--r);
+  cursor: pointer; align-items: center; justify-content: center;
+  transition: transform 160ms var(--ease-out);
+}
+.burger:active { transform: scale(0.94); }
+.burger span {
+  display: block; width: 20px; height: 2px; background: var(--ink); position: relative;
+  transition: background-color 120ms var(--ease-out) 90ms;
+}
+.burger span::before, .burger span::after {
+  content: ""; position: absolute; left: 0; width: 20px; height: 2px; background: var(--ink);
+  transition: transform 260ms var(--ease-out-quint);
+}
+.burger span::before { top: -6px; }
+.burger span::after { top: 6px; }
+
+/* Open state: the two outer bars close into an X and the middle one goes.
+   The button already flips aria-expanded; without this the icon says "open"
+   while the menu is open, which is the state-indication gap. */
+.burger[aria-expanded="true"] span { background: transparent; transition-delay: 0ms; }
+.burger[aria-expanded="true"] span::before { transform: translateY(6px) rotate(45deg); }
+.burger[aria-expanded="true"] span::after { transform: translateY(-6px) rotate(-45deg); }
+
+/* ---------------------------------------------------------------- Buttons -- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font: 700 14px/1 var(--font-sans);
+  padding: 13px 24px; border-radius: var(--r);
+  border: 2px solid transparent; cursor: pointer;
+  white-space: nowrap;                    /* labels never wrap */
+  transition: transform 160ms var(--ease-out), background-color 200ms ease, color 200ms ease, border-color 200ms ease;
+}
+.btn:active { transform: scale(0.97); }
+.btn:disabled { cursor: default; }
+
+/* Busy state. A disabled button plus a status line is enough information but
+   reads as "nothing happened"; the ring is the acknowledgement that the click
+   landed. The label stays put so the button does not resize mid-submit. */
+.btn__spin {
+  width: 15px; height: 15px; flex: none; border-radius: 50%;
+  border: 2px solid currentColor; border-top-color: transparent;
+  animation: spin 720ms linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  /* No spin, but the button must still read as busy: a steady ring does that. */
+  .btn__spin { animation: none; border-top-color: currentColor; opacity: 0.55; }
+}
+
+.btn--primary { background: var(--orange-cta); border-color: var(--orange-cta); color: #fff; }
+.btn--dark { background: var(--ink); border-color: var(--ink); color: #fff; }
+.btn--ghost { background: transparent; border-color: var(--ink); color: var(--ink); }
+.btn--lg { font-size: 15px; padding: 16px 30px; }
+.btn--block { width: 100%; }
+
+@media (hover: hover) and (pointer: fine) {
+  .btn--primary:hover { background: var(--orange-cta-hover); border-color: var(--orange-cta-hover); }
+  .btn--dark:hover { background: var(--ink-hover); border-color: var(--ink-hover); }
+  .btn--ghost:hover { background: var(--ink); color: #fff; }
+}
+
+/* --------------------------------------------------------------- Sections -- */
+.sec { padding-block: var(--sec); }
+.sec--tight { padding-block: clamp(40px, 5vw, 60px); }
+.sec--white { background: var(--surface); }
+
+.sec__head { margin-bottom: clamp(28px, 4vw, 44px); }
+.sec__title { font-size: clamp(1.75rem, 3.6vw, 2.5rem); font-weight: 800; color: var(--ink); }
+.sec__lead {
+  margin-top: 12px; color: var(--body); font-size: 1rem; line-height: 1.7; max-width: 62ch;
+}
+/* The block-heading tier: sub-sections inside a page that already has an h1
+   (product detail, contact). It was five copies of the same inline style. */
+.sec__title--sub { font-size: 1.5rem; margin-bottom: 18px; }
+.eyebrow {
+  font-size: 12.5px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--orange-ink); margin-bottom: 10px;
+}
+.eyebrow--on-dark { color: var(--orange); }
+
+/* ------------------------------------------------------------------- Hero -- */
+.hero {
+  position: relative; overflow: hidden;
+  background: var(--ink-deep);
+  min-height: clamp(360px, 54vh, 480px);
+  display: flex; align-items: center;
+}
+.hero__media { position: absolute; inset: 0 0 0 32%; }
+.hero__media img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 55%;
+  /* The source footage is shot on a light studio sweep. Darkening it lets the
+     photograph sit inside the near-black hero panel without a seam. */
+  filter: brightness(0.58) contrast(1.14) saturate(0.9);
+}
+.hero__scrim {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(100deg,
+    rgba(10, 8, 6, 1) 0%, rgba(10, 8, 6, 1) 38%,
+    rgba(10, 8, 6, 0.62) 58%, rgba(10, 8, 6, 0.2) 100%);
+}
+.hero__inner { position: relative; padding-block: clamp(44px, 6vw, 64px); }
+.hero__text { max-width: 640px; }
+.hero h1 {
+  font-size: clamp(2.3rem, 6vw, 3.8rem); font-weight: 900;
+  color: #fff; margin: 14px 0 12px; line-height: 0.98;
+}
+.hero__sub {
+  font-size: clamp(1rem, 1.6vw, 1.32rem); line-height: 1.5;
+  color: var(--on-dark); max-width: 30ch;
+}
+
+/* --------------------------------------------------------------- Rotator -- */
+.rotator { position: relative; background: var(--ink); overflow: hidden; }
+.rotator__track {
+  display: flex; transition: transform 700ms var(--ease-move);
+}
+.rotator__slide {
+  position: relative; flex: 0 0 100%; min-width: 0;
+  min-height: clamp(280px, 34vw, 300px);
+  display: flex; align-items: center;
+}
+.rotator__media { position: absolute; inset: 0; }
+.rotator__media img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; filter: brightness(0.6) contrast(1.1) saturate(0.9);
+}
+/* Same reasoning as .cat__scrim. The orange eyebrow is small text, so the
+   scrim has to still be near-opaque at the right edge of the copy column
+   (~50% across) instead of already half-faded: at 0.62 alpha over the
+   light studio photo that eyebrow composites to 3.5:1. */
+.rotator__scrim {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(100deg,
+    rgba(10, 8, 6, 0.97) 0%, rgba(10, 8, 6, 0.94) 50%,
+    rgba(10, 8, 6, 0.45) 72%, rgba(10, 8, 6, 0.12) 100%);
+}
+.rotator__body { position: relative; padding-block: 34px; max-width: 620px; }
+.rotator__title {
+  font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; color: #fff; margin: 8px 0 10px;
+}
+.rotator__rule { width: 36px; height: 3px; background: var(--yellow); margin-bottom: 10px; }
+.rotator__text { font-size: 0.875rem; line-height: 1.55; color: var(--on-dark-soft); max-width: 46ch; }
+
+.rotator__dots {
+  position: absolute; right: var(--pad); bottom: 20px; z-index: 2;
+  display: flex; gap: 8px;
+}
+.rotator__dot {
+  width: 26px; height: 4px; padding: 12px 0; background: none; border: 0;
+  cursor: pointer; position: relative;
+}
+.rotator__dot::after {
+  content: ""; position: absolute; inset: 10px 0; background: rgba(255, 255, 255, 0.34);
+  transition: background-color 220ms var(--ease-out);
+}
+.rotator__dot[aria-selected="true"]::after { background: var(--yellow); }
+
+/* The active dot doubles as the auto-advance timer, so a slide that changes
+   on its own is announced rather than surprising. scaleX only: no layout.
+   It is a real progress readout, so it pauses with the timer (hover, focus,
+   hidden tab) instead of running on regardless. */
+.rotator__dot::before {
+  content: ""; position: absolute; inset: 10px 0; background: var(--yellow);
+  transform: scaleX(0); transform-origin: left center;
+}
+.rotator__dot[aria-selected="true"]::before { transform: none; }
+.js .rotator--timed .rotator__dot::after { background: rgba(255, 255, 255, 0.34); }
+@media (prefers-reduced-motion: no-preference) {
+  /* The unfilled track of the ACTIVE dot stays a clearly yellow tint, not a
+     hint of one. If the fill animation is throttled and never advances, the
+     dot must still read as the selected one rather than going blank. */
+  .js .rotator--timed .rotator__dot[aria-selected="true"]::after { background: rgba(244, 180, 0, 0.45); }
+  .js .rotator--timed .rotator__dot[aria-selected="true"]::before {
+    animation: dotFill var(--rotator-delay, 20000ms) linear forwards;
+  }
+  .js .rotator--timed.is-paused .rotator__dot::before { animation-play-state: paused; }
+}
+@keyframes dotFill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* DELIBERATELY NOT DONE: a staggered rise on the incoming slide's copy.
+   A stagger needs animation-delay, a delay needs fill-mode: backwards, and
+   backwards parks the copy at opacity 0 until the animation actually runs.
+   On any renderer that does not run animations (background tab, crawler,
+   headless) the slide would arrive blank. The track already slides, which is
+   what communicates the change; the copy is not worth that failure mode. */
+
+/* ------------------------------------------------------------ Trust strip -- */
+.trust { background: var(--ink); }
+.trust__list {
+  display: flex; justify-content: center; flex-wrap: wrap;
+  gap: 22px clamp(28px, 5vw, 60px); padding-block: 24px;
+  list-style: none; margin: 0;
+}
+.trust__item { display: flex; align-items: center; gap: 12px; max-width: 300px; }
+.trust__tick {
+  flex: none; width: 30px; height: 30px; border-radius: 50%;
+  border: 2px solid var(--orange);
+  display: grid; place-items: center;
+}
+.trust__tick svg { width: 14px; height: 14px; }
+.trust__item span { color: var(--on-dark); font-size: 13.5px; font-weight: 600; line-height: 1.4; }
+
+/* ------------------------------------------------ Category grid + ProShop -- */
+.split {
+  display: grid; gap: 22px;
+  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1fr);
+  align-items: stretch;
+}
+/* Full-width, 3-per-row range tiles. Now that they own the whole row (the
+   retailer pitch moved to its own band below) each tile is much larger. */
+.cats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+
+.cat {
+  position: relative; display: block; min-width: 0;
+  aspect-ratio: 16 / 11;
+  overflow: hidden; background: var(--surface-2);
+  color: #fff;
+}
+.cat__img { position: absolute; inset: 0; }
+.cat__img img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 420ms var(--ease-out);
+}
+/* Categories with no photography yet get the brand device instead of a
+   grey box, so an empty tile still looks deliberate. */
+.cat__img--empty {
+  background:
+    linear-gradient(160deg, #2a2320 0%, var(--ink) 62%);
+  display: grid; place-items: center;
+}
+.cat__img--empty span {
+  font-family: var(--font-display); font-weight: 900; font-size: 30px;
+  letter-spacing: 2px; color: rgba(255, 255, 255, 0.14);
+}
+/* The label band must stay opaque enough on its own, because the product
+   photos behind it are cut-outs on WHITE. A gradient that has already decayed
+   to ~0.55 alpha where the text sits composites to only 4.2:1 for the name and
+   2.4:1 for the yellow count. Holding ~0.9 across the text band and only then
+   falling away keeps the photo readable above and the label legible below. */
+.cat__scrim {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(0deg,
+    rgba(10, 8, 6, 0.93) 0%, rgba(10, 8, 6, 0.88) 26%, rgba(10, 8, 6, 0.05) 62%);
+}
+.cat__body {
+  position: absolute; left: 16px; right: 16px; bottom: 15px;
+  display: flex; justify-content: space-between; align-items: center; gap: 10px;
+}
+.cat__name {
+  font-family: var(--font-display); font-weight: 800; font-size: 21px;
+  text-transform: uppercase; line-height: 1.1; color: #fff;
+}
+.cat__meta { display: inline-flex; align-items: center; gap: 8px; flex: none; }
+.cat__count { font-size: 11.5px; font-weight: 700; color: var(--yellow); letter-spacing: 0.5px; }
+.cat__rule { position: absolute; left: 0; right: 0; bottom: 0; height: 5px; background: var(--hazard); }
+@media (hover: hover) and (pointer: fine) {
+  .cat:hover .cat__img img { transform: scale(1.05); }
+}
+.cat:active { transform: scale(0.995); }
+
+/* ---- Home range list -------------------------------------------------
+   The six ranges as a vertical, hover-expanding list (adapted from the
+   supplied React component). Flat, per the design language — no drop shadow;
+   the hover/focus state is an accent border, a soft tint, corner brackets
+   that snap into place and an arrow leaning in. */
+.rangelist { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px;
+  --range-h: 92px; --range-grow: 22px; }
+/* Reserve the hover-grow on the CONTAINER so growing one tile redistributes the
+   tiles within a fixed block instead of pushing the footer up/down. The reserve
+   collapses in sync with the tile growth (same amount, duration + easing), so the
+   block height stays constant the whole time. Desktop hover only (touch has no grow).
+   Desktop rows use a fixed `height` (single-line, so no clip) rather than min-height,
+   so the grow is EXACTLY --range-grow and cancels the reserve to the pixel. */
+@media (hover: hover) and (pointer: fine) {
+  .range { height: var(--range-h); }
+  .rangelist { padding-bottom: var(--range-grow); transition: padding-bottom 320ms var(--ease-out-quint); }
+  .rangelist:has(.range:hover) { padding-bottom: 0; }
+}
+.range {
+  position: relative; display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; min-height: var(--range-h); padding: 18px 24px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 2px;
+  color: var(--ink);
+}
+/* .range is also .reveal, whose `.is-in` rule sets a `transition` shorthand that
+   wins on specificity and would otherwise leave the hover changes un-animated.
+   Re-declare the whole transition at higher specificity so the entrance
+   (opacity/transform) AND the hover (border/background/min-height) both animate.
+   transform is reserved for the entrance, so press feedback uses colour, not scale. */
+.range,
+.js .range.reveal.is-in {
+  transition:
+    opacity 460ms var(--ease-out-quint),
+    transform 460ms var(--ease-out-quint),
+    height 320ms var(--ease-out-quint),
+    border-color 220ms var(--ease-out),
+    background-color 220ms var(--ease-out);
+}
+/* Corner brackets — L-shapes that fade + slide into the corners. */
+.range::before, .range::after {
+  content: ""; position: absolute; width: 18px; height: 18px;
+  border: 0 solid var(--orange); opacity: 0; pointer-events: none;
+  transition: opacity 220ms var(--ease-out), transform 320ms var(--ease-out-quint);
+}
+.range::before { top: 12px; left: 12px; border-top-width: 2px; border-left-width: 2px; transform: translate(5px, 5px); }
+.range::after { bottom: 12px; right: 12px; border-bottom-width: 2px; border-right-width: 2px; transform: translate(-5px, -5px); }
+.range__body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.range__title {
+  font-family: var(--font-display); font-weight: 800; font-size: clamp(20px, 2.4vw, 28px);
+  text-transform: uppercase; line-height: 1.05; letter-spacing: 0.2px;
+  color: var(--ink); transition: color 220ms var(--ease-out);
+}
+.range__sub { font-size: 12px; font-weight: 700; letter-spacing: 0.5px; color: var(--muted); }
+.range__go {
+  flex: none; font-size: 24px; line-height: 1; color: var(--orange-ink);
+  opacity: 0; transform: translateX(-8px);
+  transition: opacity 220ms var(--ease-out), transform 320ms var(--ease-out-quint);
+}
+/* Hover AND keyboard focus share the emphasis. Focus deliberately skips the
+   height grow so tabbing down the list doesn't reflow it under the caret. */
+.range:focus-visible { border-color: var(--orange); }
+.range:focus-visible::before, .range:focus-visible::after { opacity: 1; transform: translate(0, 0); }
+.range:focus-visible .range__title { color: var(--orange-ink); }
+.range:focus-visible .range__go { opacity: 1; transform: translateX(0); }
+@media (hover: hover) and (pointer: fine) {
+  .range:hover { height: calc(var(--range-h) + var(--range-grow)); border-color: var(--orange); background: var(--orange-tint); }
+  .range:hover::before, .range:hover::after { opacity: 1; transform: translate(0, 0); }
+  .range:hover .range__title { color: var(--orange-ink); }
+  .range:hover .range__go { opacity: 1; transform: translateX(0); }
+}
+/* No hover on touch: give the row a resting arrow and a press tint. */
+@media (hover: none) {
+  .range__go { opacity: 1; transform: none; color: var(--muted); }
+  .range:active { border-color: var(--orange); background: var(--orange-tint); }
+}
+/* Narrow phones: the longest label ("Work Wear Accessories") needs smaller
+   type and tighter padding to stay on one line. */
+@media (max-width: 480px) {
+  .range { padding: 16px 18px; }
+  .range__title { font-size: clamp(17px, 5vw, 22px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .range, .js .range.reveal.is-in,
+  .range::before, .range::after, .range__title, .range__go { transition: none; }
+  .range::before, .range::after { transform: none; }
+}
+
+.proshop {
+  background: var(--ink); color: #fff; padding: 34px 30px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.proshop__eyebrow {
+  color: var(--yellow); font-size: 12.5px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px;
+}
+.proshop h2 { font-size: 1.85rem; font-weight: 800; margin-bottom: 18px; }
+.proshop ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.proshop li { display: flex; gap: 10px; align-items: flex-start; color: var(--on-dark-soft); font-size: 14px; line-height: 1.45; }
+.proshop li svg { flex: none; width: 14px; height: 14px; margin-top: 4px; }
+.proshop .btn { margin-top: 26px; align-self: flex-start; }
+
+/* Full-width retailer band: the categories now take the whole row above, so
+   the pitch sits below as its own horizontal strip with the bullets across. */
+.proshop--wide { justify-content: flex-start; gap: 20px; padding: 38px clamp(24px, 4vw, 44px); }
+.proshop--wide ul { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 620px) { .proshop--wide ul { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 32px; } }
+@media (min-width: 900px) { .proshop--wide ul { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px 30px; } }
+.proshop--wide .btn { margin-top: 6px; }
+
+/* ------------------------------------------------------------------- Why -- */
+.why { display: grid; gap: clamp(32px, 5vw, 60px); grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; }
+/* No photo uploaded for this block yet: one column reads as intentional,
+   an empty half-width frame reads as broken. */
+.why--solo { grid-template-columns: minmax(0, 1fr); }
+.why--solo p { max-width: 68ch; }
+.why__media { position: relative; aspect-ratio: 4 / 3.4; overflow: hidden; background: var(--surface-2); }
+.why__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.why h2 { font-size: clamp(1.9rem, 3.6vw, 2.75rem); font-weight: 800; margin-bottom: 20px; }
+.why p { color: var(--body); font-size: 1rem; line-height: 1.7; max-width: 54ch; margin-bottom: 26px; }
+.stats { display: flex; gap: clamp(24px, 4vw, 44px); flex-wrap: wrap; }
+.stat__num { font-family: var(--font-display); font-weight: 900; font-size: 2.4rem; color: var(--ink); line-height: 1; }
+.stat__label {
+  font-size: 12.5px; font-weight: 600; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.5px; max-width: 150px; margin-top: 6px;
+}
+
+/* --------------------------------------------------------- Product cards -- */
+.grid {
+  display: grid; gap: 22px;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+}
+.grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+.card {
+  position: relative; display: flex; flex-direction: column;
+  border: 1px solid var(--line); background: var(--surface);
+  min-width: 0;
+  content-visibility: auto; contain-intrinsic-size: 340px;
+  transition: border-color 200ms var(--ease-out), transform 160ms var(--ease-out);
+}
+.card:active { transform: scale(0.99); }
+@media (hover: hover) and (pointer: fine) {
+  .card:hover { border-color: var(--ink); }
+  .card:hover .card__media img { transform: scale(1.04); }
+}
+.card:focus-within { border-color: var(--ink); }
+
+.card__media {
+  position: relative; aspect-ratio: var(--product-ratio);
+  background: var(--surface); overflow: hidden; border-bottom: 1px solid var(--line);
+}
+/* The image MUST be absolutely positioned. An in-flow img with height:100%
+   has no definite parent height to resolve against and silently overrides
+   aspect-ratio, blowing the card height out on portrait photos. */
+.card__media img {
+  position: absolute; inset: 14px; width: calc(100% - 28px); height: calc(100% - 28px);
+  object-fit: contain;
+  transition: transform 420ms var(--ease-out);
+}
+.card__ph {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  background: var(--surface-2);
+  font-family: var(--font-display); font-weight: 900; font-size: 22px;
+  letter-spacing: 2px; color: var(--ph-ink);
+}
+.card__tag {
+  position: absolute; top: 10px; left: 10px; z-index: 1;
+  background: var(--ink); color: var(--yellow);
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.5px;
+  padding: 4px 8px; text-transform: uppercase;
+}
+.card__new {
+  position: absolute; top: 10px; right: 10px; z-index: 1;
+  /* Display orange would put white 11px text at 3.6:1. The CTA orange takes
+     the same badge to 4.5:1 with no visible change in hue. */
+  background: var(--orange-cta); color: #fff;
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.5px; padding: 4px 8px;
+  text-transform: uppercase;
+}
+.card__body { padding: 15px; display: flex; flex-direction: column; flex: 1; }
+.card__name { font-weight: 700; font-size: 14.5px; color: var(--ink); line-height: 1.35; }
+.card__spec {
+  font-size: 12.5px; color: var(--muted); line-height: 1.45; margin-top: 5px;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+/* Stretched hit area: the whole card is the link target. */
+.card__link { position: static; font: inherit; color: inherit; }
+.card__link::after { content: ""; position: absolute; inset: 0; }
+
+/* Loading skeletons, shaped like the real card. */
+.card--skeleton { pointer-events: none; }
+.card--skeleton .card__media, .card--skeleton .sk {
+  background: linear-gradient(90deg, var(--line) 25%, var(--sk-sheen) 37%, var(--line) 63%);
+  background-size: 400% 100%;
+  animation: sk 1.4s ease infinite;
+}
+.card--skeleton .sk { height: 12px; border-radius: var(--r); }
+.card--skeleton .sk + .sk { margin-top: 8px; width: 62%; }
+@keyframes sk { 0% { background-position: 100% 50%; } 100% { background-position: 0 50%; } }
+
+/* --------------------------------------------------------------- Catalog -- */
+.catalog__head { display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-end; justify-content: space-between; margin-bottom: 26px; }
+.catalog__title { font-size: clamp(1.85rem, 4vw, 2.6rem); font-weight: 800; }
+
+/* Inline links in dense rows sit at ~16px tall on their own, which is an
+   awkward tap target. A little padding-block lifts them past 24px without
+   changing the visual rhythm. */
+/* A four-level trail plus a long product name does not fit on one phone line,
+   so the row wraps instead of pushing the document wider than the viewport. */
+.crumbs {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 7px;
+  font-size: 13px; color: var(--muted); margin-bottom: 18px;
+}
+.crumbs a {
+  color: var(--muted); display: inline-block; padding-block: 5px;
+  transition: color 160ms ease;
+}
+.crumbs a:hover { color: var(--orange-ink); }
+.crumbs__sep { color: var(--line-strong); user-select: none; }
+/* The last crumb is a link too (it is where you already are), so it is styled
+   as the current position rather than as somewhere to go. It stays clickable:
+   after filtering or searching within a range, clicking it returns you to the
+   clean range page. */
+.crumbs a[aria-current="page"] { color: var(--ink); font-weight: 600; }
+.crumbs a[aria-current="page"]:hover { color: var(--orange-ink); }
+/* One long product name must not push the row wide; the earlier crumbs are
+   short and stay whole. */
+.crumbs a:last-child { max-width: 100%; overflow-wrap: anywhere; }
+
+.search { position: relative; max-width: 480px; width: 100%; }
+.search input {
+  width: 100%; font: 400 16px var(--font-sans); color: var(--ink);
+  background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--r);
+  padding: 13px 44px 13px 42px;
+  transition: border-color 180ms ease;
+}
+.search input::placeholder { color: var(--muted); }
+.search input:focus { border-color: var(--ink); outline-offset: 1px; }
+.search__icon {
+  position: absolute; left: 14px; top: 50%; translate: 0 -50%;
+  width: 17px; height: 17px; color: var(--muted); pointer-events: none;
+  transition: color 180ms ease;
+}
+.search:focus-within .search__icon { color: var(--orange-ink); }
+.search__clear {
+  position: absolute; right: 8px; top: 50%; translate: 0 -50%;
+  width: 30px; height: 30px; border: 0; border-radius: var(--r);
+  background: var(--surface-2); color: var(--ink);
+  cursor: pointer; display: grid; place-items: center;
+  transition: transform 160ms var(--ease-out), background-color 160ms ease;
+}
+.search__clear:active { transform: translateY(-50%) scale(0.9); }
+.search__clear[hidden] { display: none; }
+
+.catalog__meta { font-size: 13.5px; color: var(--muted); margin-bottom: 20px; }
+.catalog__meta strong { color: var(--ink); }
+
+.empty {
+  border: 1px solid var(--line); background: var(--surface);
+  padding: clamp(32px, 6vw, 56px); text-align: center;
+}
+.empty h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: 10px; }
+.empty p { color: var(--body); margin-bottom: 22px; }
+
+/* Filters (footwear spec codes). */
+.filters { border: 1px solid var(--line); background: var(--surface); margin-bottom: 22px; }
+.filters__bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 12px 14px; }
+.filters__toggle {
+  display: inline-flex; align-items: center; gap: 8px;
+  font: 700 13px var(--font-sans); color: var(--ink);
+  background: none; border: 2px solid var(--ink); border-radius: var(--r);
+  padding: 9px 14px; cursor: pointer;
+  transition: transform 160ms var(--ease-out), background-color 180ms ease, color 180ms ease;
+}
+.filters__toggle:active { transform: scale(0.97); }
+.filters__toggle[aria-expanded="true"] { background: var(--ink); color: #fff; }
+/* Which way the panel is about to move. The colour inversion alone says
+   "pressed", not "open". */
+.filters__chev {
+  width: 11px; height: 11px; flex: none;
+  transition: transform 260ms var(--ease-out-quint);
+}
+.filters__toggle[aria-expanded="true"] .filters__chev { transform: rotate(180deg); }
+.filters__badge {
+  background: var(--orange); color: #fff; border-radius: 999px;
+  font-size: 11px; font-weight: 700; padding: 1px 7px;
+}
+.filters__panel {
+  display: grid; grid-template-rows: 0fr;
+  transition: grid-template-rows 260ms var(--ease-out);
+}
+.filters__panel[data-open="true"] { grid-template-rows: 1fr; }
+.filters__panel > div { overflow: hidden; }
+.filters__groups { display: grid; gap: 18px; padding: 4px 14px 16px; border-top: 1px solid var(--line); }
+/* Group header. Below the desktop-sidebar breakpoint it is a plain, inert
+   heading (matching the old .fgroup__label) — the collapse chevron is hidden
+   and .fgroup__body stays open. The interactive collapse is layered on only in
+   the min-width:1025px block. */
+.fgroup__head {
+  display: flex; align-items: center; width: 100%;
+  background: none; border: 0; padding: 0; margin-bottom: 9px;
+  text-align: left; cursor: default;
+}
+.fgroup__label {
+  font-size: 11.5px; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--muted);
+}
+.fgroup__chev { display: none; width: 12px; height: 12px; flex: none; margin-left: auto; }
+.fchips { display: flex; flex-wrap: wrap; gap: 8px; }
+.fchip {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 36px;
+  font: 700 12.5px var(--font-sans); color: var(--ink);
+  background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--r);
+  padding: 6px 11px; cursor: pointer;
+  transition: transform 140ms var(--ease-out), background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+.fchip:active { transform: scale(0.96); }
+.fchip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+.fchip__n { color: var(--muted); font-weight: 600; }
+.fchip[aria-pressed="true"] .fchip__n { color: var(--ph-ink); }
+.filters__clear {
+  font: 700 12.5px var(--font-sans); color: var(--orange-ink);
+  background: none; border: 0; cursor: pointer; padding: 8px 4px;
+}
+
+/* Drawer-only furniture. Off by default: above 760px the panel is an inline
+   accordion and none of this exists. */
+.filters__backdrop,
+.filters__drawerhead,
+.filters__drawerfoot { display: none; }
+
+/* The desktop-only Clear-all inside the sidebar header; the drawer/tablet
+   Clear-all lives in .filters__bar. CSS reveals exactly one per breakpoint. */
+.filters__clear--head { display: none; }
+
+/* ==========================================================================
+   DESKTOP FILTER SIDEBAR (≥1025px) — desktops/laptops only.
+   Phones and tablets (≤1024px) keep the toggle + drawer/accordion untouched;
+   here the panel is an always-open sticky left rail beside the product grid,
+   with per-section collapse. Placed AFTER the base .filters rules so these
+   same-specificity overrides win; the max-width drawer block never co-matches.
+   ========================================================================== */
+@media (min-width: 1025px) {
+  .catalog__body {
+    display: grid; grid-template-columns: 264px minmax(0, 1fr);
+    gap: 34px; align-items: start;
+  }
+  /* No spec groups for this view (a non-footwear range, or a cross-range
+     search): #filters hides itself, so the grid collapses to one full column. */
+  .catalog__body:has(#filters[hidden]) { display: block; }
+
+  .filters {
+    margin-bottom: 0;
+    background: var(--surface); border: 1px solid var(--line);
+  }
+
+  /* The open/close toggle is meaningless when the panel is always open. */
+  .filters__bar { display: none; }
+
+  /* Reuse the drawer header as the sidebar title bar (Filters + Clear all);
+     its close button belongs to the drawer only. */
+  .filters__drawerhead {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 14px 16px; border-bottom: 1px solid var(--line);
+  }
+  .filters__drawertitle { font-size: 0.95rem; font-weight: 800; letter-spacing: 0.3px; }
+  .filters__close { display: none; }
+  .filters__clear--head { display: inline-block; padding: 2px 4px; }
+
+  /* Undo the accordion/drawer mechanics: the panel is static and always open. */
+  .filters__panel {
+    display: block; grid-template-rows: none;
+    position: static; transform: none; visibility: visible;
+    width: auto; max-width: none; min-width: 0; border-left: 0;
+  }
+  .filters__panel > div { overflow: visible; }
+  .filters__groups { display: grid; gap: 0; padding: 0; border-top: 0; }
+
+  /* Filtering is live and the sidebar is always visible, so a "Show N" dismiss
+     button would be noise here. */
+  .filters__drawerfoot { display: none; }
+
+  /* Collapsible sections. */
+  .fgroup { border-bottom: 1px solid var(--line); padding: 18px 16px; }
+  .fgroup:last-child { border-bottom: 0; }
+  .fgroup__head {
+    cursor: pointer; margin-bottom: 12px; transition: color 160ms ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .fgroup__head:hover { color: var(--ink); }
+    .fgroup__head:hover .fgroup__label { color: var(--ink); }
+  }
+  .fgroup__chev {
+    display: block; color: var(--muted);
+    transition: transform 240ms var(--ease-out-quint);
+  }
+  .fgroup.is-collapsed .fgroup__chev { transform: rotate(-90deg); }
+  /* Collapse the chips via the grid-rows trick — animatable, no layout jump. */
+  .fgroup__body {
+    display: grid; grid-template-rows: 1fr;
+    transition: grid-template-rows 240ms var(--ease-out);
+  }
+  .fgroup.is-collapsed .fgroup__body { grid-template-rows: 0fr; }
+  .fgroup__body > .fchips { overflow: hidden; }
+}
+
+/* -------------------------------------------------------- Product detail -- */
+.pd { display: grid; gap: clamp(30px, 5vw, 56px); grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: start; }
+.pd__media { position: relative; aspect-ratio: var(--product-ratio); background: var(--surface); border: 1px solid var(--line); overflow: hidden; }
+.pd__media img { position: absolute; inset: clamp(14px, 3vw, 30px); width: auto; height: auto; max-width: calc(100% - 2 * clamp(14px, 3vw, 30px)); max-height: calc(100% - 2 * clamp(14px, 3vw, 30px)); margin: auto; object-fit: contain; }
+.pd__thumbs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 12px; }
+.pd__thumb {
+  position: relative; aspect-ratio: 1 / 1; padding: 0; min-width: 0;
+  background: var(--surface); border: 1px solid var(--line); cursor: pointer;
+  transition: border-color 180ms ease, transform 140ms var(--ease-out);
+}
+.pd__thumb:active { transform: scale(0.96); }
+.pd__thumb[aria-current="true"] { border-color: var(--ink); }
+.pd__thumb img { position: absolute; inset: 7px; width: calc(100% - 14px); height: calc(100% - 14px); object-fit: contain; }
+
+.pd__tag {
+  display: inline-block; background: var(--ink); color: var(--yellow);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.5px; padding: 5px 10px;
+  text-transform: uppercase; margin-bottom: 14px;
+}
+.pd h1 { font-size: clamp(1.9rem, 4vw, 2.7rem); font-weight: 800; margin-bottom: 14px; }
+.pd__desc { font-size: 1rem; line-height: 1.7; color: var(--body); margin-bottom: 24px; }
+.pd__badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
+.badge {
+  border: 1px solid var(--ink); color: var(--ink);
+  font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: var(--r);
+}
+.badge--fill { background: var(--ink); color: #fff; }
+
+.specs { border-top: 1px solid var(--line); margin-bottom: 26px; }
+.specs__row {
+  display: flex; gap: 20px; justify-content: space-between;
+  padding: 12px 0; border-bottom: 1px solid var(--line);
+}
+.specs__label { color: var(--muted); font-size: 14px; font-weight: 600; flex: none; }
+.specs__value { color: var(--ink); font-size: 14px; font-weight: 600; text-align: right; }
+.pd__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.pd__body {
+  margin-top: clamp(48px, 6vw, 72px);
+  border-top: 3px solid var(--ink); padding-top: clamp(28px, 4vw, 40px);
+}
+.prose { max-width: 72ch; color: var(--body); }
+.prose p { margin-bottom: 16px; line-height: 1.75; }
+.prose h3 { font-size: 1.25rem; font-weight: 800; color: var(--ink); margin: 26px 0 10px; }
+.prose ul { margin: 0 0 16px; padding-left: 20px; }
+.prose li { margin-bottom: 7px; line-height: 1.65; }
+.prose strong { color: var(--ink); }
+
+/* Spec pictograms (Performance / Safety class / Technologies). */
+.pgroup + .pgroup { margin-top: 26px; }
+.pgroup__label {
+  font-size: 11.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 12px;
+}
+/* flex-start, NOT stretch: a group can mix pictograms and plain code chips
+   (Performance does), and stretching pulls a 36px chip up to the 130px
+   pictogram height with its label floating in the middle of an empty box. */
+.pgroup__items { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start; }
+
+.picto {
+  position: relative;
+  width: clamp(88px, 16vw, 112px); min-height: clamp(104px, 18vw, 130px);
+  border: 1px solid var(--line); background: var(--surface);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 6px; padding: 10px 8px; border-radius: var(--r);
+}
+.picto img { max-width: 100%; max-height: 62px; object-fit: contain; }
+/* The code, printed under the pictogram. Without it the badge is a picture
+   nobody can name, which is exactly how the text ended up unreachable. */
+.picto__code {
+  font-family: var(--font-display); font-weight: 800; font-size: 13px;
+  letter-spacing: 0.6px; text-transform: uppercase; color: var(--ink); line-height: 1;
+}
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  position: relative;
+  display: inline-flex; align-items: center; gap: 6px;
+  border: 1px solid var(--line-strong); background: var(--surface);
+  color: var(--ink); font-size: 12.5px; font-weight: 600;
+  padding: 6px 11px; border-radius: var(--r);
+}
+.chip__code { font-weight: 700; letter-spacing: 0.3px; }
+
+/* ------------------------------------------------- Spec code disclosure -- */
+/* Any code the admin has written a title or a description for becomes a real
+   button that opens its text inline. Codes with nothing to say stay inert
+   labels, so an affordance never promises something that is not there. */
+button.picto, button.chip {
+  font: inherit; color: var(--ink); cursor: pointer; text-align: center;
+  transition: border-color 180ms ease, background-color 180ms ease, transform 140ms var(--ease-out);
+}
+button.chip { text-align: left; }
+button.picto:active, button.chip:active { transform: scale(0.97); }
+@media (hover: hover) and (pointer: fine) {
+  button.picto:hover, button.chip:hover { border-color: var(--ink); background: var(--surface-2); }
+}
+button.picto[aria-expanded="true"], button.chip[aria-expanded="true"] {
+  border-color: var(--ink); background: var(--surface-2);
+}
+/* The "there is more here" mark. Small, quiet, and only on codes that open. */
+.spec-open__i {
+  width: 13px; height: 13px; flex: none; color: var(--orange-ink);
+}
+.picto .spec-open__i { position: absolute; top: 6px; right: 6px; }
+@media (pointer: coarse) {
+  button.chip { min-height: 44px; }
+}
+
+.pgroup__detail {
+  display: grid; grid-template-rows: 0fr; margin-top: 10px;
+  transition: grid-template-rows 260ms var(--ease-out);
+}
+.pgroup__detail[data-open="true"] { grid-template-rows: 1fr; }
+.pgroup__detail > div { overflow: hidden; }
+/* A full border, not a coloured left stripe: the stripe is banned in this
+   system and it reads as a callout template rather than part of the sheet. */
+.spec-detail {
+  border: 1px solid var(--line-strong); background: var(--surface);
+  padding: 14px 16px; border-radius: var(--r);
+}
+.spec-detail__code {
+  display: inline-block; background: var(--ink); color: var(--yellow);
+  font-family: var(--font-display); font-weight: 800; font-size: 12px;
+  letter-spacing: 0.6px; text-transform: uppercase;
+  padding: 4px 9px; margin-bottom: 9px;
+}
+.spec-detail__title { font-weight: 700; color: var(--ink); font-size: 14.5px; line-height: 1.4; }
+.spec-detail__text {
+  color: var(--body); font-size: 14px; line-height: 1.65; margin-top: 6px; max-width: 62ch;
+}
+
+.codes { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.codes th, .codes td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); }
+.codes th { font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.6px; color: var(--muted); }
+.codes td { color: var(--ink); font-weight: 600; }
+.codes__wrap { overflow-x: auto; border: 1px solid var(--line); background: var(--surface); }
+
+/* --------------------------------------------------------------- Contact -- */
+.pagehero { background: var(--ink); text-align: center; padding-block: clamp(44px, 7vw, 64px); }
+.pagehero h1 { font-size: clamp(2.1rem, 5vw, 3rem); font-weight: 900; color: #fff; margin-bottom: 12px; }
+.pagehero p { color: var(--on-dark-soft); font-size: 1rem; max-width: 56ch; margin-inline: auto; }
+
+.contact { display: grid; gap: clamp(30px, 5vw, 56px); grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); align-items: start; }
+.form { display: grid; gap: 16px; }
+.form__row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.field { display: grid; gap: 6px; }
+.field label { font-size: 12px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: var(--muted); }
+.field input, .field textarea {
+  font: 400 16px var(--font-sans); color: var(--ink);
+  background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--r);
+  padding: 13px 14px; width: 100%;
+  transition: border-color 180ms ease;
+}
+.field textarea { min-height: 140px; resize: vertical; }
+.field input:focus, .field textarea:focus { border-color: var(--ink); }
+.field input[aria-invalid="true"], .field textarea[aria-invalid="true"] { border-color: var(--orange-ink); border-width: 2px; }
+.field__err { font-size: 12.5px; font-weight: 600; color: var(--orange-ink); }
+.field__err[hidden] { display: none; }
+
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.form-status { font-size: 14px; font-weight: 600; min-height: 1.4em; }
+.form-status.is-error { color: var(--orange-ink); }
+.is-sending { opacity: 0.6; }
+.is-invalid { animation: shake 320ms var(--ease-out); }
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.form-success { border: 2px solid var(--ink); background: var(--surface); padding: 30px; text-align: center; }
+/* display:flex/grid on a JS-toggled block defeats the hidden attribute. */
+.form-success[hidden] { display: none; }
+.form-success h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: 8px; }
+.form-success p { color: var(--body); }
+.form-success svg { width: 46px; height: 46px; margin: 0 auto 14px; color: var(--orange); }
+
+.infocard { background: var(--surface-2); padding: 30px; }
+.infocard h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: 20px; }
+.inforow + .inforow { margin-top: 16px; }
+.inforow[hidden] { display: none; }
+.inforow__label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); }
+.inforow__value { font-size: 14.5px; color: var(--ink); font-weight: 600; }
+.inforow__value a { color: var(--ink); display: inline-block; padding-block: 4px; }
+.inforow__value a:hover { color: var(--orange-ink); }
+
+/* ------------------------------------------------------------ CTA banner -- */
+.ctabar { background: var(--orange); }
+.ctabar__inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px; flex-wrap: wrap; padding-block: clamp(38px, 5vw, 56px);
+}
+/* 32px+ display type: 3.6:1 clears the WCAG large-text threshold. */
+.ctabar h2 { font-size: clamp(1.6rem, 3.2vw, 2.1rem); font-weight: 800; color: #fff; max-width: 22ch; }
+
+/* ----------------------------------------------------------------- Footer -- */
+.foot { background: var(--ink-deep); padding-block: clamp(44px, 6vw, 60px) 22px; }
+.foot__cols {
+  display: grid; gap: 34px;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  margin-bottom: 36px;
+}
+.foot__mark { font-family: var(--font-stencil); font-weight: 400; font-size: 26px; letter-spacing: 1px; color: #fff; margin-bottom: 14px; }
+.foot__mark i { color: var(--orange); font-style: normal; }
+.foot__about { color: var(--muted-soft); font-size: 13.5px; line-height: 1.7; max-width: 30ch; }
+.foot__h { color: #fff; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 14px; }
+
+/* ---- Stencil accent tier ---------------------------------------------
+   The wordmark (above) plus the primary display headlines and the hero
+   figures. Big, short text ONLY — stencil is a poster face, so long or small
+   copy (product names, sub-heads, cards, rotator, nav) stays Clash Display.
+   A touch more leading than the Clash headings, since stencil caps run tall.
+   Placed after all the targeted rules so it wins the tie on equal specificity. */
+.hero h1,
+#whyTitle,
+.sec__title:not(.sec__title--sub),
+.ctabar h2,
+.catalog__title,
+.pagehero h1 {
+  font-family: var(--font-stencil);
+  font-weight: 400;
+  line-height: 1.06;
+}
+
+/* ---- Cascade hover (stencil headlines) -------------------------------
+   Each letter carries an identical copy 1em below it (text-shadow); the copy
+   is clipped away until hover, when the letter rolls up by 1em with a
+   per-character stagger and the copy takes its place. `clip-path` (not
+   overflow) does the clipping so each letter keeps its baseline — important
+   where the letters sit inline next to other text (the wordmark + its tag). */
+.csc { display: inline; }
+.csc__c {
+  display: inline-block; line-height: 1; vertical-align: baseline;
+  clip-path: inset(0);
+}
+.csc__g {
+  display: inline-block; line-height: 1;
+  text-shadow: 0 1em currentColor;
+  transition: transform 250ms ease-in-out, color 260ms ease;
+  transition-delay: calc(var(--i, 0) * 25ms), 0s;   /* roll staggers; colour is uniform */
+}
+.csc__g--dot { color: var(--orange); }
+/* Trigger only when the pointer is over the LETTERS: .csc is inline, so it
+   shrink-wraps the text rather than filling the full-width heading line. On
+   hover the whole word rolls and turns the signature orange. */
+.csc:hover .csc__g { transform: translateY(-1em); color: var(--orange); }
+@media (prefers-reduced-motion: reduce) {
+  .csc__g { transition: color 260ms ease; }
+  .csc:hover .csc__g { transform: none; }   /* colour still shifts; the roll is suppressed */
+}
+.foot__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 3px; }
+.foot__list a, .foot__contact { color: var(--muted-soft); font-size: 13.5px; line-height: 1.7; }
+.foot__list a { transition: color 160ms ease; display: inline-block; padding-block: 5px; }
+.foot__list a:hover { color: #fff; }
+.foot__bottom {
+  border-top: 1px solid var(--line-dark); padding-top: 18px;
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+}
+.foot__bottom span { color: var(--muted-soft); font-size: 12px; }
+
+/* ===========================================================================
+   MOTION
+
+   The budget is spent deliberately, not sprayed across the page:
+
+   1. ONE signature entrance  - the hero, once, on load.
+   2. Sibling stagger on real LISTS only (range tiles, product grids). Fading
+      in every section on scroll is the saturated AI default and it is not
+      choreography; the standing sections just appear.
+   3. Feedback on everything pressable.
+   4. Transitions on state changes that would otherwise pop.
+
+   Everything collapses under prefers-reduced-motion at the end of the file.
+   =========================================================================== */
+
+/* --- 1. Hero entrance. The one rehearsed moment on the site. --------------
+   Gated on `.js` AND on no-preference, and it is a CSS animation rather than
+   a class-triggered transition, so content can never be left invisible by a
+   blocked script or a stalled observer. */
+@media (prefers-reduced-motion: no-preference) {
+  .js .hero .hazard {
+    animation: hazardWipe 560ms var(--ease-out-expo) 60ms backwards;
+    transform-origin: left center;
+  }
+  .js .hero h1 { animation: heroIn 640ms var(--ease-out-quint) 140ms backwards; }
+  .js .hero__sub { animation: heroIn 640ms var(--ease-out-quint) 220ms backwards; }
+}
+@keyframes hazardWipe {
+  from { transform: scaleX(0); opacity: 0; }
+}
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(14px); }
+}
+
+/* --- 2. List stagger. Only for genuine sibling sets. ---------------------
+   The hidden start state is scoped to `.js`, which an inline script in <head>
+   sets on <html>. Content is therefore VISIBLE by default and the reveal only
+   enhances it: if the script is blocked, JS throws, or a crawler renders
+   without it, the page still shows its content. main.js additionally
+   force-reveals everything if IntersectionObserver never reports. Stagger is
+   capped at 8 steps so a 47-card grid never waits seconds to finish. */
+.js .reveal { opacity: 0; transform: translateY(10px); }
+.js .reveal.is-in {
+  opacity: 1; transform: none;
+  transition: opacity 460ms var(--ease-out-quint), transform 460ms var(--ease-out-quint);
+  transition-delay: calc(var(--rd, 0) * 45ms);
+}
+
+/* --- 3. Feedback ------------------------------------------------------- */
+/* The range tile's chevron leans toward the page it opens. It is purely a
+   hover affordance, so it is not rendered where there is no hover, and not on
+   the narrow 2-up grid where the label and count already fill the tile. */
+.cat__go {
+  display: none; color: var(--yellow); font-size: 20px; font-weight: 700;
+  line-height: 1; flex: none;
+  transition: transform 220ms var(--ease-out-quint);
+}
+@media (hover: hover) and (pointer: fine) and (min-width: 561px) {
+  .cat__go { display: inline-block; }
+  .cat:hover .cat__go { transform: translateX(4px); }
+}
+
+/* --- 4. State transitions ---------------------------------------------- */
+/* Swapping the main product photo. A short blur bridges the crossfade so the
+   eye reads one object changing rather than two objects trading places. */
+.pd__media img {
+  transition: opacity 200ms var(--ease-out), filter 200ms var(--ease-out);
+}
+.pd__media.is-swapping img { opacity: 0.45; filter: blur(3px); }
+
+/* DELIBERATELY NOT DONE: a blur-in on the product photo's first paint, and an
+   arrival on the "nothing matched" panel. Both were built and both were
+   removed after measuring: an animation whose from-state is opacity 0 parks
+   there whenever the renderer starts it but never advances it (a background
+   tab throttles rAF; headless renderers and crawlers may never tick at all),
+   with or without fill-mode. Measured on the preview: the product photo sat
+   at computed opacity 0. The main photo is also this page's LCP element, so
+   there is no version of "fade it in" that is worth delaying it.
+   The swap bridge below is safe because it animates TO a hidden state and
+   back from an already-visible element. Keep it that way. */
+
+/* The contact form leaving and the confirmation arriving. Instant swap reads
+   as a glitch; the exit is faster than the entrance. */
+.form.is-leaving {
+  opacity: 0; transform: translateY(-6px);
+  transition: opacity 180ms var(--ease-out), transform 180ms var(--ease-out);
+}
+.form-success {
+  animation: successIn 420ms var(--ease-out-quint) backwards;
+}
+.form-success svg { animation: checkPop 460ms var(--ease-out-quint) 120ms backwards; }
+@keyframes successIn {
+  from { opacity: 0; transform: translateY(10px); }
+}
+@keyframes checkPop {
+  /* Never from scale(0): nothing in the real world appears out of nothing. */
+  from { opacity: 0; transform: scale(0.86); }
+}
+
+/* The clear button only exists once there is something to clear, so it earns
+   an entrance. @starting-style degrades to an instant appearance. */
+.search__clear {
+  transition: transform 160ms var(--ease-out), opacity 160ms var(--ease-out), background-color 160ms ease;
+}
+@starting-style {
+  .search__clear { opacity: 0; transform: translateY(-50%) scale(0.85); }
+}
+
+/* --------------------------------------------------------------- Responsive */
+@media (max-width: 1080px) {
+  .nav {
+    /* Absolute, NOT fixed: top:100% on a fixed element resolves against the
+       viewport (= one full screen down, off the bottom), so the menu opened
+       where nobody could see it. Absolute resolves it against the relative
+       .head below, dropping the panel right under the bar. */
+    /* +3px clears the header's own 3px ink bottom border (top:100% lands on the
+       padding box, above that border), so the divider between bar and menu
+       stays crisp instead of being painted over by the menu's white top. */
+    position: absolute; top: calc(100% + 3px); left: 0; right: 0;
+    background: var(--surface); border-bottom: 3px solid var(--ink);
+    flex-direction: column; align-items: stretch; gap: 0;
+    padding: 8px var(--pad) 20px;
+    transform: translateY(-8px); opacity: 0; visibility: hidden;
+    transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out), visibility 200ms;
+  }
+  .nav.is-open { transform: none; opacity: 1; visibility: visible; }
+  /* Every link gets a rule under it; the first one also needs one ABOVE it,
+     or "Footwear" is the only item in the list without a line on both sides
+     and the stack reads as starting mid-way. */
+  .nav a { padding-block: 14px; border-bottom: 1px solid var(--line); font-size: 16px; }
+  .nav a:first-child { border-top: 1px solid var(--line); }
+  .nav a::after { display: none; }
+  .nav.is-open a {
+    animation: navIn 260ms var(--ease-out) backwards;
+    animation-delay: calc(var(--i, 0) * 40ms);
+  }
+  @keyframes navIn { from { opacity: 0; transform: translateY(-6px); } }
+  .burger { display: inline-flex; }
+  .head { position: relative; }
+}
+
+@media (max-width: 980px) {
+  .split { grid-template-columns: minmax(0, 1fr); }
+  .why { grid-template-columns: minmax(0, 1fr); }
+  .pd { grid-template-columns: minmax(0, 1fr); }
+  .contact { grid-template-columns: minmax(0, 1fr); }
+  .grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .foot__cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 760px) {
+  .hero__media { inset: 0; }
+  .hero__scrim {
+    background: linear-gradient(15deg,
+      rgba(10, 8, 6, 0.97) 0%, rgba(10, 8, 6, 0.86) 46%, rgba(10, 8, 6, 0.5) 100%);
+  }
+  .hero__sub { max-width: 38ch; }
+  .cats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rotator__dots { right: auto; left: var(--pad); }
+  .rotator__body { padding-bottom: 46px; }
+  .form__row { grid-template-columns: minmax(0, 1fr); }
+  .pd__thumbs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+/* Below this width the brand, the Contact button and the menu toggle stop
+   fitting on one line and push the document wider than the viewport. */
+@media (max-width: 430px) {
+  .head__inner { gap: 12px; }
+  .brand { min-width: 0; }
+  .brand__tag { display: none; }
+  .brand__mark { font-size: 27px; }
+  .head__actions { gap: 8px; }
+  .head__actions .btn { padding: 11px 15px; font-size: 13px; }
+}
+
+@media (max-width: 560px) {
+  /* ---- Range tiles become a LIST on a phone --------------------------------
+     The 2-up tile is 159x109 here, and the photography is product cut-outs on
+     white. object-fit: cover on a landscape box that small crops a boot down
+     to an unrecognisable fragment, and the overlaid label ("Work Wear
+     Accessories") wraps to two lines on top of it. A row fixes both at once:
+     the photo gets a square frame and is CONTAINED rather than cropped, and
+     the label moves out of the picture onto the surface where it can be read.
+     Six ranges then scan in one screen instead of three.
+     NB this block must stay AFTER the base .cat rules: the overrides are
+     same-specificity, so source order is what decides. */
+  .cats {
+    grid-template-columns: minmax(0, 1fr); gap: 0;
+    border: 1px solid var(--line); background: var(--surface);
+  }
+  .cat {
+    display: grid; grid-template-columns: 84px minmax(0, 1fr);
+    align-items: center; gap: 14px;
+    aspect-ratio: auto; min-height: 84px; padding-right: 14px;
+    background: var(--surface); color: var(--ink);
+  }
+  .cat + .cat { border-top: 1px solid var(--line); }
+  .cat__img { position: relative; inset: auto; width: 84px; height: 84px; }
+  .cat__img img { object-fit: contain; padding: 9px; }
+  .cat__img--empty { background: var(--surface-2); }
+  .cat__img--empty span { font-size: 13px; color: var(--ph-ink); letter-spacing: 1px; }
+  /* Nothing to darken any more: the label is no longer over the photo. */
+  .cat__scrim, .cat__rule { display: none; }
+  .cat__body {
+    position: static; display: flex; flex-direction: column;
+    align-items: flex-start; gap: 2px; min-width: 0;
+  }
+  .cat__name { font-size: 15.5px; color: var(--ink); }
+  .cat__count { font-size: 12px; color: var(--orange-ink); }
+  /* A row needs to say it is a row you can open, and the chevron only reads as
+     "go" when it sits at the end of the row rather than trailing the count. */
+  .cat__meta { width: 100%; justify-content: space-between; }
+  /* --line-strong is a hairline colour (1.5:1 on white): as a chevron it is
+     invisible and promises nothing. --muted is the same family and reads. */
+  .cat__go { display: inline-block; color: var(--muted); font-size: 22px; }
+  /* A row is a big target, so the 0.995 scale the tile uses is imperceptible
+     here. A surface tint is the feedback a list row actually gives. */
+  .cat:active { transform: none; background: var(--surface-2); }
+
+  /* The featured card's category tag was covering 35% of the photo: at 160px
+     wide "Work Wear Accessories" wrapped to two lines. One line, and it sits
+     on the frame instead of over the product. */
+  .card__tag {
+    top: 0; left: 0; max-width: 100%;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    /* 10px is the largest size that still fits "Work Wear Accessories" on one
+       line in a 160px card. Bigger truncates it, which is worse. */
+    font-size: 10px; padding: 3px 7px; letter-spacing: 0.2px;
+  }
+  /* A full-width category tag and a "New" badge both pinned to the top row
+     collide on the longest labels. Opposite corners, so neither has to be
+     truncated to make room for the other. "New" is short, so it keeps the
+     desktop size. */
+  .card__new { top: auto; right: 0; bottom: 0; }
+
+  .grid, .grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .card { contain-intrinsic-size: 260px; }
+  .card__media img { inset: 8px; width: calc(100% - 16px); height: calc(100% - 16px); }
+  .card__body { padding: 11px; }
+  .card__name { font-size: 13.5px; }
+  .card__spec { font-size: 12px; -webkit-line-clamp: 2; }
+  /* 54vh of hero on a phone is 438px holding 216px of copy, so half of it is
+     empty near-black — and the rotator and trust strip below it are also dark,
+     which makes the top of the page read as one long unbroken slab. Let the
+     copy set the height instead. */
+  .hero { min-height: 0; }
+  .hero__inner { padding-block: 52px; }
+
+  /* Three stats in a wrapping flex row land 2 + 1, which reads as a mistake.
+     A three-column grid keeps them on one line: the numbers are short and the
+     labels are free to wrap under them. */
+  .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .stat__num { font-size: 1.9rem; }
+  .stat__label { font-size: 11px; max-width: none; }
+
+  /* The footer was 810px: four full-width stacked blocks, one of them a
+     six-item list. Two columns for the link blocks halves the tail without
+     dropping a single link. */
+  .foot { padding-block: 40px 20px; }
+  .foot__cols { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 20px; margin-bottom: 26px; }
+  .foot__cols > :first-child { grid-column: 1 / -1; }
+  .foot__about { max-width: none; }
+  .foot__list { gap: 0; }
+
+  .specs__row { flex-direction: column; gap: 2px; }
+  .specs__value { text-align: left; }
+  .trust__list { justify-content: flex-start; }
+  .pd__actions .btn { width: 100%; }
+}
+
+/* ==========================================================================
+   FILTERS AS A DRAWER (phone / small tablet)
+
+   An accordion that expands in place pushes the entire product grid down the
+   page, so on a phone you lose your place every time you open it and the
+   chips you are choosing from are below the fold anyway. Over 760px it stays
+   the inline accordion, which is right for a wide screen.
+
+   Placed AFTER the other breakpoint blocks on purpose: these overrides are
+   same-specificity with the base .filters rules, so source order decides.
+   ========================================================================== */
+@media (max-width: 760px) {
+  .filters__backdrop {
+    display: block; position: fixed; inset: 0; z-index: 90;
+    background: rgba(10, 8, 6, 0.55);
+    animation: backdropIn 240ms var(--ease-out);
+  }
+  .filters__backdrop[hidden] { display: none; }
+  @keyframes backdropIn { from { opacity: 0; } }
+
+  .filters__panel {
+    position: fixed; top: 0; right: 0; bottom: 0; left: auto; z-index: 91;
+    width: 75vw; min-width: 264px; max-width: 400px;
+    /* Drop the accordion mechanism entirely; this is a sliding panel now. */
+    display: block; grid-template-rows: none;
+    background: var(--surface); border-left: 1px solid var(--line-strong);
+    transform: translateX(101%);
+    /* Hidden means hidden: off-screen alone would keep it tabbable and
+       readable to a screen reader while the page behind it is the content. */
+    visibility: hidden;
+    transition: transform 300ms var(--ease-out-quint), visibility 0s linear 300ms;
+    overscroll-behavior: contain;
+  }
+  .filters__panel[data-open="true"] {
+    transform: none; visibility: visible;
+    transition: transform 300ms var(--ease-out-quint), visibility 0s;
+  }
+  /* The inner wrapper becomes the drawer's column: header pinned, chips
+     scrolling, footer pinned. */
+  .filters__panel > div {
+    overflow: visible; height: 100%;
+    display: flex; flex-direction: column;
+  }
+
+  .filters__drawerhead {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 14px 16px; border-bottom: 3px solid var(--ink); flex: none;
+  }
+  .filters__drawertitle { font-size: 1.25rem; font-weight: 800; }
+  .filters__close {
+    width: 44px; height: 44px; flex: none; padding: 0;
+    display: grid; place-items: center; cursor: pointer;
+    background: none; border: 2px solid var(--ink); border-radius: var(--r);
+    color: var(--ink);
+    transition: transform 160ms var(--ease-out), background-color 180ms ease, color 180ms ease;
+  }
+  .filters__close:active { transform: scale(0.94); }
+  .filters__closeicon { width: 16px; height: 16px; }
+  @media (hover: hover) and (pointer: fine) {
+    .filters__close:hover { background: var(--ink); color: #fff; }
+  }
+
+  .filters__groups {
+    flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch;
+    border-top: 0; padding: 18px 16px 24px; gap: 22px;
+  }
+
+  .filters__drawerfoot {
+    display: block; flex: none;
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid var(--line);
+    background: var(--surface);
+  }
+
+  /* The page behind a drawer must not scroll under your finger. */
+  body.is-drawer-open { overflow: hidden; }
+}
+
+/* Bigger touch targets on coarse pointers. */
+@media (pointer: coarse) {
+  .nav a { padding-block: 15px; }
+  .fchip { min-height: 44px; }
+  /* The visible bar stays 4px; the hit area is the padding around it. 12px of
+     padding only reached 28px, which is under the 44px target and these dots
+     sit close together. */
+  .rotator__dot { height: 44px; padding-block: 20px; }
+  .rotator__dot::before, .rotator__dot::after { inset: 20px 0; }
+  .search__clear { width: 44px; height: 44px; right: 3px; }
+  .filters__clear { min-height: 44px; padding-inline: 8px; }
+  .crumbs a { padding-block: 10px; }
+}
+
+/* ------------------------------------------------------- Reduced motion -- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .js .reveal, .reveal { opacity: 1; transform: none; }
+  .btn:active, .card:active, .fchip:active, .burger:active, .pd__thumb:active,
+  .cat:active, .filters__toggle:active { transform: none; }
+  /* The burger still has to become an X: that is state, not decoration. It
+     just gets there instantly (the global duration override handles it). */
+  .cat:hover .cat__go, .cat:hover .cat__img img { transform: none; }
+  /* Keep the blur bridge and the crossfade (they aid comprehension); drop the
+     movement. The rotator still changes slide, it just cuts instead of sliding. */
+  .form.is-leaving { transform: none; }
+  .search__clear { transform: translateY(-50%); }
+}

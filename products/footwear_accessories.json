@@ -1,0 +1,359 @@
+[
+  {
+    "category": "footwear-accessories",
+    "slug": "insole-gel",
+    "name": "Gel Insole",
+    "img": "",
+    "description": "Gel insole for superior shock absorption and comfort in safety footwear.",
+    "features": [
+      "Gel material",
+      "Shock absorption",
+      "Three size ranges"
+    ],
+    "overview": [
+      "Kapriol's Gel insole provides targeted cushioning for the heel and forefoot, reducing fatigue during long work shifts."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "42113",
+        "size": "39/41"
+      },
+      {
+        "code": "42114",
+        "size": "42/44"
+      },
+      {
+        "code": "42115",
+        "size": "45/47"
+      }
+    ],
+    "sizes": [
+      "39/41",
+      "42/44",
+      "45/47"
+    ],
+    "colors": [],
+    "material": "Gel",
+    "materialComposition": null,
+    "certifications": [],
+    "standards": [],
+    "safetyClass": null,
+    "weightGrams": null,
+    "fit": null,
+    "toeCap": null,
+    "midsole": null,
+    "sole": null,
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [],
+    "isNew": false,
+    "pageRef": 71,
+    "sourceNames": [
+      "GEL"
+    ]
+  },
+  {
+    "category": "footwear-accessories",
+    "slug": "insole-eva-gel",
+    "name": "EVA Gel Insole",
+    "img": "",
+    "description": "Combined EVA foam and gel insole for balanced cushioning and energy return.",
+    "features": [
+      "EVA + gel construction",
+      "Balanced cushioning",
+      "Four size ranges"
+    ],
+    "overview": [
+      "The EVA Gel insole combines a lightweight EVA base with gel zones for cushioning and energy return suited to active workdays."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "42125",
+        "size": "39/40"
+      },
+      {
+        "code": "42126",
+        "size": "41/42"
+      },
+      {
+        "code": "42127",
+        "size": "43/44"
+      },
+      {
+        "code": "42128",
+        "size": "45/47"
+      }
+    ],
+    "sizes": [
+      "39/40",
+      "41/42",
+      "43/44",
+      "45/47"
+    ],
+    "colors": [],
+    "material": "EVA + Gel",
+    "materialComposition": null,
+    "certifications": [],
+    "standards": [],
+    "safetyClass": null,
+    "weightGrams": null,
+    "fit": null,
+    "toeCap": null,
+    "midsole": null,
+    "sole": null,
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [],
+    "isNew": false,
+    "pageRef": 71,
+    "sourceNames": [
+      "EVA GEL"
+    ]
+  },
+  {
+    "category": "footwear-accessories",
+    "slug": "insole-eva",
+    "name": "EVA Insole",
+    "img": "",
+    "description": "Lightweight EVA foam insole for everyday comfort and mild cushioning.",
+    "features": [
+      "EVA foam",
+      "Lightweight",
+      "Four size ranges"
+    ],
+    "overview": [
+      "Kapriol's EVA insole is a simple, lightweight replacement insole providing basic cushioning inside safety footwear."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "42120",
+        "size": "39/40"
+      },
+      {
+        "code": "42121",
+        "size": "41/42"
+      },
+      {
+        "code": "42122",
+        "size": "43/44"
+      },
+      {
+        "code": "42123",
+        "size": "45/46"
+      }
+    ],
+    "sizes": [
+      "39/40",
+      "41/42",
+      "43/44",
+      "45/46"
+    ],
+    "colors": [],
+    "material": "EVA",
+    "materialComposition": null,
+    "certifications": [],
+    "standards": [],
+    "safetyClass": null,
+    "weightGrams": null,
+    "fit": null,
+    "toeCap": null,
+    "midsole": null,
+    "sole": null,
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [],
+    "isNew": false,
+    "pageRef": 71,
+    "sourceNames": [
+      "EVA"
+    ]
+  },
+  {
+    "category": "footwear-accessories",
+    "slug": "insole-memory-foam",
+    "name": "Memory Foam Insole",
+    "img": "",
+    "description": "Memory foam insole that moulds to the foot shape for personalised comfort.",
+    "features": [
+      "Memory foam material",
+      "Conforms to foot shape",
+      "Individual sizes 40–46"
+    ],
+    "overview": [
+      "The Memory Foam insole uses viscoelastic foam that moulds to the wearer's foot, distributing pressure evenly across the sole for all-day comfort."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "43248",
+        "size": "40"
+      },
+      {
+        "code": "43249",
+        "size": "41"
+      },
+      {
+        "code": "43250",
+        "size": "42"
+      },
+      {
+        "code": "43251",
+        "size": "43"
+      },
+      {
+        "code": "43252",
+        "size": "44"
+      },
+      {
+        "code": "43253",
+        "size": "45"
+      },
+      {
+        "code": "43254",
+        "size": "46"
+      }
+    ],
+    "sizes": [
+      "40",
+      "41",
+      "42",
+      "43",
+      "44",
+      "45",
+      "46"
+    ],
+    "colors": [],
+    "material": "Memory Foam",
+    "materialComposition": null,
+    "certifications": [],
+    "standards": [],
+    "safetyClass": null,
+    "weightGrams": null,
+    "fit": null,
+    "toeCap": null,
+    "midsole": null,
+    "sole": null,
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [],
+    "isNew": false,
+    "pageRef": 71,
+    "sourceNames": [
+      "MEMORY FOAM insole"
+    ]
+  },
+  {
+    "category": "footwear-accessories",
+    "slug": "shoelaces",
+    "name": "Replacement Shoelaces",
+    "img": "",
+    "description": "Kapriol replacement shoelaces in 100–150 cm lengths, available in brown and black.",
+    "features": [
+      "5 length/colour combinations",
+      "100 cm, 125 cm, 150 cm options",
+      "Brown and black"
+    ],
+    "overview": [
+      "Kapriol replacement laces fit the full safety footwear range, available in multiple lengths and two colours."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "42105",
+        "size": "100cm",
+        "color": "Brown"
+      },
+      {
+        "code": "42104",
+        "size": "125cm",
+        "color": "Brown"
+      },
+      {
+        "code": "42106",
+        "size": "125cm",
+        "color": "Black"
+      },
+      {
+        "code": "42107",
+        "size": "150cm",
+        "color": "Brown"
+      },
+      {
+        "code": "42108",
+        "size": "150cm",
+        "color": "Black"
+      }
+    ],
+    "sizes": [
+      "100cm",
+      "125cm",
+      "150cm"
+    ],
+    "colors": [
+      "Brown",
+      "Black"
+    ],
+    "material": null,
+    "materialComposition": null,
+    "certifications": [],
+    "standards": [],
+    "safetyClass": null,
+    "weightGrams": null,
+    "fit": null,
+    "toeCap": null,
+    "midsole": null,
+    "sole": null,
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [],
+    "isNew": false,
+    "pageRef": 71,
+    "sourceNames": [
+      "STRINGS"
+    ]
+  },
+  {
+    "category": "footwear-accessories",
+    "slug": "duo-spray",
+    "name": "Duo Spray Shoe Care",
+    "img": "",
+    "description": "Kapriol Duo Spray — specialist dual-action care product for safety and work footwear.",
+    "features": [
+      "Dual-action formula",
+      "Protects and maintains upper material"
+    ],
+    "overview": [
+      "The Kapriol Duo Spray is a shoe care spray for work and safety footwear, protecting and maintaining upper materials."
+    ],
+    "productLine": null,
+    "articleCodes": [
+      {
+        "code": "42100",
+        "size": null
+      }
+    ],
+    "sizes": [],
+    "colors": [],
+    "material": null,
+    "materialComposition": null,
+    "certifications": [],
+    "standards": [],
+    "safetyClass": null,
+    "weightGrams": null,
+    "fit": null,
+    "toeCap": null,
+    "midsole": null,
+    "sole": null,
+    "gender": "Unisex",
+    "season": null,
+    "features_pictograms": [],
+    "isNew": false,
+    "pageRef": 71,
+    "sourceNames": [
+      "DUO SPRAY"
+    ]
+  }
+]

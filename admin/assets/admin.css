@@ -1,0 +1,443 @@
+/* =============================================================================
+   KAPRIOL.BG — admin.css
+   Layout-only styles for the admin area. Tokens, buttons (.btn*), and form
+   fields (.field) come from the public style.css; this file just arranges them.
+   ========================================================================== */
+
+.admin { background: var(--bg); color: var(--ink); min-height: 100vh; }
+
+/* Small button variant (admin chrome) */
+.btn--sm { padding: .55em 1em; font-size: .85rem; }
+
+/* --------------------------------------------------------- Auth (login) -- */
+.admin--auth { display: grid; place-items: center; padding: 24px; }
+.auth-card {
+  width: 100%; max-width: 380px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-card);
+  padding: clamp(28px, 5vw, 40px);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.07);
+}
+.auth-card__brand {
+  display: inline-block; font-weight: 800; letter-spacing: .14em;
+  color: var(--ink); text-decoration: none; font-size: 1.1rem;
+}
+.auth-card__title { margin: 18px 0 4px; font-size: 1.5rem; }
+.auth-card__sub { margin: 0 0 24px; color: var(--ink-dim); font-size: .95rem; }
+.auth-form .field:last-of-type { margin-bottom: 22px; }
+
+/* ------------------------------------------------------------- Top bar -- */
+.admin-bar {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--surface);
+  border-bottom: 1px solid var(--hairline);
+}
+.admin-bar__inner {
+  max-width: var(--maxw); margin: 0 auto;
+  display: flex; align-items: center; gap: 16px 24px; flex-wrap: wrap;
+  padding: 12px var(--pad-x);
+}
+.admin-bar__brand { font-weight: 800; letter-spacing: .12em; }
+.admin-bar__brand span { color: var(--red-ink); font-weight: 700; }
+.admin-bar__right { margin-left: auto; display: flex; gap: 8px; }
+
+.admin-tabs { display: flex; gap: 4px; }
+.admin-tab {
+  font: inherit; font-weight: 600; font-size: .92rem;
+  border: 1px solid transparent; border-radius: var(--r-btn);
+  background: transparent; color: var(--ink-dim);
+  padding: .5em 1em; cursor: pointer;
+  transition: background-color .2s var(--ease-out), color .2s var(--ease-out);
+}
+.admin-tab:hover { color: var(--ink); background: rgba(0,0,0,0.04); }
+.admin-tab.is-active { color: var(--ink); background: var(--bg-alt); }
+
+/* --------------------------------------------------------------- Main -- */
+.admin-main { max-width: var(--maxw); margin: 0 auto; padding: 24px var(--pad-x) 80px; }
+.admin-panel[hidden] { display: none; }
+.admin-h2 { margin: 0; font-size: 1.4rem; }
+.admin-meta { color: var(--ink-mute); font-size: .9rem; margin: 6px 0 16px; }
+.admin-hint { color: var(--ink-mute); font-weight: 400; text-transform: none; letter-spacing: 0; }
+.admin-empty { color: var(--ink-mute); padding: 40px 4px; text-align: center; }
+
+.admin-section__head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; margin-bottom: 4px;
+}
+
+/* ---------------------------------------------------- Products: grid ---- */
+.admin-grid {
+  display: grid; grid-template-columns: 320px 1fr; gap: 28px;
+  align-items: start;
+}
+@media (max-width: 760px) { .admin-grid { grid-template-columns: 1fr; } }
+
+.admin-list {
+  background: var(--surface); border: 1px solid var(--hairline);
+  border-radius: var(--r-card); overflow: hidden;
+  position: sticky; top: 76px;
+}
+@media (max-width: 760px) { .admin-list { position: static; } }
+.admin-list__head { padding: 14px; border-bottom: 1px solid var(--hairline); display: flex; flex-direction: column; gap: 10px; }
+.admin-list__new { align-self: stretch; text-align: center; }
+.admin-search {
+  width: 100%; font: inherit; font-size: 16px; color: var(--ink);
+  background: var(--bg); border: 1px solid var(--stroke-soft);
+  border-radius: var(--r-btn); padding: 10px 12px;
+}
+.admin-search:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px rgba(232,0,13,0.12); }
+.admin-list__count { margin: 2px 0 0; font-size: .82rem; color: var(--ink-mute); }
+
+/* Select control (category filter + create-form category) */
+.admin-select {
+  width: 100%; font: inherit; font-size: 16px; color: var(--ink);
+  background: var(--bg); border: 1px solid var(--stroke-soft);
+  border-radius: var(--r-btn); padding: 10px 12px; cursor: pointer;
+}
+.admin-select:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px rgba(232,0,13,0.12); }
+.admin-select--full { background: var(--surface); }
+.admin-list__scroll { max-height: min(70vh, 640px); overflow-y: auto; }
+
+.admin-item {
+  display: block; width: 100%; text-align: left; font: inherit; cursor: pointer;
+  background: transparent; border: 0; border-bottom: 1px solid var(--hairline);
+  padding: 12px 14px; color: var(--ink);
+  transition: background-color .15s var(--ease-out);
+}
+.admin-item:hover { background: rgba(0,0,0,0.03); }
+.admin-item.is-active { background: var(--bg-alt); }
+.admin-item__name { display: block; font-weight: 600; font-size: .95rem; }
+.admin-item__sub { display: block; font-size: .8rem; color: var(--ink-mute); margin-top: 2px; }
+
+/* A product that is hidden from the public site. Dimmed, but still perfectly
+   readable: it is not disabled, it is just not being served. */
+.admin-item.is-hidden-prod .admin-item__name,
+.admin-item.is-hidden-prod .admin-item__sub { color: var(--ink-mute); }
+.admin-flag {
+  display: inline-block; vertical-align: 1px;
+  background: var(--ink); color: #fff;
+  font-size: .62rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  padding: 2px 6px; border-radius: 3px; margin-left: 6px;
+}
+
+/* The bulk visibility action sits above "+ New product". Ghost-weighted on
+   purpose: it affects the entire catalog, so it must not compete with the
+   primary create action for a distracted click. */
+.admin-list__bulk { align-self: stretch; text-align: center; }
+.admin-list__bulk[hidden] { display: none; }
+/* Its own feedback line: the editor's status sits inside a form that is
+   hidden until a product is selected, so a bulk result posted there would be
+   announced to nobody. */
+.admin-list__msg { margin: 0; font-size: .8rem; line-height: 1.4; }
+.admin-list__msg:empty { display: none; }
+
+/* ---------------------------------------------------- Forms / editor ---- */
+.admin-editor, .admin-form--content {
+  background: var(--surface); border: 1px solid var(--hairline);
+  border-radius: var(--r-card); padding: clamp(20px, 3vw, 32px);
+}
+.admin-form--content { max-width: 760px; }
+.admin-form__head { margin-bottom: 18px; }
+.admin-form__title { margin: 0; font-size: 1.3rem; }
+.admin-form__foot {
+  margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--hairline);
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+}
+.form-status.is-ok { color: var(--ink-dim); }
+
+/* Delete sits on the far right of the editor foot, styled as a quiet danger. */
+.admin-del { margin-left: auto; }
+.admin-del:hover { border-color: var(--red); color: var(--red-ink); background: rgba(232,0,13,0.06); }
+.admin-del[hidden] { display: none; }
+
+.admin-fieldset {
+  border: 1px solid var(--hairline); border-radius: var(--r-card);
+  padding: 18px 18px 4px; margin: 0 0 22px;
+}
+.admin-fieldset legend {
+  padding: 0 8px; font-weight: 700; font-size: .85rem;
+  text-transform: uppercase; letter-spacing: .07em; color: var(--ink-dim);
+}
+.admin-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; }
+@media (max-width: 560px) { .admin-row { grid-template-columns: 1fr; } }
+
+/* Best-seller product pickers (Site content tab) */
+.admin-best { margin-bottom: 16px; }
+.admin-best__prev { display: flex; align-items: center; gap: 10px; margin-top: 8px; min-height: 28px; }
+.admin-best__thumb {
+  flex: none; width: 44px; height: 44px; object-fit: contain;
+  background: var(--bg); border: 1px solid var(--stroke-soft); border-radius: 8px;
+}
+.admin-best__thumb--empty {
+  display: grid; place-items: center; color: var(--ink-mute); font-size: 1.1rem;
+}
+.admin-best__thumb.is-empty { background: var(--surface-2); }
+.admin-best__hint { color: var(--ink-mute); font-size: .85rem; }
+.admin-best__hint--warn { color: var(--red-ink); }
+
+/* Full-description "simple rich text" box: monospace so the -, ##, ** markers
+   line up and read as markup. */
+.admin-richtext { font-family: var(--font-mono, ui-monospace, monospace); line-height: 1.6; min-height: 180px; resize: vertical; }
+
+/* Repeatable list rows (features / overview / sizes / article codes) */
+.admin-rows { display: flex; flex-direction: column; gap: 8px; }
+.admin-rows__row { display: flex; gap: 8px; align-items: flex-start; }
+.admin-rows__row input,
+.admin-rows__row textarea {
+  flex: 1; font: inherit; color: var(--ink);
+  background: var(--surface); border: 1px solid var(--stroke-soft);
+  border-radius: var(--r-btn); padding: 10px 12px; min-width: 0;
+}
+.admin-rows__row textarea { min-height: 60px; resize: vertical; }
+.admin-rows__row input:focus,
+.admin-rows__row textarea:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px rgba(232,0,13,0.12); }
+.admin-rows__del {
+  flex: none; width: 38px; height: 40px; cursor: pointer;
+  background: transparent; border: 1px solid var(--stroke-soft);
+  border-radius: var(--r-btn); color: var(--ink-mute); font-size: 1.2rem; line-height: 1;
+  transition: color .15s var(--ease-out), border-color .15s var(--ease-out);
+}
+.admin-rows__del:hover { color: var(--red-ink); border-color: var(--red); }
+.admin-rows__add {
+  align-self: flex-start; margin-top: 8px; font: inherit; font-weight: 600; font-size: .85rem;
+  cursor: pointer; background: transparent; border: 1px dashed var(--stroke-soft);
+  border-radius: var(--r-btn); padding: .5em 1em; color: var(--ink-dim);
+}
+.admin-rows__add:hover { border-color: var(--red); color: var(--red-ink); }
+
+/* article codes = code + size pair */
+.admin-pair { display: grid; grid-template-columns: 1fr 110px auto; gap: 8px; }
+
+/* image upload field */
+.admin-img { display: flex; gap: 16px; align-items: flex-start; }
+@media (max-width: 480px) { .admin-img { flex-direction: column; } }
+.admin-img__preview {
+  flex: none; width: 120px; height: 120px;
+  border: 1px solid var(--stroke-soft); border-radius: var(--r-btn);
+  background: var(--surface-2); overflow: hidden;
+  display: grid; place-items: center;
+}
+.admin-img__preview img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.admin-img__preview.is-empty { position: relative; }
+.admin-img__preview.is-empty img { display: none; }
+.admin-img__preview.is-empty::after {
+  content: "KAPRIOL"; font-weight: 800; letter-spacing: .1em;
+  font-size: .7rem; color: var(--ink-dim);
+}
+.admin-img__controls { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.admin-img__file { font: inherit; font-size: .9rem; }
+.admin-img__hint { margin: 0; font-size: .78rem; color: var(--ink-mute); }
+.admin-img__path {
+  font: inherit; font-size: .85rem; color: var(--ink-dim);
+  background: var(--surface); border: 1px solid var(--stroke-soft);
+  border-radius: var(--r-btn); padding: 8px 10px;
+}
+.admin-img__path:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px rgba(232,0,13,0.12); }
+.admin-img__status { margin: 0; min-height: 1em; }
+
+/* ------------------------------------------------- Product gallery ------- */
+.admin-gallery { display: flex; flex-direction: column; gap: 12px; }
+.admin-gallery__grid { display: flex; flex-wrap: wrap; gap: 12px; }
+.admin-gallery__empty { margin: 0; font-size: .85rem; color: var(--ink-mute); }
+.admin-gallery__tile {
+  position: relative; width: 120px;
+  border: 1px solid var(--stroke-soft); border-radius: var(--r-btn);
+  background: var(--surface); overflow: hidden; cursor: grab;
+  transition: border-color .15s ease, box-shadow .15s ease, opacity .15s ease;
+}
+.admin-gallery__tile.is-main { border-color: var(--red); box-shadow: 0 0 0 2px rgba(232,0,13,0.15); }
+.admin-gallery__tile.is-over { border-color: var(--red); box-shadow: 0 0 0 3px rgba(232,0,13,0.25); }
+.admin-gallery__tile.is-dragging { opacity: .45; }
+.admin-gallery__thumb { width: 100%; height: 100px; background: var(--surface-2); display: grid; place-items: center; }
+.admin-gallery__thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.admin-gallery__thumb.is-empty::after { content: "KAPRIOL"; font-weight: 800; letter-spacing: .1em; font-size: .62rem; color: var(--ink-dim); }
+.admin-gallery__badge {
+  position: absolute; top: 6px; left: 6px; z-index: 2;
+  background: var(--red); color: #fff; font-size: .62rem; font-weight: 800;
+  letter-spacing: .06em; text-transform: uppercase; padding: 2px 6px; border-radius: 4px;
+}
+.admin-gallery__actions { display: flex; gap: 2px; padding: 5px; border-top: 1px solid var(--stroke-soft); }
+.admin-gallery__btn {
+  flex: 1; font: inherit; font-size: .8rem; line-height: 1; cursor: pointer;
+  padding: 5px 0; border: 1px solid var(--stroke-soft); border-radius: 5px;
+  background: var(--surface); color: var(--ink-dim);
+}
+.admin-gallery__btn:hover:not(:disabled) { border-color: var(--ink-mute); color: var(--ink); }
+.admin-gallery__btn:disabled { opacity: .35; cursor: default; }
+.admin-gallery__btn--del { color: var(--red); }
+.admin-gallery__btn--del:hover:not(:disabled) { background: var(--red); color: #fff; border-color: var(--red); }
+.admin-gallery__controls { display: flex; flex-direction: column; gap: 8px; }
+.admin-gallery__status { margin: 0; min-height: 1em; }
+
+/* checkbox row */
+.admin-check { display: flex; align-items: center; gap: 10px; margin: 4px 0 18px; }
+.admin-check input { width: 18px; height: 18px; accent-color: var(--red); }
+.admin-check label { font-weight: 600; font-size: .9rem; color: var(--ink-dim); }
+
+/* Contact detail row: value input + its "Show on site" toggle side by side. */
+.admin-contactrow { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; align-items: center; }
+.admin-contactrow > label { grid-column: 1 / -1; }
+.admin-check--inline { margin: 0; white-space: nowrap; }
+.admin-check--inline label { font-weight: 500; font-size: .82rem; color: var(--ink-mute); }
+@media (max-width: 520px) {
+  .admin-contactrow { grid-template-columns: 1fr; }
+}
+
+/* One "why" key figure: a short number field beside a wider caption field. */
+.admin-statrow { display: grid; grid-template-columns: 130px 1fr; gap: 0 16px; }
+.admin-statrow .field { margin-bottom: 12px; }
+@media (max-width: 520px) {
+  .admin-statrow { grid-template-columns: 1fr; }
+}
+
+.admin-readonly { color: var(--ink-mute); font-size: .82rem; }
+.admin-readonly code { color: var(--ink-dim); }
+
+/* ------------------------------------------------- Codes & pictograms --- */
+.admin-coderows { display: flex; flex-direction: column; gap: 10px; }
+.admin-coderow { display: flex; flex-direction: column; gap: 8px; }
+/* picto rows carry an extra title+description line below, so box them up. */
+.admin-coderow--picto {
+  padding: 10px; border: 1px solid var(--stroke-soft);
+  border-radius: var(--r-btn); background: var(--surface-2);
+}
+.admin-coderow__main {
+  display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center;
+}
+.admin-coderow--picto .admin-coderow__main {
+  grid-template-columns: 44px 1fr minmax(0, 200px) auto;
+}
+.admin-coderow__detail { display: grid; gap: 8px; }
+.admin-coderow input[type="text"],
+.admin-coderow textarea {
+  font: inherit; color: var(--ink); min-width: 0;
+  background: var(--surface); border: 1px solid var(--stroke-soft);
+  border-radius: var(--r-btn); padding: 10px 12px;
+}
+.admin-coderow textarea { resize: vertical; line-height: 1.5; }
+.admin-coderow input[type="text"]:focus,
+.admin-coderow textarea:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px rgba(232,0,13,0.12); }
+.admin-coderow__thumb {
+  width: 44px; height: 44px; flex: none;
+  border: 1px solid var(--stroke-soft); border-radius: var(--r-btn);
+  background: var(--surface-2); overflow: hidden; display: grid; place-items: center;
+}
+.admin-coderow__thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.admin-coderow__thumb.is-empty img { display: none; }
+.admin-coderow__thumb.is-empty::after {
+  content: "—"; color: var(--ink-mute); font-weight: 700;
+}
+.admin-coderow__file { font: inherit; font-size: .82rem; min-width: 0; }
+@media (max-width: 640px) {
+  .admin-coderow__main,
+  .admin-coderow--picto .admin-coderow__main { grid-template-columns: 1fr auto; }
+  .admin-coderow--picto .admin-coderow__thumb { grid-row: span 2; }
+  .admin-coderow__file { grid-column: 1 / -1; }
+}
+
+/* -------------------------------------------- Category landing images -- */
+.admin-catimg {
+  display: grid; grid-template-columns: 96px 1fr; gap: 6px 14px;
+  align-items: center; padding: 14px 0; border-top: 1px solid var(--hairline);
+}
+.admin-catimg:first-of-type { border-top: 0; padding-top: 4px; }
+.admin-catimg > label { grid-column: 1 / -1; margin: 0; }
+.admin-catimg__thumb {
+  width: 96px; height: 60px;
+  border: 1px solid var(--stroke-soft); border-radius: var(--r-btn);
+  background: var(--surface-2); overflow: hidden; display: grid; place-items: center;
+}
+.admin-catimg__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.admin-catimg__thumb.is-empty img { display: none; }
+.admin-catimg__thumb.is-empty::after { content: "—"; color: var(--ink-mute); font-weight: 700; }
+.admin-catimg__controls { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.admin-catimg__hint { color: var(--ink-mute); font-size: .82rem; }
+.admin-catimg .admin-file { font: inherit; font-size: .82rem; min-width: 0; }
+
+/* ----------------------------------------- Product spec pickers (chips) -- */
+.admin-specs {
+  margin-top: 8px; padding-top: 18px; border-top: 1px solid var(--hairline);
+}
+.admin-specs__head {
+  margin: 0 0 14px; font-size: .85rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .07em; color: var(--ink-dim);
+}
+.admin-specpick { position: relative; }
+.admin-specpick__bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.admin-specpick__chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.admin-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--bg-alt); border: 1px solid var(--hairline);
+  border-radius: 999px; padding: 4px 4px 4px 12px; font-size: .9rem; color: var(--ink);
+}
+.admin-chip__icon { width: 20px; height: 20px; object-fit: contain; }
+.admin-chip__txt { font-weight: 600; }
+.admin-chip__x {
+  width: 22px; height: 22px; flex: none; cursor: pointer; line-height: 1;
+  background: transparent; border: 0; color: var(--ink-mute); font-size: 1.05rem;
+  border-radius: 50%;
+}
+.admin-chip__x:hover { color: var(--red-ink); background: rgba(0,0,0,.05); }
+.admin-specpick__add {
+  width: 34px; height: 34px; flex: none; cursor: pointer; font-size: 1.2rem; line-height: 1;
+  background: transparent; border: 1px dashed var(--stroke-soft);
+  border-radius: var(--r-btn); color: var(--ink-dim);
+}
+.admin-specpick__add:hover { border-color: var(--red); color: var(--red-ink); }
+.admin-specpick__pop {
+  position: absolute; z-index: 20; margin-top: 8px; left: 0;
+  width: min(420px, 100%); max-height: 280px; overflow-y: auto;
+  background: var(--surface); border: 1px solid var(--hairline);
+  border-radius: var(--r-card); box-shadow: 0 14px 40px rgba(0,0,0,0.12);
+  padding: 6px;
+}
+.admin-specpick__pop[hidden] { display: none; }
+.admin-specpick__opt {
+  display: flex; align-items: center; gap: 10px; width: 100%; text-align: left;
+  font: inherit; font-size: .9rem; color: var(--ink); cursor: pointer;
+  background: transparent; border: 0; border-radius: var(--r-btn); padding: 8px 10px;
+}
+.admin-specpick__opt:hover { background: var(--bg-alt); }
+.admin-specpick__opt img { width: 26px; height: 26px; object-fit: contain; flex: none; }
+.admin-specpick__empty { margin: 0; padding: 12px 10px; color: var(--ink-mute); font-size: .88rem; }
+
+/* ------------------------------------------------------- Enquiries ------ */
+.admin-table-wrap { overflow-x: auto; border: 1px solid var(--hairline); border-radius: var(--r-card); background: var(--surface); }
+.admin-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+.admin-table th, .admin-table td { text-align: left; padding: 12px 14px; vertical-align: top; border-bottom: 1px solid var(--hairline); }
+.admin-table th { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-mute); background: var(--bg-alt); position: sticky; top: 0; }
+.admin-table tr:last-child td { border-bottom: 0; }
+.admin-table td.admin-msg { white-space: pre-wrap; max-width: 420px; color: var(--ink-dim); }
+.admin-table a { color: var(--red-ink); }
+.admin-table__date { color: var(--ink-mute); white-space: nowrap; }
+
+/* ----------------------------------------------------------- Analytics -- */
+.an-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 26px; }
+@media (max-width: 720px) { .an-kpis { grid-template-columns: repeat(2, 1fr); } }
+.an-kpi {
+  background: var(--surface); border: 1px solid var(--hairline);
+  border-radius: var(--r-card); padding: 18px 18px 16px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.an-kpi__num { font-size: 1.9rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
+.an-kpi__label { font-size: .82rem; color: var(--ink-mute); }
+.an-block { margin-top: 26px; }
+.an-h3 { font-size: 1.02rem; font-weight: 700; margin: 0 0 12px; }
+.an-chart {
+  display: flex; align-items: flex-end; gap: 3px;
+  height: 150px; padding: 10px 12px;
+  background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--r-card);
+}
+.an-bar { flex: 1; height: 100%; display: flex; align-items: flex-end; min-width: 0; }
+.an-bar__fill {
+  width: 100%; min-height: 2px; border-radius: 3px 3px 0 0;
+  background: var(--red); opacity: .85;
+}
+.an-axis { display: flex; justify-content: space-between; color: var(--ink-mute); font-size: .76rem; margin-top: 6px; }
+.an-num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.an-block .admin-table { border: 1px solid var(--hairline); border-radius: var(--r-card); overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-tab, .admin-item, .admin-rows__del, .btn { transition: none; }
+}

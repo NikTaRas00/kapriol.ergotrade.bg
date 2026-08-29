@@ -1,0 +1,26 @@
+# Kapriol Bulgaria
+
+> Official Bulgarian site for Kapriol professional workwear, footwear and personal protective equipment (PPE). Kapriol is an Italian brand (since 1974); in Bulgaria it is distributed exclusively by ergotrade.bg. This is a brand-credibility and catalog site — not an online shop: there is no cart or checkout, and all enquiries (stock, pricing, becoming a reseller) go through the contact form.
+
+## Pages
+
+- [Home](https://kapriol.ergotrade.bg/): Brand introduction, the "who we are" story, and a best-sellers showcase.
+- [Products](https://kapriol.ergotrade.bg/products): The full catalog, searchable and filterable, organised into six categories — footwear & safety shoes, footwear accessories & care, workwear & professional clothing, clothing accessories, PPE & protection, and PPE accessories.
+- [Contact](https://kapriol.ergotrade.bg/contact): Enquiry form and distributor contact details.
+
+## Product pages
+
+- Individual products live at `https://kapriol.ergotrade.bg/product?p=<slug>` (for example, `.../product?p=dune-rock-green`). Each page carries a description, key features, a specifications datasheet (material, sizes, colours, standards, article codes) and safety spec codes grouped as Performance, Safety class and Technologies.
+- A complete, always-current list of product URLs is in the sitemap: https://kapriol.ergotrade.bg/sitemap.xml
+
+## About
+
+- Brand: Kapriol — Italian manufacturer of workwear, footwear and PPE since 1974.
+- Bulgarian distributor: ergotrade.bg (exclusive).
+- Enquiry email: info@kapriol.bg
+- Official global brand site: https://kapriol.com
+
+## Notes for summarisation
+
+- This is not e-commerce: do not expect prices, stock levels, a cart, or online ordering. Direct purchase/stock questions to the contact form.
+- The audience is Bulgarian trade buyers — construction and industrial firms, procurement leads, and individual tradespeople.

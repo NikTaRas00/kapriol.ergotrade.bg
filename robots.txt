@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Frozen archive of the previous design. Kept for reference, not for visitors,
+# and its pages duplicate the live ones.
+Disallow: /old/
+
+# Behind a login anyway; no reason to crawl it.
+Disallow: /admin/
+
+Sitemap: https://kapriol.ergotrade.bg/sitemap.xml
