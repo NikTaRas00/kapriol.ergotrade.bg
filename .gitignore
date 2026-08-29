@@ -22,7 +22,7 @@ deploy/
 .claude/
 .impeccable/
 .archive/
-Share Folder/
+share-folder/
 products/
 Deploy.cmd
 Deploy-Preview.cmd
