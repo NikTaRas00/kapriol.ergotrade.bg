@@ -1,7 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /admin/
-
-# Update the host if the site moves domains. sitemap.php derives its own origin,
-# but this absolute line is location-coupled.
-Sitemap: https://REPLACE-WITH-DOMAIN/sitemap.xml
