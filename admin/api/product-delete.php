@@ -1,10 +1,18 @@
 <?php
 /**
- * product-delete.php — remove a product from products.json.
+ * product-delete.php — remove a product.
  *
- * Auth + CSRF protected. Takes { slug }, removes the matching record, and also
- * deletes that slug's product image file(s) so we don't orphan them on the
- * inode-limited host. Writes are lock-protected and atomic.
+ * Auth + CSRF protected. Takes { slug }. The product row is deleted and its
+ * list, spec-code and article-code rows go with it via ON DELETE CASCADE —
+ * no orphan sweep needed.
+ *
+ * The product's image FILES are then unlinked as well, because they are not in
+ * the database and would otherwise sit on an inode-limited host forever. That
+ * is best-effort and deliberately last: losing a photo is recoverable, and a
+ * failed unlink must not roll back a completed delete.
+ *
+ * NB deletion is not the normal way to take a product off the site — `hidden`
+ * is, and it is reversible. This exists for genuine mistakes.
  */
 require __DIR__ . '/_guard.php';
 admin_require_post();
@@ -17,26 +25,17 @@ if (!is_array($in) || empty($in['slug'])) {
 }
 $slug = (string) $in['slug'];
 
-$all = read_json(KAP_PRODUCTS, null);
-if (!is_array($all)) {
-    json_out(array('success' => false, 'error' => 'Catalog file is missing or corrupt.'), 500);
+$pdo = kap_db();
+try {
+    if (!kap_product_delete($pdo, $slug)) {
+        json_out(array('success' => false, 'error' => 'Product not found.'), 404);
+    }
+} catch (Exception $e) {
+    error_log('kapriol product-delete: ' . $e->getMessage());
+    json_out(array('success' => false, 'error' => 'Delete failed.'), 500);
 }
 
-$idx = -1;
-foreach ($all as $i => $p) {
-    if (isset($p['slug']) && $p['slug'] === $slug) { $idx = $i; break; }
-}
-if ($idx < 0) {
-    json_out(array('success' => false, 'error' => 'Product not found.'), 404);
-}
-
-array_splice($all, $idx, 1);
-
-if (!atomic_write_json(KAP_PRODUCTS, $all)) {
-    json_out(array('success' => false, 'error' => 'Save failed (catalog not writable).'), 500);
-}
-
-// Best-effort cleanup of the product's image (only if the slug is a safe name).
+// Best-effort image cleanup (only for a slug that is a safe filename stem).
 if (preg_match('/^[a-z0-9][a-z0-9-]*$/', $slug)) {
     $dir = KAP_WEB_ROOT . '/assets/img/products';
     foreach (array('jpg', 'jpeg', 'png', 'webp') as $ext) {

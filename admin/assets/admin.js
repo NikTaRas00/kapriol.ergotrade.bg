@@ -797,7 +797,11 @@
       avail.forEach(function (d) {
         var b = el("button", "admin-specpick__opt"); b.type = "button";
         if (d.img) { var ic = document.createElement("img"); ic.src = adminImgSrc(d.img); ic.alt = ""; b.appendChild(ic); }
-        b.appendChild(el("span", null, d.name ? (d.code + " — " + d.name) : d.code));
+        // `title` is the current field; `name` is the retired spelling kept as
+        // a fallback for any record predating the rename. main.js:1327 does the
+        // same. Without the `title` branch this picker showed bare codes.
+        var label = d.title || d.name;
+        b.appendChild(el("span", null, label ? (d.code + " — " + label) : d.code));
         b.addEventListener("click", function () { addChip(d.code); refreshPop(); });
         pop.appendChild(b);
       });

@@ -1,0 +1,72 @@
+{
+    "copy": {
+        "contactPhone": "",
+        "contactEmail": "info@kapriol.ergotrade.bg",
+        "contactAddr": "",
+        "footerCopy": "© 2026 Ergotrade BG",
+        "footerPowered": "Powered by NikTaRas Web Studio"
+    },
+    "categories": [],
+    "visible": {
+        "contactPhone": false,
+        "contactEmail": true,
+        "contactAddr": false
+    },
+    "home": {
+        "heroTitle": "KAPRIOL BULGARIA",
+        "heroSub": "We are Ergotrade: \nThe new Official and Exclusive Kapriol distributor in Bulgaria",
+        "heroImg": "",
+        "heroImgV": "",
+        "whyTitle": "Certified Italian Engineering",
+        "whyBody": "Every Kapriol product and range is first tested and developed in Italy before being certified to EN safety standards. Kapriol is a known and praised brand that professionals select to work while being safe and comfortable.",
+        "whyImg": "assets/img/site/why.webp",
+        "whyImgV": "1785775016275",
+        "showRotator": true,
+        "stats": [
+            {
+                "num": "1927",
+                "label": "Kapriol Founded"
+            },
+            {
+                "num": "70",
+                "label": "Countries where Kapriol is Present"
+            },
+            {
+                "num": "6",
+                "label": "Product Ranges"
+            }
+        ],
+        "slides": [
+            {
+                "eyebrow": "",
+                "title": "as",
+                "body": "",
+                "img": "",
+                "imgV": "",
+                "show": false
+            },
+            {
+                "eyebrow": "",
+                "title": "",
+                "body": "",
+                "img": "",
+                "imgV": "",
+                "show": false
+            },
+            {
+                "eyebrow": "",
+                "title": "",
+                "body": "",
+                "img": "",
+                "imgV": "",
+                "show": false
+            }
+        ],
+        "featured": [
+            "",
+            "",
+            "",
+            ""
+        ]
+    }
+}

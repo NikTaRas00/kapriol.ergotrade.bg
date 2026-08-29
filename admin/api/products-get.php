@@ -1,11 +1,14 @@
 <?php
 /**
- * products-get.php — return the full product catalog for the editor.
+ * products-get.php — the full catalogue for the editor.
+ *
+ * Includes HIDDEN products: the admin has to be able to see and un-hide them.
+ * The public endpoint (api/products.php) excludes them in SQL instead. Both
+ * assemble records through the same kap_products() mapping, so the editor can
+ * never show a shape the site does not render.
  */
 require __DIR__ . '/_guard.php';
 admin_require_auth();
 
-$products = read_json(KAP_PRODUCTS, array());
-if (!is_array($products)) { $products = array(); }
-
-json_out(array('success' => true, 'products' => $products));
+$pdo = kap_db();
+json_out(array('success' => true, 'products' => kap_products($pdo, true)));

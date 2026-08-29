@@ -62,7 +62,12 @@ $IncludeFiles = @(
 # so re-syncing its ~35 files on every deploy is pure wasted time. If the
 # archive ever needs re-uploading, add 'old' back here plus 'old/.htaccess' to
 # $IncludeFiles and 'old/assets/video' to $ExcludeDirs.
-$IncludeDirs  = @('assets/css', 'assets/js', 'assets/fonts', 'admin', 'error')
+# NB 'api' holds the PUBLIC catalogue endpoints (products/attributes/categories)
+# that replaced assets/data/*.json. They are code, not data, so they deploy
+# normally. The credentials and the shared mapping they rely on live in
+# private/ (db.php, catalog.php, config.php), which the chrooted deploy account
+# CANNOT reach — upload those by hand via cPanel File Manager.
+$IncludeDirs  = @('assets/css', 'assets/js', 'assets/fonts', 'admin', 'api', 'error')
 
 # Sub-paths skipped inside $IncludeDirs (relative, forward slashes).
 $ExcludeDirs  = @()

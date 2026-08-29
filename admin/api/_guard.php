@@ -49,9 +49,12 @@ define('KAP_WEB_ROOT',    dirname(__DIR__, 2));            // public_html
 define('KAP_ENQUIRIES',   KAP_PRIVATE_DIR . '/enquiries.json');
 define('KAP_THROTTLE',    KAP_PRIVATE_DIR . '/login-throttle.json');
 define('KAP_ANALYTICS',   KAP_PRIVATE_DIR . '/analytics.json');
-define('KAP_PRODUCTS',    KAP_WEB_ROOT . '/assets/data/products.json');
 define('KAP_CONTENT',     KAP_WEB_ROOT . '/assets/data/content.json');
-define('KAP_ATTRIBUTES',  KAP_WEB_ROOT . '/assets/data/attributes.json');
+/* KAP_PRODUCTS / KAP_ATTRIBUTES are GONE: the catalogue and the spec-code
+   dictionary moved to MySQL on 2026-08-29 and are reached through kap_db()
+   plus the mapping in private/catalog.php. content.json stays a flat file —
+   site copy was deliberately left out of the migration. Any leftover
+   assets/data/products.json on the host is inert; nothing reads it. */
 
 $GLOBALS['KAP_CFG'] = $KAP_CFG;
 
@@ -60,6 +63,47 @@ $GLOBALS['KAP_CFG'] = $KAP_CFG;
    the request is actually over HTTPS (so local http dev still works). */
 function kap_cfg($key, $default = null) {
     return isset($GLOBALS['KAP_CFG'][$key]) ? $GLOBALS['KAP_CFG'][$key] : $default;
+}
+
+/**
+ * The catalogue database, plus the shared JSON<->SQL mapping.
+ *
+ * Resolved from KAP_PRIVATE_DIR (i.e. wherever config.php was actually found),
+ * so it follows private/ whether that sits beside public_html or inside it —
+ * do NOT re-derive the path here, that is the bug the config lookup above
+ * already solves.
+ *
+ * Every product read and write in this admin goes through the functions in
+ * private/catalog.php, which is the same code api/products.php serves the
+ * public site from. One mapping, one behaviour.
+ *
+ * On failure this emits a JSON error and exits, so callers can use the return
+ * value without checking it.
+ *
+ * @return PDO
+ */
+function kap_db() {
+    static $pdo = null;
+    if ($pdo instanceof PDO) { return $pdo; }
+
+    $dbFile  = KAP_PRIVATE_DIR . '/db.php';
+    $mapFile = KAP_PRIVATE_DIR . '/catalog.php';
+    if (!is_file($dbFile) || !is_file($mapFile)) {
+        json_out(array('success' => false,
+            'error' => 'Database layer missing (private/db.php + private/catalog.php).'), 500);
+    }
+    try {
+        require_once $dbFile;
+        require_once $mapFile;
+        $pdo = kap_pdo($GLOBALS['KAP_CFG']);
+    } catch (Exception $e) {
+        error_log('kapriol admin db: ' . $e->getMessage());
+        // The admin is authenticated, so a real reason is useful here — but
+        // kap_pdo() already strips credentials out of what it throws.
+        json_out(array('success' => false,
+            'error' => 'Database connection failed: ' . $e->getMessage()), 500);
+    }
+    return $pdo;
 }
 
 if (session_status() !== PHP_SESSION_ACTIVE) {

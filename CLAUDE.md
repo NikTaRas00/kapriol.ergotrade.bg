@@ -49,11 +49,13 @@ the contact form, the analytics beacon, the dynamic sitemap and the admin panel.
 | Public pages | `index.html`, `products.html`, `product.html`, `contact.html` |
 | Styles | `assets/css/style.css` (~1560 lines — tokens + every component) |
 | Behaviour | `assets/js/main.js` (~1930 lines, ONE guarded IIFE for all 4 pages) |
-| Data (host-owned) | `assets/data/products.json`, `content.json`, `attributes.json` |
+| Catalogue (MySQL) | `ergotrade_kapriol` — served by `api/*.php`, mapped by `private/catalog.php` |
+| Site copy (host-owned) | `assets/data/content.json` — the only data file left |
 | Fonts (self-hosted, GDPR) | `assets/fonts/*.woff2` |
 | Admin | `admin/login.php`, `admin/index.php`, `admin/api/*.php` |
+| Public API | `api/products.php`, `attributes.php`, `categories.php`, `_bootstrap.php` |
 | Server config | `.htaccess`, `sitemap.php`, `robots.txt`, `llms.txt`, `error/*.html` |
-| Secrets + runtime data | `private/` — **must sit OUTSIDE the web root** |
+| Secrets + DB layer | `private/` — config, `db.php`, `catalog.php`. **Must sit OUTSIDE the web root** |
 
 `main.js` is one IIFE whose every `init()` step no-ops when its root element is
 absent, so a single file serves all pages with no per-page branching. `init()` runs:
@@ -62,9 +64,10 @@ absent, so a single file serves all pages with no per-page branching. `init()` r
 `initCatalog` → `initProduct` → `applyContact` → `setupForm` → `applyStaticCascades`
 → `beacon`.
 
-**Data is fetched at runtime**, never inlined: `loadProducts()` / `loadContent()` /
-`loadAttributes()` pull the three JSONs through `cachedJSON()`, which memoises them in
-`sessionStorage` (`t1:<url>`) for the visit. **A fresh window = a fresh fetch**; an
+**Data is fetched at runtime**, never inlined: `loadProducts()` / `loadAttributes()` /
+`loadCategories()` hit `api/*.php`, and `loadContent()` still fetches
+`assets/data/content.json`. All four go through `cachedJSON()`, which memoises by URL
+in `sessionStorage` (`t1:<url>`) for the visit. **A fresh window = a fresh fetch**; an
 admin save therefore shows on a new window, not a same-session reload.
 
 **Six categories**, fixed: `footwear`, `footwear-accessories`, `clothing`,
@@ -211,8 +214,8 @@ subdomain docroot, hence `RemoteBase=/` in `deploy/ftp.config`. Because of the c
 
 **Local and live are IN SYNC and fully deployed.** `style.css`, `main.js`, all four
 HTML pages, `llms.txt` and `robots.txt` are byte-identical to what the server serves.
-Cache strings **CSS `?v=72`, JS `?v=72`**; admin `base.css?v=2`, `admin.css?v=3`,
-`theme.css?v=2`, `admin.js?v=6`. `node --check` clean on both JS files; `php -l` clean
+Cache strings **CSS `?v=72`, JS `?v=73`**; admin `base.css?v=2`, `admin.css?v=3`,
+`theme.css?v=2`, `admin.js?v=7`. `node --check` clean on both JS files; `php -l` clean
 on all 23 PHP files. The Clash Display + Saira Stencil + cascade font work that
 the retired `handoff.md` still called "pending sign-off / not deployed" **is live**.
 
@@ -248,6 +251,90 @@ excludes `assets/data` — but do not "fix" the host from local copies.
 Deployed and verified 2026-08-29: `/` `products` `?cat=` `?p=` `contact` `sitemap.xml`
 `robots.txt` `llms.txt` `admin/login.php` all 200, admin API 401, styled 403/404/500
 pages all render, founding year now reads 1927 everywhere.
+
+---
+
+## MySQL catalogue database (switched over 2026-08-29)
+
+**Products, categories and spec codes live in MySQL.** The site and the admin
+both read and write the database; `assets/data/products.json` and
+`attributes.json` are no longer read by anything and are inert wherever they
+still sit. **`content.json` is still a flat file** — site copy (hero, why,
+rotator, stats, contact rows, footer) was deliberately left out, as were
+`private/enquiries.json` and `private/analytics.json`.
+
+Why: `atomic_write_json()` locks only its own `.tmp`, so overlapping admin
+saves were last-writer-wins across the whole 977 KB catalogue — and
+`persistGallery()` autosaves on every photo upload, so that race ran routinely.
+Saves are now per-row and transactional.
+
+Live DB **`ergotrade_kapriol`** (user `ergotrade_kapriol`; credentials in
+`private/config.php`, gitignored). Full plan:
+`~/.claude/plans/bro-we-need-to-soft-hanrahan.md`.
+
+### The shape of it
+
+| Piece | Role |
+| --- | --- |
+| `private/db.php` | PDO connector. Outside the web root. |
+| `private/catalog.php` | **The one JSON↔SQL mapping.** Every read and write in the site AND the admin goes through it, so the two can never drift. |
+| `api/products.php` · `attributes.php` · `categories.php` | Public read endpoints. Replaced `assets/data/*.json`. |
+| `api/_bootstrap.php` | Shared connect / JSON-out / fail-closed for the above. |
+| `admin/api/_fields.php` | The write allowlist, shared by save + create (was duplicated). |
+| `admin/api/_guard.php` | Gained `kap_db()`. **`KAP_PRODUCTS` / `KAP_ATTRIBUTES` are gone.** |
+| `deploy/db-schema.sql` · `db-import.php` · `db-seed.sql` · `db-check.sql` | Schema, seeder, generated seed, post-import verification. |
+| `deploy/db-selftest.php` | 62 assertions against an offline SQLite copy. **Run this after touching `catalog.php` or `_fields.php`.** |
+
+Six tables: `categories`, `products`, `product_list`, `product_spec_code`,
+`product_article_code`, `spec_code`.
+
+### Rules that are load-bearing
+
+- **`slug` is opaque.** Never derive it from `name` (`dune-jaq` ↔ "Dune Jaq",
+  and worse). It is the primary key, the `?p=` link and the image filename stem.
+  Not writable through the admin.
+- **Product order is category-grouped**, reproduced by
+  `ORDER BY categories.sort_order, products.sort_order`. Not cosmetic:
+  `renderCategoryTiles` takes "first in this category with a photo"
+  (`main.js:855-859`), `renderFeatured` the same (`:912`), `renderRelated` the
+  first four (`:1704`).
+- **`spec_json` holds ~22 frozen PDF-import fields**, preserved blind exactly as
+  before. Several ARE rendered (`sole`, `toeCap`, `weightGrams`, `fit`,
+  `materialComposition` — `main.js:1536-1542`), so any reader must spread it
+  back into the record. Not editable.
+- **`safetyClass` is stored twice on purpose**: `safety_class_raw` keeps the
+  intact EN ISO marking for the badge (`"S1PL ESD"` is ONE certification), and
+  `product_spec_code` keeps the whitespace-split codes for the filter chips. An
+  editor save writes codes and clears the raw string. Only ONE product still has
+  a raw marking (`plat`); the other 43 are already arrays.
+- **`articleCodes[].color` carries forward on save.** The editor posts
+  `{code,size}` only, so `kap_put_articles()` re-applies a stored colour to a
+  surviving code — without that, editing one of those 5 products would destroy
+  the values the migration rescued.
+- **Never `TRUNCATE` these tables — `DELETE FROM`.** MySQL refuses to truncate a
+  table a foreign key references (error 1701) and `SET FOREIGN_KEY_CHECKS = 0`
+  does **not** lift it. This shipped as a bug and failed on the first import.
+- **⚠️ Port 3306 is unreachable from outside the host.** Measured: 443 opens in
+  0.1 s, 3306 times out. cPanel → Remote Database Access whitelists MySQL
+  *grants*, not the network firewall, and adding the workstation IP changed
+  nothing. So the DB cannot be reached from this machine: seed with
+  `db-import.php --emit-sql` + phpMyAdmin Import, verify with `db-check.sql`,
+  and test logic with `db-selftest.php` against SQLite. `deploy/db-verify.php`
+  needs a live connection and is therefore host-only. Don't re-attempt a direct
+  connection without new information.
+
+### Deploying this
+
+`api` is in the deploy allowlist. **`private/db.php` and `private/catalog.php`
+must be uploaded by hand via cPanel File Manager** — the deploy account is
+chrooted out of `private/` — and the host `private/config.php` needs the `db`
+block with `host = 'localhost'`. If those three are missing the site answers
+503 from every catalogue endpoint and the admin says the database layer is
+missing.
+
+Endpoints **fail closed**: a DB error returns 503, never 200-with-empty-array,
+because `cachedJSON()` turns a non-200 into `cb(null)` and the catalogue then
+says "Catalogue unavailable" instead of silently rendering an empty shop.
 
 ---
 
@@ -381,6 +468,9 @@ server error with an internal email address instead of the branded 404.
 `assets/js/main.js` · `assets/css/style.css` · `admin/assets/admin.js` ·
 `admin/index.php` · `admin/api/_guard.php` · the four HTML pages ·
 `deploy/ftp-deploy.ps1` · `.htaccess`
+
+DB migration (in progress): `deploy/db-schema.sql` · `deploy/db-import.php` ·
+`deploy/db-verify.php` · `private/db.php`
 
 ## Docs Map
 

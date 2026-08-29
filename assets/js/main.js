@@ -3,11 +3,16 @@
    One shared IIFE for all four pages. Every init step is guarded: it no-ops
    when its root element is absent, so a single file serves every page.
 
-   test1 is SELF-CONTAINED. It carries its own assets/data/*.json and
-   assets/img/, so the folder can be dropped on the host, the data and image
-   folders pasted in beside it, and it runs on its own. BASE is therefore
-   empty: nothing is read from the parent site, and its admin writes only to
-   test1's own files.
+   DATA SOURCES (changed 2026-08-29 — the catalogue moved to MySQL):
+     api/products.php    the catalogue      (was assets/data/products.json)
+     api/attributes.php  spec-code labels   (was assets/data/attributes.json)
+     api/categories.php  range tile photos  (was content.json's `categories`)
+     assets/data/content.json               site copy — still a flat file
+   Product photos remain files under assets/img/; the database stores only
+   their paths and the imgV cache-buster.
+
+   BASE is empty: every path is document-relative, so the whole site can move
+   without touching this file.
    ========================================================================== */
 (function () {
   "use strict";
@@ -37,6 +42,7 @@
   var productsLoadFailed = false;
   var ATTRS = null;
   var CONTENT = null;
+  var CATIMGS = null;
 
   /* --------------------------------------------------------------- Utils -- */
   function $(sel, ctx) { return (ctx || document).querySelector(sel); }
@@ -190,10 +196,15 @@
      applies the same rule server-side. */
   function loadProducts(cb) {
     if (PRODUCTS.length) { cb(PRODUCTS); return; }
-    cachedJSON(BASE + "assets/data/products.json", function (data) {
-      // "The file would not load" and "everything in it is hidden" are two
-      // different situations and must not share an error message.
+    cachedJSON(BASE + "api/products.php", function (data) {
+      // "The request would not load" and "everything in it is hidden" are two
+      // different situations and must not share an error message. The endpoint
+      // returns a non-200 on a database failure precisely so this stays true —
+      // it never answers 200 with an empty array.
       productsLoadFailed = !Array.isArray(data);
+      // The endpoint already excludes hidden products in SQL, so this filter is
+      // now belt-and-braces. Kept because PRODUCTS is what every consumer reads
+      // from, and one guarantee in one place is cheaper than trusting callers.
       PRODUCTS = (Array.isArray(data) ? data : []).filter(function (p) {
         return p && !p.hidden;
       });
@@ -203,9 +214,21 @@
 
   function loadAttributes(cb) {
     if (ATTRS) { cb(ATTRS); return; }
-    cachedJSON(BASE + "assets/data/attributes.json", function (data) {
+    cachedJSON(BASE + "api/attributes.php", function (data) {
       ATTRS = data && typeof data === "object" ? data : {};
       cb(ATTRS);
+    });
+  }
+
+  /* Category tile photos. These used to ride along inside content.json; they
+     now come from the catalogue database, so they load separately. A failure
+     yields {} and every tile falls back to its flat panel — the same state as
+     "no photo uploaded", which is a designed-for look rather than a gap. */
+  function loadCategories(cb) {
+    if (CATIMGS) { cb(CATIMGS); return; }
+    cachedJSON(BASE + "api/categories.php", function (data) {
+      CATIMGS = data && typeof data === "object" ? data : {};
+      cb(CATIMGS);
     });
   }
 
@@ -816,9 +839,11 @@
     });
   }
 
-  /* An admin-uploaded photo for a range tile, if there is one. */
+  /* An admin-uploaded photo for a range tile, if there is one. Sourced from
+     api/categories.php (it used to be CONTENT.categories) — loadCategories()
+     is awaited before renderCatalog, so this is never a race. */
   function categoryImg(id) {
-    var cats = (CONTENT && CONTENT.categories) || {};
+    var cats = CATIMGS || {};
     var row = cats[id];
     if (!row || !row.img) { return ""; }
     return BASE + row.img + (row.imgV ? "?v=" + encodeURIComponent(row.imgV) : "");
@@ -960,8 +985,12 @@
         return;
       }
       loadAttributes(function () {
-        setupSearch();
-        renderCatalog();
+        // Category tile photos must be in hand before the first render, or the
+        // landing view paints its tiles with no images and never repaints.
+        loadCategories(function () {
+          setupSearch();
+          renderCatalog();
+        });
       });
     });
   }

@@ -1,0 +1,266 @@
+{
+    "performance": [
+        {
+            "code": "A",
+            "img": "",
+            "title": "A - Antistatic Shoe",
+            "description": "Work shoes with antistatic properties that allow the controlled passage of low-voltage currents, dissipating the electrostatic charges accumulated by the operator during work activities and reducing the risk of ignition in environments with the presence of flammable or explosive substances."
+        },
+        {
+            "code": "CI",
+            "img": "",
+            "title": "CI - Cold insulation",
+            "description": "Work shoes designed for outdoor use with exposure to atmospheric agents at low temperatures. The entire footwear is subjected to a specific test at −17 °C, verifying that the drop in internal temperature is not lower than the required standards, thus ensuring perfect maintenance of the foot's thermal comfort."
+        },
+        {
+            "code": "ESD",
+            "img": "",
+            "title": "ESD - Electrostatic Discharge",
+            "description": "Shoes that constantly discharge the static electricity accumulated by the human body to the ground, also protecting devices that are sensitive to electrostatic discharge."
+        },
+        {
+            "code": "FO",
+            "img": "assets/img/certs/fo.webp",
+            "title": "FO - Resistance of the sole to hydrocarbons",
+            "description": "Work shoes equipped with soles designed to resist prolonged contact with oily substances and hydrocarbons without undergoing structural alterations. The laboratory test involves immersing the compound in Trimethylpentane, verifying that the swelling and increase in volume of the sole do not exceed 12%, thus ensuring the stability and durability of the shoe over time. This requirement is mandatory for work footwear according to the 2011 standard, while it becomes additional and optional for the 2022 standard."
+        },
+        {
+            "code": "GRIP",
+            "img": "",
+            "title": "Non-slip sole",
+            "description": "All Kapriol shoe soles are tested for conformity with the EN 20345:2011 Standard requirements concerning non-slip performance. \nThe soles made of rubber or Eva/rubber have a higher grip level and are identified by the Grip icon."
+        },
+        {
+            "code": "HI",
+            "img": "",
+            "title": "HI - Heat Insulation",
+            "description": "Work shoes designed to protect the foot from heat transmitted by conduction. The entire footwear is tested on a surface at 150 °C, verifying that the increase in internal temperature does not exceed the required standards. They guarantee effective thermal insulation in environments such as foundries, steel mills, industrial plants and road construction sites where work is performed on hot surfaces."
+        },
+        {
+            "code": "HRO",
+            "img": "",
+            "title": "HRO – Heat-resistant sole for contact",
+            "description": "Soles that are resistant to heat contact. The test involves contact with a hot surface of 300°C for 60 seconds without visible damages."
+        },
+        {
+            "code": "LG",
+            "img": "",
+            "title": "LG - Ladder grip system",
+            "description": "Safety shoes designed with a specific sole profile for a secure grip on ladder rungs, reducing the risk of slipping during ascent and descent. Indicated for electricians, installers, construction workers and anyone who frequently works at heights on fixed or portable ladders."
+        },
+        {
+            "code": "PL",
+            "img": "",
+            "title": "PL - Perforation-resistant shoe (4.5 mm nail)",
+            "description": "Safety shoes according to EN ISO 20345:2022 equipped with a non-metallic perforation-resistant insert, tested with a large diameter nail (4.5 mm). This requirement guarantees effective protection of work shoes against the penetration of sharp objects through the sole, with the advantage of an insert that is lighter and more flexible than traditional metal inserts."
+        },
+        {
+            "code": "SC",
+            "img": "",
+            "title": "SC - Scuff cap abrasion resistance",
+            "description": "Safety shoes equipped with a toe cap with high resistance to abrasion, tested with 8,000 Martindale cycles. The Martindale test evaluates the durability of the material in the toe area, ensuring that the work shoe maintains its protective features over time even in the most wearing working conditions."
+        },
+        {
+            "code": "SEAMLESS UP",
+            "img": "",
+            "title": "Seamless Upper",
+            "description": "Footwear featuring a seamless upper that ensures greater comfort, lightness, and reduced irritation even during long working days."
+        },
+        {
+            "code": "SR",
+            "img": "",
+            "title": "SR - Slip resistance",
+            "description": "Safety shoes equipped with a sole with advanced anti-slip performance, specifically designed to ensure maximum stability and grip even on the most insidious surfaces. Subjected to severe dynamic friction tests under wet and lubricated conditions, this footwear ensures a firm grip on the ground and drastically reduces the risk of accidental falls. It is the ideal solution to guarantee maximum safety on wet or oily floors, typical of critical environments such as professional kitchens, laboratories and food processing plants."
+        },
+        {
+            "code": "WR",
+            "img": "",
+            "title": "WR - Waterproof shoe",
+            "description": "Safety shoes totally waterproof thanks to upper, seams and joints tested to prevent the entry of liquids. The waterproofness of the entire shoe is tested by placing it in a water tank and subjecting it to a dynamic flexion or mechanical walking test."
+        },
+        {
+            "code": "WRU",
+            "img": "",
+            "title": "WRU - Water-resistant upper",
+            "description": "Work shoes with water-resistant upper thanks to a specific special treatment. The laboratory test involves the mechanical flexion of the material in contact with water for 60 minutes, verifying that the passage of water inside is practically zero."
+        },
+        {
+            "code": "LIGHT",
+            "img": "",
+            "title": "Light",
+            "description": "The combination of a composite toecap (Light Cap) and a synthetic anti-perforation insole (High Flex) allows for a lighter, more comfortable safety shoe that causes less fatigue for the operator."
+        },
+        {
+            "code": "METAL FREE",
+            "img": "",
+            "title": "Metal Free",
+            "description": "This shoe is totally designed without metal parts."
+        },
+        {
+            "code": "FLEX",
+            "img": "",
+            "title": "Flex",
+            "description": "The combination of a puncture-resistant composite insole (High Flex), an EVA midsole, and a rubber outsole creates an extremely flexible shoe. A flexible shoe is more comfortable and less tiring for the wearer's foot."
+        },
+        {
+            "code": "P",
+            "img": "",
+            "title": "P - Perforation-resistant shoe",
+            "description": "Safety shoes equipped with a METALLIC perforation-resistant insert placed in the sole. The test involves resisting penetration by a standardized nail with a diameter of 4.5 mm applied with a fixed force of 1100 N: the insert must resist without being perforated, guaranteeing maximum protection against sharp or cutting objects that may be stepped on during work activities. The difference between P and PL is the fact that the PL's perforation-resistant insert is not made of metal, but P's is."
+        }
+    ],
+    "safetyClass": [
+        {
+            "code": "CI"
+        },
+        {
+            "code": "ESD"
+        },
+        {
+            "code": "FO"
+        },
+        {
+            "code": "HI"
+        },
+        {
+            "code": "HRO"
+        },
+        {
+            "code": "LG"
+        },
+        {
+            "code": "O1"
+        },
+        {
+            "code": "O2"
+        },
+        {
+            "code": "O6"
+        },
+        {
+            "code": "OB"
+        },
+        {
+            "code": "S1"
+        },
+        {
+            "code": "S1P"
+        },
+        {
+            "code": "S1PL"
+        },
+        {
+            "code": "S3"
+        },
+        {
+            "code": "S3L"
+        },
+        {
+            "code": "S3S"
+        },
+        {
+            "code": "S5"
+        },
+        {
+            "code": "S7S"
+        },
+        {
+            "code": "SC"
+        },
+        {
+            "code": "SR"
+        },
+        {
+            "code": "SRC"
+        },
+        {
+            "code": "WR"
+        }
+    ],
+    "technologies": [
+        {
+            "code": "ALU",
+            "img": "",
+            "title": "ALU",
+            "description": "Light, recyclable, perfectly mouldable aluminium toe cap with the same mechanical resistance of the steel toe cap but more comfortable."
+        },
+        {
+            "code": "CF",
+            "img": "",
+            "title": "CF safety toe cap",
+            "description": "Very light carbon fiber toe cap with high impact resistance."
+        },
+        {
+            "code": "COMP",
+            "img": "",
+            "title": "Light safety toe cap",
+            "description": "Particularly lightweight composite toe cap that provides high thermal insulation and total foot protection in the event of objects falling from above, from impacts of up to 200J, which is equivalent to the energy caused by a stone of 10kg from a height of 2m."
+        },
+        {
+            "code": "EVA RUBBER",
+            "img": "",
+            "title": "EVA Rubber - Ethylene Vinyl Acetate",
+            "description": "Soft, light, and flexible polymer foam that blends the cushioning of rubber with the durability of plastic."
+        },
+        {
+            "code": "HIGH FLEX",
+            "img": "",
+            "title": "High Flex Perforation proof midsole",
+            "description": "Anti-puncture midsole made of high-strength and highly flexible synthetic polymer fiber. It contributes to high thermal insulation of the shoe. Extremely light and comfortable, the high flex midsole guarantees total protection of the foot from the risk of wounds, cuts and punctures."
+        },
+        {
+            "code": "INOX",
+            "img": "",
+            "title": "Inox perforation proof midsole",
+            "description": "Anti-puncture midsole made of high-hardness stainless steel. Ensures high resistance in case of contact with sharp materials such as nails, sharp blades, scrap metal. Protects the foot from injuries, cuts and punctures."
+        },
+        {
+            "code": "NHP REBOUND",
+            "img": "",
+            "title": "NHP Ultra Rebound Technology",
+            "description": "Midsole made of NHP Ultra Rebound Technology: the evolution for maximum elasticity, cushioning and lightweight."
+        },
+        {
+            "code": "NHP RUBBER",
+            "img": "",
+            "title": "NHP-Rubber",
+            "description": "Anti Skid System outsole for maximum stability even on the most slippery surfaces."
+        },
+        {
+            "code": "PS",
+            "img": "",
+            "title": "PS",
+            "description": "Perforation proof midsole tested with 3 mm conical nail."
+        },
+        {
+            "code": "PU PU",
+            "img": "",
+            "title": "PU PU Sole",
+            "description": "Polyurethane gives the sole lightness and flexibility. It has shock-absorbing features that guarantee high comfort for the entire shoe. The double injection of polyurethane makes it possible to obtain dual-coloured or dual-density soles. Polyurethane is injected onto the upper by means of special moulds: these are called ‘injected soles’ or simply ‘injected’."
+        },
+        {
+            "code": "PU R-SOLE",
+            "img": "",
+            "title": "PU-Rubber sole",
+            "description": "Anti Skid System rubber sole, maximum stability even on the most slippery surfaces."
+        },
+        {
+            "code": "PU SOLE",
+            "img": "",
+            "title": "PU sole",
+            "description": "Sole formed from a single injection of polyurethane (single-component polyurethane). The production moulds are simple and inexpensive, and the sole can only have one colour."
+        },
+        {
+            "code": "PVC",
+            "img": "",
+            "title": "PVC",
+            "description": "PVC (Polyvinyl Chloride) is a high-density, non-porous thermoplastic polymer engineered to provide 100% waterproof protection, high abrasion resistance, and long-lasting structural durability."
+        },
+        {
+            "code": "STEEL TOE",
+            "img": "",
+            "title": "Hard safety toe cap",
+            "description": "Steel safety toe-cap that provides total foot protection in the event of objects falling from heights from impacts of up to 200J, which is equivalent to the energy caused by a stone of 10kg from a height of 2m."
+        }
+    ]
+}

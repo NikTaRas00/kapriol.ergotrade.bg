@@ -15,12 +15,18 @@ DirectoryIndex index.php index.html
 # Never serve admin secrets / logs, the shared guard include, or half-written
 # temp files. (Best practice is to keep private/ OUTSIDE the web root entirely;
 # these rules are belt-and-braces in case it lives under public_html.)
-# NOTE: products.json and content.json are intentionally NOT blocked — the
-# public site fetches them. They are only WRITABLE via the authed admin API.
+# NOTE: content.json is intentionally NOT blocked — the public site fetches it
+# for the home/contact copy. It is only WRITABLE via the authed admin API.
+# (products.json and attributes.json are no longer read by the site at all:
+# the catalogue moved to MySQL and is served by api/*.php. Any leftover copies
+# under assets/data/ are inert.)
 <FilesMatch "(config|enquiries|login-throttle|analytics)\.(php|json)$">
   Require all denied
 </FilesMatch>
-<FilesMatch "(_guard\.php|\.tmp)$">
+# Shared includes are never entry points. Anchored on "_" at the start of the
+# basename so this covers admin/api/_guard.php, api/_bootstrap.php and anything
+# added later with the same convention.
+<FilesMatch "(^_.*\.php|\.tmp)$">
   Require all denied
 </FilesMatch>
 
@@ -120,8 +126,10 @@ ErrorDocument 504 /error/504.html
   <FilesMatch "\.html$">
     Header set Cache-Control "no-cache"
   </FilesMatch>
-  # Admin-editable data (products/content/attributes) must always revalidate so
-  # edits show immediately — never let the browser heuristically cache them.
+  # Admin-editable data must always revalidate so edits show immediately —
+  # never let the browser heuristically cache it. content.json is the only
+  # such file left; the catalogue endpoints under api/ send the same
+  # Cache-Control header themselves (see api/_bootstrap.php).
   <FilesMatch "\.json$">
     Header set Cache-Control "no-cache, must-revalidate"
   </FilesMatch>

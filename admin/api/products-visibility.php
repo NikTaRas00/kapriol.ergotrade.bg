@@ -8,10 +8,10 @@
  * Payload: { "hidden": true|false }
  * Returns: { success, hidden, changed, total }
  *
- * This is a bulk edit of the whole catalog, so it deliberately touches ONLY
- * the `hidden` key on each record and leaves every other field alone — the
- * same merge discipline products-save.php uses for a single product. Nothing
- * is deleted: hiding is reversible by posting the opposite value.
+ * Now a single UPDATE. The old version decoded 977 KB of JSON, looped 333
+ * records and re-encoded the lot; nothing but the flag was ever meant to
+ * change, and now nothing else can. Hiding stays reversible — no row is
+ * deleted, so posting the opposite value restores the previous state.
  */
 require __DIR__ . '/_guard.php';
 admin_require_post();
@@ -24,25 +24,17 @@ if (!is_array($in) || !array_key_exists('hidden', $in)) {
 }
 $hidden = (bool) $in['hidden'];
 
-$all = read_json(KAP_PRODUCTS, null);
-if (!is_array($all)) {
-    json_out(array('success' => false, 'error' => 'Catalog file is missing or corrupt.'), 500);
+$pdo = kap_db();
+try {
+    $r = kap_products_visibility($pdo, $hidden);
+} catch (Exception $e) {
+    error_log('kapriol products-visibility: ' . $e->getMessage());
+    json_out(array('success' => false, 'error' => 'Bulk update failed.'), 500);
 }
 
-$changed = 0;
-foreach ($all as $i => $p) {
-    if (!is_array($p)) { continue; }
-    $was = !empty($p['hidden']);
-    if ($was !== $hidden) { $changed++; }
-    $all[$i]['hidden'] = $hidden;
-}
-
-if (atomic_write_json(KAP_PRODUCTS, $all)) {
-    json_out(array(
-        'success' => true,
-        'hidden'  => $hidden,
-        'changed' => $changed,
-        'total'   => count($all),
-    ), 200);
-}
-json_out(array('success' => false, 'error' => 'Save failed (catalog not writable).'), 500);
+json_out(array(
+    'success' => true,
+    'hidden'  => $hidden,
+    'changed' => $r['changed'],
+    'total'   => $r['total'],
+), 200);

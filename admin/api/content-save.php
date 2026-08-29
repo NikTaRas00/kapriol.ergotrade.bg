@@ -123,9 +123,27 @@ for ($i = 0; $i < 3; $i++) {
     );
 }
 
+/* Category tile photos live in the catalogue database now, not in this file.
+   They are written first: if the DB write fails we stop before touching
+   content.json, so the two never disagree about what was saved. A category
+   the editor sent no image for is cleared, which is what makes "remove photo"
+   work — the old code achieved the same by omitting the key. */
+$pdo = kap_db();
+try {
+    foreach ($CAT_IDS as $cid) {
+        $row = isset($cats[$cid]) ? $cats[$cid] : array('img' => '', 'imgV' => '');
+        kap_category_image_save($pdo, $cid, $row['img'], $row['imgV']);
+    }
+} catch (Exception $e) {
+    error_log('kapriol content-save (categories): ' . $e->getMessage());
+    json_out(array('success' => false, 'error' => 'Could not save the range images.'), 500);
+}
+
+/* Note the absence of 'categories' here — dropping it is the point. A stale
+   copy left in the file would quietly diverge from the database and there
+   would be no way to tell which one the site was really using. */
 $ok = atomic_write_json(KAP_CONTENT, array(
-    'copy' => $copy, 'categories' => $cats,
-    'visible' => $visible, 'home' => $home,
+    'copy' => $copy, 'visible' => $visible, 'home' => $home,
 ));
 json_out(
     $ok ? array('success' => true)

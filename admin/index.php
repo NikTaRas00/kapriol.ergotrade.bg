@@ -239,6 +239,6 @@ $csrf = admin_csrf_token();
   </main>
 </div>
 
-<script src="assets/admin.js?v=6" defer></script>
+<script src="assets/admin.js?v=7" defer></script>
 </body>
 </html>

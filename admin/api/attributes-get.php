@@ -1,16 +1,17 @@
 <?php
 /**
- * attributes-get.php — return the master spec-code list (Performance / Safety
- * class / Technologies), each an array of { code, name, img? }.
+ * attributes-get.php — the master spec-code list (Performance / Safety class /
+ * Technologies), each an array of { code, img?, title?, description? }.
+ *
+ * Always returns all three groups, even when empty, because admin.js indexes
+ * them by name.
  */
 require __DIR__ . '/_guard.php';
 admin_require_auth();
 
-$default = array('performance' => array(), 'safetyClass' => array(), 'technologies' => array());
-$attrs = read_json(KAP_ATTRIBUTES, $default);
-if (!is_array($attrs)) { $attrs = $default; }
+$pdo = kap_db();
+$attrs = kap_attributes($pdo);
 foreach (array('performance', 'safetyClass', 'technologies') as $g) {
     if (!isset($attrs[$g]) || !is_array($attrs[$g])) { $attrs[$g] = array(); }
 }
-
 json_out(array('success' => true, 'attributes' => $attrs));

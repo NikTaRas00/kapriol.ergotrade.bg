@@ -75,9 +75,17 @@ foreach ($GROUPS as $g) {
     $out[$g] = $clean;
 }
 
-$ok = atomic_write_json(KAP_ATTRIBUTES, $out);
-json_out(
-    $ok ? array('success' => true, 'attributes' => $out)
-        : array('success' => false, 'error' => 'Attributes file is not writable.'),
-    $ok ? 200 : 500
-);
+/* The dictionary is small (54 codes) and the editor always posts all three
+   groups, so this is a wholesale replace inside one transaction rather than a
+   per-row merge. A failure rolls back to the previous dictionary — it can
+   never leave half a vocabulary, which would silently strip labels and
+   pictograms off the live product pages. */
+$pdo = kap_db();
+try {
+    kap_attributes_save($pdo, $out);
+} catch (Exception $e) {
+    error_log('kapriol attributes-save: ' . $e->getMessage());
+    json_out(array('success' => false, 'error' => 'Could not save the code list.'), 500);
+}
+
+json_out(array('success' => true, 'attributes' => kap_attributes($pdo)), 200);

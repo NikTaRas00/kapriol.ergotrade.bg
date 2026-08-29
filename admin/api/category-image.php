@@ -8,8 +8,11 @@
  *
  * Validates it's a real image, caps the size, saves to
  * assets/img/categories/<id>.<ext> (replacing any prior file for that id), and
- * returns { success, path }. The caller stores `path` in content.json's
- * `categories` map via content-save. Mirrors attr-image.php / product-image.php.
+ * returns { success, path }. The caller persists `path` via content-save, which
+ * now writes it to the categories table rather than content.json. This file is
+ * unchanged by that: it only ever touched the filesystem, and product photos
+ * deliberately stay on disk with the database holding just their paths.
+ * Mirrors attr-image.php / product-image.php.
  */
 require __DIR__ . '/_guard.php';
 admin_require_post();
