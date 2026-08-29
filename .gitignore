@@ -13,6 +13,35 @@ deploy/ftp.config
 private/
 
 # ---------------------------------------------------------------------------
+# Local-only dev material — never belongs in the live docroot.
+# ---------------------------------------------------------------------------
+CLAUDE.md
+README.md
+docs/
+deploy/
+.claude/
+.impeccable/
+.archive/
+Share Folder/
+products/
+Deploy.cmd
+Deploy-Preview.cmd
+
+# ---------------------------------------------------------------------------
+# Host-owned / admin-mutable — a git pull must NEVER touch these. The admin
+# panel writes here directly; a fresh clone must not create or overwrite them.
+# ---------------------------------------------------------------------------
+assets/data/
+
+assets/img/*
+!assets/img/ergotrade-logo.png
+!assets/img/logo-kapriol.svg
+!assets/img/favicon.ico
+!assets/img/favicon-16.png
+!assets/img/favicon-32.png
+!assets/img/apple-touch-icon.png
+
+# ---------------------------------------------------------------------------
 # Local noise
 # ---------------------------------------------------------------------------
 Thumbs.db
