@@ -8,8 +8,12 @@
   so host-side product edits, uploaded photos and the admin password are
   always safe.
 
-  Credentials are read from deploy/ftp.config (gitignored). If that file is
-  missing the script prompts for them and offers to save it.
+  Credentials are read from deploy/ftp.config, which is GITIGNORED because it
+  may hold a real secret: if that file contains a "Pass=" line the script uses
+  it verbatim and does NOT prompt. Delete the Pass= line to be asked for the
+  password on every run instead. deploy/ftp.config.example is the tracked
+  template. If ftp.config is missing entirely the script prompts for host /
+  user / remote base and offers to save those (never the password).
 
   Usage (from the project root):
         powershell -ExecutionPolicy Bypass -File deploy/ftp-deploy.ps1
@@ -148,8 +152,10 @@ Write-Host ""
 $go = Read-Host "Upload these $($files.Count) files? (y/N)"
 if ($go -notmatch '^(y|yes)$') { Write-Host 'Aborted.' -ForegroundColor Yellow; return }
 
-# Password: from config if present (optional), else prompt securely
+# Password: taken verbatim from a Pass= line in ftp.config when one exists
+# (convenience; that file is gitignored for exactly this reason), else prompted.
 if ($cfg.Pass) {
+    Write-Host "Using the stored password from $ConfigPath." -ForegroundColor DarkGray
     $Password = $cfg.Pass
 } else {
     $sec = Read-Host "FTP password for $User@$FtpHost" -AsSecureString

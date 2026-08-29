@@ -1,0 +1,22 @@
+# ---------------------------------------------------------------------------
+# Secrets and runtime data — MUST NEVER be committed.
+# ---------------------------------------------------------------------------
+
+# FTP credentials for the live host. deploy/ftp-deploy.ps1 reads a "Pass=" line
+# from this file when one is present, so it can and does hold a real password.
+# deploy/ftp.config.example is the tracked template.
+deploy/ftp.config
+
+# Admin password hash, submitted enquiries (names, emails, phones, IPs),
+# login-throttle state and analytics. This folder lives OUTSIDE the web root on
+# the server and has no business in version control.
+private/
+
+# ---------------------------------------------------------------------------
+# Local noise
+# ---------------------------------------------------------------------------
+Thumbs.db
+desktop.ini
+.DS_Store
+*.tmp
+*.bak

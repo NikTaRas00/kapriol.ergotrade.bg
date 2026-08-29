@@ -3,9 +3,13 @@
 # ============================================================================
 
 Options -Indexes -MultiViews
-# index.html first (the public pages), then index.php so directories that are
-# PHP-only still resolve — notably /admin/, whose dashboard is index.php.
-DirectoryIndex index.html index.php
+# index.php FIRST, then index.html. The public pages are unaffected (the web
+# root has no index.php, so index.html still serves "/"), but /admin/ must
+# resolve to its dashboard index.php. A stale admin/index.html redirect stub
+# was left behind by an earlier move and, with index.html winning, it shadowed
+# the real dashboard and bounced /admin/ to a hardcoded absolute URL. Ordering
+# index.php first makes that stub inert wherever it still exists.
+DirectoryIndex index.php index.html
 
 # -------------------------------------------------------------- Private data --
 # Never serve admin secrets / logs, the shared guard include, or half-written
@@ -53,6 +57,20 @@ DirectoryIndex index.html index.php
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME}\.html -f
   RewriteRule ^(.+?)/?$ $1.html [L]
+
+  # 4) Intended to make /products/foo — a path segment hanging off a page that
+  #    does not exist — 404 through our own ErrorDocument instead of Apache's
+  #    RAW 500. DEPLOYED 2026-08-29 AND IT DID NOT WORK: those URLs still 500.
+  #    The primary status is already 500 before any ErrorDocument is attempted,
+  #    so the cause is upstream of this rule (see CLAUDE.md -> OPEN BUG; the
+  #    Apache error log is the next step). Left in place because it is correct
+  #    in itself and harmless — verified after deploy that every page, the
+  #    clean URLs, /error/404 and the styled 403/404/500 pages still work.
+  #    It MUST stay after rule 3, or extensionless URLs one level down
+  #    (e.g. /error/404) would be caught before rule 3 can map them.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^[^/]+/.+ - [R=404,L]
 </IfModule>
 
 # ------------------------------------------------------------- Error pages --

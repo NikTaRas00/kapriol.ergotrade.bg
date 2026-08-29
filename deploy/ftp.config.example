@@ -1,0 +1,16 @@
+# Template for deploy/ftp.config — copy this file to "ftp.config" and fill it in.
+#
+# ftp.config itself is GITIGNORED. This template is the only version that is
+# committed, so never put a real password in here.
+#
+# The live site is kapriol.ergotrade.bg. Its FTP account is chrooted to the
+# subdomain docroot, so RemoteBase is "/" and NOT "/public_html".
+
+Host=ftp.ergotrade.bg
+User=ftp1@kapriol.ergotrade.bg
+RemoteBase=/
+
+# Optional. If a Pass= line is present, ftp-deploy.ps1 uses it verbatim and does
+# not prompt. Leave it out to be asked for the password on every run — that is
+# the safer default, and the only difference is one prompt per deploy.
+#Pass=

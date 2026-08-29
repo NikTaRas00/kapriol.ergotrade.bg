@@ -1,9 +1,9 @@
 # CLAUDE.md — kapriol.ergotrade.bg
 
-Persistent context for Claude Code. Auto-loaded every session. **Keep it tight** —
-every byte here is spent on every request. Deep history lives in
-`docs/legacy-notes.md` (the archived 86 KB predecessor of this file); the newest
-state-of-play is `docs/handoff.md`.
+Persistent context for Claude Code. Auto-loaded every session. **This is the single
+source of truth for project state** — there is no separate handoff file. **Keep it
+tight**: every byte here is spent on every request. Deep history lives in
+`docs/legacy-notes.md`, the archived 86 KB predecessor of this file.
 
 Last full verification against the live server: **2026-08-29**.
 
@@ -11,8 +11,6 @@ Last full verification against the live server: **2026-08-29**.
 
 ## Always
 
-- **Read `docs/handoff.md` first** at the start of a fresh session — it may be newer
-  than this file.
 - **Begin every response with `START` on its own line, end with `END` on its own line.**
 - **`website-automation-v1/` is OFF LIMITS.** A self-contained side project (a Claude
   Code skill being authored). Unrelated to this site. Do not read, edit or deploy
@@ -103,6 +101,21 @@ NOT in the deploy allowlist** — it was uploaded once and never changes. To res
 design, move the files back to the root; do not try to make it run in place.
 
 ---
+
+## Version Control & Secrets
+
+The project is a **local git repo** (created 2026-08-29, no remote). `.gitignore`
+excludes exactly two things, and both matter:
+
+- **`deploy/ftp.config`** — it holds a real FTP password. `ftp-deploy.ps1` uses a
+  `Pass=` line verbatim when present and skips the prompt; delete that line to be
+  prompted each run. `deploy/ftp.config.example` is the tracked template.
+- **`private/`** — the admin password hash, plus submitted enquiries containing
+  names, emails, phone numbers and IP addresses.
+
+**⚠️ Both were captured in the very first commit (`404f284`) before being untracked,
+so the FTP password is still recoverable from git history.** Rotate it in cPanel, or
+rewrite that commit, before this repo goes anywhere near a remote.
 
 ## Deploying
 
@@ -202,7 +215,7 @@ HTML pages, `llms.txt` and `robots.txt` are byte-identical to what the server se
 Cache strings **CSS `?v=72`, JS `?v=72`**; admin `base.css?v=2`, `admin.css?v=3`,
 `theme.css?v=2`, `admin.js?v=6`. `node --check` clean on both JS files; `php -l` clean
 on all 23 PHP files. The Clash Display + Saira Stencil + cascade font work that
-`docs/handoff.md` still calls "pending sign-off / not deployed" **is live**.
+the retired `handoff.md` still called "pending sign-off / not deployed" **is live**.
 
 **Live catalogue: 333 products** — footwear 46, footwear-accessories 6, clothing 105,
 clothing-accessories 23, ppe 139, ppe-accessories 14.
@@ -233,37 +246,60 @@ banner is hidden entirely, all four featured slots are auto-filled, stats read
 (`contactPhone: "phoneTest"`, `ADDRESS_PLACEHOLDER`). Harmless, because the deploy
 excludes `assets/data` — but do not "fix" the host from local copies.
 
+Deployed and verified 2026-08-29: `/` `products` `?cat=` `?p=` `contact` `sitemap.xml`
+`robots.txt` `llms.txt` `admin/login.php` all 200, admin API 401, styled 403/404/500
+pages all render, founding year now reads 1927 everywhere.
+
 ---
 
-## Known Issues (found 2026-08-29, none fixed yet)
+## ⚠️ OPEN BUG — raw Apache 500 on `/<page>/<anything>`
 
-1. **`/<page>/<anything>` returns a raw Apache 500, not the styled 404.** Reproducible:
-   `/products/foo`, `/contact/x`, `/index/x`, `/error/404/x` all 500; `/foo/bar` and
-   `/assets/xx.css` correctly 404. The response leaks `webmaster@kapriol.ergotrade.bg`,
-   and the ErrorDocument fallback fails too. Cause is the clean-URL block in `.htaccess`
-   interacting with a path whose first segment resolves to an existing `.html` file.
-2. **`deploy/ftp.config` stores the FTP password in plaintext**, despite the file's own
-   comment and the script's help text both claiming it is prompted each run —
-   `ftp-deploy.ps1:152` reads `$cfg.Pass` and skips the prompt when it is present.
-3. **A stale `admin/index.html` stub still exists on the host** (92 bytes, dated
-   2026-07-28, a meta-refresh to the absolute login URL). It is not in the local repo
-   and it shadows `admin/index.php` via `DirectoryIndex index.html index.php`. It
-   currently points at the right URL so nothing is broken, but it hardcodes the domain
-   and will silently break on the next move.
-4. **Synthetic bold on the display face.** Clash Display ships 500/600/700 only, but
-   `.hero h1`, `.stat__num`, `.cat__img--empty span` and `.card__ph` ask for
-   `font-weight: 800/900` — the browser fakes it.
-5. **Founding-year contradiction.** The static `<meta name="description">`,
-   `og:description` and hero fallback in `index.html` say "Built in Italy since 1980";
-   the live admin stats say Kapriol was founded **1927**. The meta description is not
-   admin-editable, so the wrong year is what shows in search results.
-6. **The project is NOT under version control.** No `.git`, no `.gitignore` — despite
-   `README.md` documenting both. Every change is one bad overwrite away from gone.
-7. **`README.md` is badly stale** — it still describes the pre-redesign site (video
-   hero, About + Best Sellers, Archivo/Spline fonts, `assets/video/`, `Info hosting/`,
-   `.git/`).
-8. Analytics page keys still carry the `t1-` staging prefix (`beacon("t1-" + page)`),
-   a leftover from when the redesign lived in `test1/`.
+**Still unfixed.** `https://kapriol.ergotrade.bg/products/foo` returns a **raw Apache
+500** (leaking `webmaster@kapriol.ergotrade.bg`) instead of the styled 404. An attempted
+`.htaccess` fix (a `[R=404,L]` rule after the clean-URL block) **was deployed and
+changed nothing** — do not simply retry it.
+
+What the probing established, so the next attempt starts from facts:
+
+| Request | Result | First segment is… |
+| --- | --- | --- |
+| `/products/foo`, `/contact/x`, `/index/x`, `/error/404/x` | **500** | a page reached via the `.html` rewrite |
+| `/error/nope`, `/old/nope`, `/assets/img/nope.png`, `/admin/nope.php` | 404 | a real **directory** |
+| `/foo/bar/baz` | 404 | nonexistent |
+| `/products.html/x`, `/llms.txt/x`, `/robots.txt/x` | 404 | a real **static file** + path info |
+| `/send-mail.php/x` | 405 | a real **PHP file** (PHP accepted the path info) |
+
+So it fires **only** where mod_rewrite rule 3 would map the first segment to a `.html`
+file. The 500 body says *"Additionally, a 500 … while trying to use an ErrorDocument"*,
+meaning the **primary** status is already 500 — this is not a 404 that fails to render
+(normal 404s render the styled page fine). The shape fits Apache's *"Request exceeded
+the limit of 10 internal redirects"*, which is emitted as a 500.
+
+**Next step is the Apache error log, not another guess** — cPanel → Metrics → Errors, or
+`~/logs/` on the host. One line there names the mechanism. Every hypothesis reachable
+from the outside has been eliminated.
+
+Impact is low but real: a mistyped or legacy link like `/products/footwear` shows a bare
+server error with an internal email address instead of the branded 404.
+
+---
+
+## Open Notes
+
+- **Analytics page keys still carry the `t1-` staging prefix** (`beacon("t1-" + page)`),
+  a leftover from when the redesign lived in `test1/`. Deliberately NOT renamed —
+  the keys in `private/analytics.json` would fork and the existing history would be
+  orphaned. Cosmetic; leave it.
+- **The display face caps at 700.** Clash Display ships 500/600/700, and ~25 rules ask
+  for `font-weight: 800/900` (`.hero h1`, `.stat__num`, `.sec__title`, `.pd h1` …).
+  This is **not** faux bold — the CSS font-matching algorithm selects the 700 face and
+  browsers only synthesize when the selected face is below 600. The declarations simply
+  resolve to 700. Harmless, but don't expect a heavier face than 700 to appear, and note
+  the design looked heavier before the Barlow → Clash swap (Barlow had real 800/900).
+- **"70 countries" in the live admin stats** vs "more than 40 countries" in Kapriol's own
+  corporate copy. Owner-authored, left alone — flag it rather than edit it.
+- The live `attributes.json` has authored titles and descriptions throughout but only
+  **one pictogram image** across all 32 performance + technologies codes.
 
 ## What's Left To Do
 
@@ -349,14 +385,17 @@ excludes `assets/data` — but do not "fix" the host from local copies.
 
 ## Docs Map
 
-Root holds only `README.md`, `CLAUDE.md` and the two deploy launchers. Everything else
-is in `docs/`, except `deploy/README.md` and `deploy/_review.md` (which
+Root holds only `README.md`, `CLAUDE.md`, `.gitignore` and the two deploy launchers.
+Everything else is in `docs/`, except `deploy/README.md` and `deploy/_review.md` (which
 `resolve-descriptions.js` writes there via `__dirname` — it must stay in `deploy/`).
+
+`docs/handoff.md` was **deleted on 2026-08-29** and folded into this file: two
+state-of-play documents drift apart, and the handoff had already gone stale (it still
+called the shipped font work "pending sign-off, not deployed"). Do not recreate it.
 
 | File | What it is |
 | --- | --- |
-| `docs/handoff.md` | Newest state-of-play snapshot. Read first. |
-| `docs/legacy-notes.md` | The archived 86 KB predecessor of this file. History only — **much of it describes the pre-redesign site and is not current.** |
+| `docs/legacy-notes.md` | The archived 86 KB predecessor of this file, plus the retired `handoff.md`. History only — **much of it describes the pre-redesign site and is not current.** |
 | `docs/product-brief.md` | Audience and positioning. |
 | `docs/brand-kit.md` | Colours, logo usage. |
 | `docs/PRODUCT.md` | Product-data field reference. |
