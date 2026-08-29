@@ -11,7 +11,6 @@ Last full verification against the live server: **2026-08-29**.
 
 ## Always
 
-- **Begin every response with `START` on its own line, end with `END` on its own line.**
 - **`website-automation-v1/` is OFF LIMITS.** A self-contained side project (a Claude
   Code skill being authored). Unrelated to this site. Do not read, edit or deploy
   anything in it unless the user explicitly reopens it.
