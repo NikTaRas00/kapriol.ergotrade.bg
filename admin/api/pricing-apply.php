@@ -53,8 +53,10 @@ try {
         $plan['stats']['case2Choice'] = $action;
         if ($action === 'delete') {
             $plan['stats']['deleted'] = kap_price_case2_delete($pdo, $plan['case2']);
+            $plan['changes']['deleted'] = $plan['case2Info'];
         } elseif ($action === 'unavailable') {
             $plan['stats']['unavailable'] = kap_price_case2_unavailable($pdo, $plan['case2']);
+            $plan['changes']['unavailable'] = $plan['case2Info'];
         }
         $plan['step'] = kap_price_next_step($plan, 'case2');
     } else {
@@ -64,6 +66,7 @@ try {
             if (is_string($r)) { json_out(array('success' => false, 'error' => $r), 500); }
             $plan['stats']['added'] = $r[0];
             $plan['stats']['addedExisted'] = $r[1];
+            $plan['changes']['added'] = $r[2];
         }
         $plan['step'] = 'done';
     }

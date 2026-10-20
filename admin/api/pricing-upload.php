@@ -56,7 +56,7 @@ try {
             'error' => 'Could not write the backup file, so nothing was changed.'), 500);
     }
 
-    list($updated, $unchanged, $restored) = kap_price_apply_case1($pdo, $class);
+    list($updated, $unchanged, $restored, $details) = kap_price_apply_case1($pdo, $class);
 } catch (Exception $e) {
     error_log('kapriol pricing-upload: ' . $e->getMessage());
     json_out(array('success' => false, 'error' => 'Upload failed: nothing further was changed.'), 500);
@@ -71,7 +71,16 @@ $plan = array(
     'backup'  => $backup,
     'case2'   => $class['case2'],
     'case3'   => $class['case3'],
+    'case2Info' => kap_price_case2_info($class),
     'skipped' => $class['skipped'],
+    // Per-product detail for the report: who changed and by how much. The
+    // deleted / unavailable / added lists fill in as the admin picks.
+    'changes' => array(
+        'updated'     => $details,
+        'deleted'     => array(),
+        'unavailable' => array(),
+        'added'       => array(),
+    ),
     'stats'   => array(
         'rows'        => $class['rowsInFile'],
         'valid'       => count($class['valid']),

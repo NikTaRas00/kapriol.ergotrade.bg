@@ -179,6 +179,8 @@
 .admin-alert__actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .admin-alert__actions .btn { white-space: normal; text-align: left; max-width: 100%; }
 .admin-report { margin: 0 0 12px; padding-left: 22px; }
+.admin-detail { margin: 12px 0 0; }
+.admin-detail > summary { cursor: pointer; font-weight: 600; }
 
 /* Best-seller product pickers (Site content tab) */
 .admin-best { margin-bottom: 16px; }

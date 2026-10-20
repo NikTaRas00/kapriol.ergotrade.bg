@@ -1085,6 +1085,38 @@
     return ul;
   }
 
+  // A collapsible list of the products a step touched, one line each.
+  // `lines` is already-built plain text, so nothing here needs escaping.
+  function detailList(title, lines) {
+    if (!lines || !lines.length) return null;
+    var d = document.createElement("details");
+    d.className = "admin-detail";
+    d.appendChild(el("summary", null, title + " (" + lines.length + ")"));
+    var ul = el("ul", "admin-alert__list");
+    lines.forEach(function (t) { ul.appendChild(el("li", null, t)); });
+    d.appendChild(ul);
+    return d;
+  }
+  function prodLabel(x) {
+    return x.name && x.name !== x.slug ? x.name + " (" + x.slug + ")" : x.slug;
+  }
+  function changeLines(ch) {
+    ch = ch || {};
+    return {
+      updated: (ch.updated || []).map(function (x) {
+        return prodLabel(x) + ": " + (x.from == null ? "no price" : fmtEur(x.from)) + " → " + fmtEur(x.to) +
+          (x.restored ? " (was unavailable)" : "");
+      }),
+      deleted: (ch.deleted || []).map(function (x) {
+        return prodLabel(x) + " — was " + (x.price == null ? "without a price" : fmtEur(x.price));
+      }),
+      unavailable: (ch.unavailable || []).map(function (x) {
+        return prodLabel(x) + " — price removed (was " + (x.price == null ? "none" : fmtEur(x.price)) + ")";
+      }),
+      added: (ch.added || []).map(function (x) { return x.slug + " — " + fmtEur(x.price); })
+    };
+  }
+
   function skippedBox(skipped) {
     var box = el("div", "admin-alert");
     box.appendChild(el("p", null, skipped.length + " row" + (skipped.length === 1 ? " was" : "s were") +
@@ -1114,7 +1146,14 @@
       " with a usable price. <strong>" + s.updated + "</strong> price" + (s.updated === 1 ? "" : "s") + " changed" +
       (s.unchanged ? ", " + s.unchanged + " already had that price" : "") +
       (s.restored ? ", " + s.restored + " unavailable product" + (s.restored === 1 ? "" : "s") + " came back with a price" : "") + ".";
-    root.appendChild(priceNote("", line));
+    var note = priceNote("", line);
+    // On the last step the report below carries this list; before that, show it
+    // here so the admin can see what case 1 already changed.
+    if (plan.step !== "done") {
+      var upd = detailList("Prices changed", changeLines(plan.changes).updated);
+      if (upd) note.appendChild(upd);
+    }
+    root.appendChild(note);
 
     if (plan.step === "case2") {
       var b2 = el("div", "admin-alert admin-alert--red");
@@ -1187,6 +1226,14 @@
           : "not added.")));
     }
     box.appendChild(more);
+
+    // Which products, and what exactly happened to each.
+    var cl = changeLines(plan.changes);
+    [["Prices changed", cl.updated], ["Deleted", cl.deleted],
+     ["Made unavailable", cl.unavailable], ["Added", cl.added]].forEach(function (pair) {
+      var d = detailList(pair[0], pair[1]);
+      if (d) box.appendChild(d);
+    });
 
     if (plan.skipped && plan.skipped.length) box.appendChild(skippedBox(plan.skipped));
 

@@ -668,6 +668,18 @@
 
     var spec = p.description || (Array.isArray(p.features) ? p.features.slice(0, 2).join(". ") : "");
     if (spec) { body.appendChild(el("p", "card__spec", spec)); }
+
+    /* price row, pinned to the bottom of the card so rows of cards line up.
+       Same rule as the product page: "20.00 €" + "with VAT", the word
+       Unavailable instead, or nothing when the record has no price. */
+    if (p.unavailable) {
+      body.appendChild(el("p", "card__price card__price--na", "Unavailable"));
+    } else if (typeof p.price === "number" && p.price > 0) {
+      var pr = el("p", "card__price");
+      pr.appendChild(el("span", "card__price-num", p.price.toFixed(2) + " €"));
+      pr.appendChild(el("span", "card__price-vat", "with VAT"));
+      body.appendChild(pr);
+    }
     card.appendChild(body);
     return card;
   }

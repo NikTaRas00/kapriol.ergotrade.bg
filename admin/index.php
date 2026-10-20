@@ -26,7 +26,7 @@ $csrf = admin_csrf_token();
   <title>Admin | Kapriol Bulgaria</title>
   <link rel="icon" href="../assets/img/favicon.ico" sizes="any" />
   <link rel="stylesheet" href="assets/base.css?v=2" />
-  <link rel="stylesheet" href="assets/admin.css?v=4" />
+  <link rel="stylesheet" href="assets/admin.css?v=5" />
   <link rel="stylesheet" href="assets/theme.css?v=2" />
 </head>
 <body class="admin">
@@ -254,6 +254,6 @@ $csrf = admin_csrf_token();
   </main>
 </div>
 
-<script src="assets/admin.js?v=8" defer></script>
+<script src="assets/admin.js?v=9" defer></script>
 </body>
 </html>

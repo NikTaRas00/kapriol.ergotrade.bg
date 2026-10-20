@@ -365,9 +365,10 @@ function kap_price_classify(PDO $pdo, array $rows) {
     }
 
     $old = array();
-    foreach ($pdo->query('SELECT slug, price, unavailable FROM products') as $p) {
+    foreach ($pdo->query('SELECT slug, name, price, unavailable FROM products') as $p) {
         $old[strtolower($p['slug'])] = array(
             'slug' => $p['slug'],
+            'name' => (string) $p['name'],
             'price' => $p['price'] === null ? null : (float) $p['price'],
             'unavailable' => (int) $p['unavailable'],
         );
@@ -439,10 +440,12 @@ function kap_price_write_backup(PDO $pdo, array $class, $uploadName) {
  * Also clears `unavailable`, so a product that was withdrawn and reappears in a
  * later sheet comes back with its price.
  *
- * @return array(updated, unchanged, restored)
+ * @return array(updated, unchanged, restored, details) where details lists every
+ *         product that was touched: {slug, name, from (float|null), to, restored}.
  */
 function kap_price_apply_case1(PDO $pdo, array $class) {
     $updated = 0; $unchanged = 0; $restored = 0;
+    $details = array();
     $upd = $pdo->prepare('UPDATE products SET price = ?, unavailable = 0 WHERE slug = ?');
     $pdo->beginTransaction();
     try {
@@ -453,13 +456,28 @@ function kap_price_apply_case1(PDO $pdo, array $class) {
             $upd->execute(array(number_format($price, 2, '.', ''), $slug));
             if (!$priceSame)         { $updated++; }
             if ($o['unavailable'])   { $restored++; }
+            $details[] = array('slug' => $slug, 'name' => $o['name'], 'from' => $o['price'],
+                               'to' => $price, 'restored' => (bool) $o['unavailable']);
         }
         $pdo->commit();
     } catch (Exception $e) {
         if ($pdo->inTransaction()) { $pdo->rollBack(); }
         throw $e;
     }
-    return array($updated, $unchanged, $restored);
+    return array($updated, $unchanged, $restored, $details);
+}
+
+/**
+ * What each case 2 product looked like before the admin's choice, for the
+ * report ("deleted: X, was 20.00 €"). Keyed lookups into the classify() result.
+ */
+function kap_price_case2_info(array $class) {
+    $out = array();
+    foreach ($class['case2'] as $slug) {
+        $o = $class['old'][strtolower($slug)];
+        $out[] = array('slug' => $slug, 'name' => $o['name'], 'price' => $o['price']);
+    }
+    return $out;
 }
 
 /* ========================================================================== *
@@ -516,6 +534,7 @@ function kap_price_plan_view(array $plan) {
         'case3'   => $plan['case3'],
         'skipped' => $plan['skipped'],
         'stats'   => $plan['stats'],
+        'changes' => isset($plan['changes']) ? $plan['changes'] : array(),
         'expires' => (int) $plan['created'] + KAP_PLAN_TTL,
     );
 }
@@ -563,7 +582,7 @@ function kap_price_case2_unavailable(PDO $pdo, array $slugs) {
  * admin finishes each one in the Products tab (category is editable there) and
  * unticks "Hide from the public site" when it is ready.
  *
- * @return array(added, alreadyExisted) or string error message
+ * @return array(added, alreadyExisted, addedItems) or string error message
  */
 function kap_price_case3_add(PDO $pdo, array $items) {
     $st = $pdo->prepare('SELECT id FROM categories WHERE id = ?');
@@ -572,7 +591,7 @@ function kap_price_case3_add(PDO $pdo, array $items) {
         return 'The placeholder category "' . KAP_PLACEHOLDER_CAT . '" is missing. Run the pricing migration SQL first.';
     }
 
-    $added = 0; $existed = 0;
+    $added = 0; $existed = 0; $addedItems = array();
     $chk = $pdo->prepare('SELECT 1 FROM products WHERE slug = ?');
     $ord = $pdo->prepare('SELECT COALESCE(MAX(sort_order), -1) + 1 FROM products WHERE category_id = ?');
     $ins = $pdo->prepare('INSERT INTO products (slug, category_id, sort_order, name, hidden, is_new, price, unavailable)
@@ -586,11 +605,12 @@ function kap_price_case3_add(PDO $pdo, array $items) {
             $ins->execute(array($it['slug'], KAP_PLACEHOLDER_CAT, (int) $ord->fetchColumn(),
                                 $it['slug'], number_format($it['price'], 2, '.', '')));
             $added++;
+            $addedItems[] = array('slug' => $it['slug'], 'price' => $it['price']);
         }
         $pdo->commit();
     } catch (Exception $e) {
         if ($pdo->inTransaction()) { $pdo->rollBack(); }
         throw $e;
     }
-    return array($added, $existed);
+    return array($added, $existed, $addedItems);
 }
