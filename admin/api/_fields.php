@@ -21,7 +21,13 @@
  *    slug      the primary key and the image filename stem. Opaque: it is NOT
  *              derivable from name (dune-jaq vs "Dune Jaq"). Set once at
  *              creation, never rewritten.
- *    category  changing it would reorder the catalogue and orphan sort_order.
+ *    category  not part of this allowlist because moving a product also has to
+ *              re-sort it to the end of its new range. products-save.php
+ *              handles it separately via kap_product_set_category()
+ *              (_pricing.php); product-create.php sets it once at creation.
+ *    price, unavailable
+ *              written only by the price-list upload (pricing-*.php), never by
+ *              the product editor.
  *    the ~22 frozen PDF-import fields (toeCap, sole, weightGrams, fit,
  *              materialComposition ...). They live in products.spec_json and
  *              are preserved untouched through every save — the same

@@ -26,7 +26,7 @@ $csrf = admin_csrf_token();
   <title>Admin | Kapriol Bulgaria</title>
   <link rel="icon" href="../assets/img/favicon.ico" sizes="any" />
   <link rel="stylesheet" href="assets/base.css?v=2" />
-  <link rel="stylesheet" href="assets/admin.css?v=3" />
+  <link rel="stylesheet" href="assets/admin.css?v=4" />
   <link rel="stylesheet" href="assets/theme.css?v=2" />
 </head>
 <body class="admin">
@@ -43,6 +43,7 @@ $csrf = admin_csrf_token();
 
     <nav class="admin-tabs" aria-label="Admin sections">
       <button class="admin-tab is-active" type="button" data-tab="products" aria-selected="true">Products</button>
+      <button class="admin-tab" type="button" data-tab="pricing" aria-selected="false">Pricing</button>
       <button class="admin-tab" type="button" data-tab="enquiries" aria-selected="false">Enquiries</button>
       <button class="admin-tab" type="button" data-tab="analytics" aria-selected="false">Analytics</button>
       <button class="admin-tab" type="button" data-tab="codes" aria-selected="false">Codes</button>
@@ -93,6 +94,20 @@ $csrf = admin_csrf_token();
           </form>
         </div>
       </div>
+    </section>
+
+    <!-- ============================ PRICING ============================ -->
+    <section class="admin-panel" id="tab-pricing" role="tabpanel" hidden>
+      <div class="admin-section__head">
+        <h2 class="admin-h2">Pricing</h2>
+      </div>
+      <p class="admin-meta">Upload one Excel (.xlsx) or CSV file with a <strong>slugs</strong> column and a <strong>prices</strong> column (euros, VAT included, decimals allowed, e.g. 12.50 or 12,50). Prices are applied straight away; if some products are missing from the file, or only in the file, you will be asked what to do with them. A backup of the previous prices is saved first.</p>
+      <div class="admin-pricing__upload">
+        <input type="file" id="priceFile" accept=".xlsx,.csv" aria-label="Pricing file (.xlsx or .csv)" />
+        <button class="btn btn--red" type="button" id="priceUpload">Upload all pricing</button>
+      </div>
+      <p class="form-status" id="priceStatus" role="status" aria-live="polite"></p>
+      <div id="priceResult"><!-- notices, red boxes and the final report are injected by admin.js --></div>
     </section>
 
     <!-- ============================ ENQUIRIES ============================ -->
@@ -239,6 +254,6 @@ $csrf = admin_csrf_token();
   </main>
 </div>
 
-<script src="assets/admin.js?v=7" defer></script>
+<script src="assets/admin.js?v=8" defer></script>
 </body>
 </html>

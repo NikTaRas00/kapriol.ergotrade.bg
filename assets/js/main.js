@@ -1550,6 +1550,27 @@
     /* headline block */
     var tag = $("#pdTag"); if (tag) { tag.textContent = catLabel(p.category); }
     var h1 = $("#pdName"); if (h1) { h1.textContent = p.name; }
+
+    /* price: "20.00 €" + "with VAT", or the Unavailable banner in its place.
+       A product with neither (no price loaded yet) shows nothing at all. */
+    var priceBox = $("#pdPrice");
+    if (priceBox) {
+      var priceNum = $("#pdPriceNum"), priceVat = $("#pdPriceVat");
+      priceBox.classList.remove("pd__price--na");
+      if (p.unavailable) {
+        priceNum.textContent = "Unavailable";
+        priceVat.hidden = true;
+        priceBox.classList.add("pd__price--na");
+        priceBox.hidden = false;
+      } else if (typeof p.price === "number" && p.price > 0) {
+        priceNum.textContent = p.price.toFixed(2) + " €";
+        priceVat.hidden = false;
+        priceBox.hidden = false;
+      } else {
+        priceBox.hidden = true;
+      }
+    }
+
     var desc = $("#pdDesc");
     if (desc) {
       if (p.description) { setMultiline("#pdDesc", p.description); }

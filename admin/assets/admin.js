@@ -194,6 +194,7 @@
         if (name === "analytics" && !anLoaded) loadAnalytics();
         if (name === "content" && !contentLoaded) loadContent();
         if (name === "codes" && !codesRendered) { codesRendered = true; ensureAttrs(renderCodes); }
+        if (name === "pricing" && !priceLoaded) loadPricingState();
       });
     });
   }
@@ -215,8 +216,14 @@
   ];
   function catLabel(id) {
     for (var i = 0; i < CATEGORIES.length; i++) if (CATEGORIES[i].id === id) return CATEGORIES[i].label;
+    if (id === PLACEHOLDER_CAT) return "Unsorted (added from a price list)";
     return id;
   }
+
+  // Hidden holding category for products the price-list upload creates (case 3).
+  // Not one of the six public ranges: it only appears in this admin, as a
+  // filter entry and as the "current" value of a product that still needs sorting.
+  var PLACEHOLDER_CAT = "unsorted";
 
   // Field spec: which keys are editable and how. Everything else on a record
   // is passed through untouched by the server.
@@ -233,6 +240,9 @@
         o.value = c.id; o.textContent = c.label;
         filter.appendChild(o);
       });
+      var uo = document.createElement("option");
+      uo.value = PLACEHOLDER_CAT; uo.textContent = catLabel(PLACEHOLDER_CAT);
+      filter.appendChild(uo);
       filter.addEventListener("change", function () { activeCat = filter.value; renderList(); });
     }
 
@@ -693,7 +703,32 @@
       slugInp.addEventListener("input", function () { slugInp.dataset.touched = "1"; });
     } else {
       $("#prodFormTitle").textContent = p.name;
-      $("#prodFormMeta").innerHTML = 'Category: <code>' + esc(p.category) + '</code> · Slug: <code>' + esc(p.slug) + "</code> <span class=\"admin-readonly\">(read-only)</span>";
+      $("#prodFormMeta").innerHTML = 'Slug: <code>' + esc(p.slug) + "</code> <span class=\"admin-readonly\">(read-only)</span>";
+
+      // The category can be changed after creation. A product still in the
+      // placeholder range shows it as a disabled "current" choice, so saving
+      // without picking a real range leaves it where it is.
+      var ecWrap = el("div", "field");
+      ecWrap.appendChild(el("label", null, "Category"));
+      var ecSel = document.createElement("select");
+      ecSel.name = "category"; ecSel.className = "admin-select admin-select--full";
+      if (p.category === PLACEHOLDER_CAT) {
+        var po = document.createElement("option");
+        po.value = PLACEHOLDER_CAT; po.disabled = true; po.selected = true;
+        po.textContent = catLabel(PLACEHOLDER_CAT) + " — choose a range";
+        ecSel.appendChild(po);
+      }
+      CATEGORIES.forEach(function (c) {
+        var o = document.createElement("option");
+        o.value = c.id; o.textContent = c.label;
+        if (c.id === p.category) o.selected = true;
+        ecSel.appendChild(o);
+      });
+      ecWrap.appendChild(ecSel);
+      if (p.category === PLACEHOLDER_CAT) {
+        ecWrap.appendChild(el("p", "admin-img__hint", "This product was added from a price list and is hidden. Choose its range, fill in the details, then untick “Hide from the public site”."));
+      }
+      box.appendChild(ecWrap);
     }
 
     box.appendChild(textField("name", "Name", p.name));
@@ -872,6 +907,11 @@
     var payload = collectProductFields();
     payload.slug = activeSlug;
 
+    // Only send a category when the editor actually changed it.
+    var catSel = $("#prodFields [name=category]");
+    var cur = findProduct(activeSlug);
+    if (catSel && cur && catSel.value && catSel.value !== cur.category) payload.category = catSel.value;
+
     // Spec codes (Performance / Safety class / Technologies) — sent for any
     // category in edit mode, where the pickers exist.
     payload.performance = collectSpec("performance");
@@ -952,6 +992,213 @@
       del.disabled = false;
       status(st, err.message || "Delete failed.", "error");
     });
+  }
+
+  /* ===========================================================  PRICING  */
+  /* "Upload all pricing": the upload applies case 1 (price updates) on the
+     server and returns a plan. This tab then walks the admin through case 2
+     (products missing from the file) and case 3 (products only in the file),
+     one red box at a time, and ends with a written report. The server owns the
+     plan; the browser only sends { token, action }. */
+  var priceLoaded = false;
+  var priceBusy = false;
+
+  function setupPricing() {
+    var btn = $("#priceUpload");
+    if (btn) btn.addEventListener("click", uploadPricing);
+  }
+
+  // Reopening the tab (or reloading the page) mid-flow picks the plan back up.
+  function loadPricingState() {
+    priceLoaded = true;
+    postJSON("api/pricing-apply.php", { action: "status" }).then(function (res) {
+      if (res && res.success && res.plan) renderPricing(res.plan);
+    }).catch(function () { /* nothing pending is not an error */ });
+  }
+
+  function fmtEur(n) { return Number(n).toFixed(2) + " €"; }
+
+  function uploadPricing() {
+    var inp = $("#priceFile"), st = $("#priceStatus"), btn = $("#priceUpload");
+    if (priceBusy) return;
+    if (!inp.files || !inp.files[0]) { status(st, "Choose a file first.", "error"); return; }
+
+    var fd = new FormData();
+    fd.append("file", inp.files[0]);
+    priceBusy = true; btn.disabled = true;
+    $("#priceResult").innerHTML = "";
+    status(st, "Uploading and applying prices…", "ok");
+
+    fetch("api/pricing-upload.php", {
+      method: "POST", credentials: "same-origin",
+      headers: { "X-CSRF-Token": CSRF }, body: fd
+    }).then(function (r) {
+      if (r.status === 401) { location.href = "login.php"; throw new Error("auth"); }
+      return r.json().catch(function () { throw new Error("Bad response (is PHP running?)"); });
+    }).then(function (res) {
+      priceBusy = false; btn.disabled = false;
+      if (res && res.success) {
+        inp.value = "";
+        status(st, "Prices from the file were applied. Read the notices below.", "ok");
+        renderPricing(res.plan);
+      } else {
+        status(st, (res && res.error) || "Upload failed.", "error");
+        if (res && res.skipped && res.skipped.length) {
+          $("#priceResult").appendChild(skippedBox(res.skipped));
+        }
+      }
+    }).catch(function (err) {
+      priceBusy = false; btn.disabled = false;
+      status(st, err.message || "Upload failed.", "error");
+    });
+  }
+
+  function priceAction(plan, action) {
+    if (priceBusy) return;
+    var st = $("#priceStatus");
+    priceBusy = true;
+    Array.prototype.forEach.call(document.querySelectorAll("#priceResult button"), function (b) { b.disabled = true; });
+    status(st, "Working…", "ok");
+    postJSON("api/pricing-apply.php", { token: plan.token, action: action }).then(function (res) {
+      priceBusy = false;
+      if (res && res.plan) renderPricing(res.plan);   // also on a 409: show the real current step
+      if (res && res.success) status(st, "Done.", "ok");
+      else status(st, (res && res.error) || "That step failed.", "error");
+    }).catch(function (err) {
+      priceBusy = false;
+      status(st, err.message || "That step failed.", "error");
+      renderPricing(plan);   // buttons come back
+    });
+  }
+
+  function priceNote(cls, html) {
+    var d = el("div", "admin-alert " + cls);
+    d.innerHTML = html;
+    return d;
+  }
+
+  function slugList(items, withPrice) {
+    var ul = el("ul", "admin-alert__list");
+    items.forEach(function (it) {
+      ul.appendChild(el("li", null, withPrice ? it.slug + " — " + fmtEur(it.price) : it));
+    });
+    return ul;
+  }
+
+  function skippedBox(skipped) {
+    var box = el("div", "admin-alert");
+    box.appendChild(el("p", null, skipped.length + " row" + (skipped.length === 1 ? " was" : "s were") +
+      " skipped and changed nothing. Fix them in the file if they should be applied:"));
+    var ul = el("ul", "admin-alert__list");
+    skipped.forEach(function (s) {
+      ul.appendChild(el("li", null, "row " + s.row + (s.slug ? " (" + s.slug + ")" : "") + " — " + s.reason));
+    });
+    box.appendChild(ul);
+    return box;
+  }
+
+  function actionBtn(label, cls, onClick) {
+    var b = el("button", "btn btn--sm " + cls, label);
+    b.type = "button";
+    b.addEventListener("click", onClick);
+    return b;
+  }
+
+  function renderPricing(plan) {
+    var root = $("#priceResult");
+    root.innerHTML = "";
+    var s = plan.stats;
+
+    // Case 1 has already happened by the time any plan exists.
+    var line = "<strong>" + esc(plan.file) + "</strong>: " + s.rows + " rows read, " + s.valid +
+      " with a usable price. <strong>" + s.updated + "</strong> price" + (s.updated === 1 ? "" : "s") + " changed" +
+      (s.unchanged ? ", " + s.unchanged + " already had that price" : "") +
+      (s.restored ? ", " + s.restored + " unavailable product" + (s.restored === 1 ? "" : "s") + " came back with a price" : "") + ".";
+    root.appendChild(priceNote("", line));
+
+    if (plan.step === "case2") {
+      var b2 = el("div", "admin-alert admin-alert--red");
+      b2.appendChild(el("p", null, "the products with the following slugs were not found on the uploaded file")).style.fontWeight = "700";
+      b2.appendChild(slugList(plan.case2, false));
+      var a2 = el("div", "admin-alert__actions");
+      a2.appendChild(actionBtn("delete these products", "btn--red", function () {
+        if (!window.confirm("Delete " + plan.case2.length + " product" + (plan.case2.length === 1 ? "" : "s") +
+          " permanently?\n\nTheir photos stay on the server and a backup of the products was saved, " +
+          "but they disappear from the catalogue and the admin.")) return;
+        priceAction(plan, "delete");
+      }));
+      a2.appendChild(actionBtn("keep these products on Data Base and Website, do not show a price number and show the banner ‘unavailable’ where their prices should sit", "btn--outline", function () {
+        priceAction(plan, "unavailable");
+      }));
+      a2.appendChild(actionBtn("Nevermind, keep these products untouched", "btn--ghost", function () {
+        priceAction(plan, "keep");
+      }));
+      b2.appendChild(a2);
+      root.appendChild(b2);
+    } else if (plan.step === "case3") {
+      var b3 = el("div", "admin-alert admin-alert--red");
+      b3.appendChild(el("p", null, "the products with the following slugs were not found on the Data Base")).style.fontWeight = "700";
+      b3.appendChild(slugList(plan.case3, true));
+      b3.appendChild(el("p", null, "the system can create these products and attribute them the given prices but they will have no pictures or text. " +
+        "their title will be their slug. please go to the products' section of admin panel and add their informations if you choose to add these products to Data Base and Website"));
+      b3.appendChild(el("p", "admin-hint", "They are created hidden, in the “" + catLabel(PLACEHOLDER_CAT) +
+        "” category. In the Products tab, pick a range, fill in the details and untick “Hide from the public site” to publish each one."));
+      var a3 = el("div", "admin-alert__actions");
+      a3.appendChild(actionBtn("add these products to the Data Base and Website on given conditions", "btn--red", function () {
+        priceAction(plan, "add");
+      }));
+      a3.appendChild(actionBtn("nevermind, do not add these products now", "btn--ghost", function () {
+        priceAction(plan, "skip");
+      }));
+      b3.appendChild(a3);
+      root.appendChild(b3);
+    } else {
+      root.appendChild(reportBox(plan));
+    }
+
+    // Skipped rows stay visible next to whichever step is showing.
+    if (plan.skipped && plan.skipped.length && plan.step !== "done") root.appendChild(skippedBox(plan.skipped));
+  }
+
+  function reportBox(plan) {
+    var s = plan.stats;
+    var box = el("div", "admin-alert admin-alert--ok");
+    box.appendChild(el("p", null, "Pricing report")).style.fontWeight = "700";
+    var ul = el("ol", "admin-report");
+    ul.appendChild(el("li", null, "Products whose price changed: " + s.updated));
+    ul.appendChild(el("li", null, "Products deleted: " + s.deleted));
+    ul.appendChild(el("li", null, "Products that became unavailable: " + s.unavailable));
+    ul.appendChild(el("li", null, "Products added to the Data Base: " + s.added));
+    box.appendChild(ul);
+
+    var more = el("ul", "admin-report");
+    more.appendChild(el("li", null, "Rows read from the file: " + s.rows + " (" + s.valid + " with a usable price, " +
+      (plan.skipped ? plan.skipped.length : 0) + " skipped)."));
+    if (s.unchanged) more.appendChild(el("li", null, s.unchanged + " product" + (s.unchanged === 1 ? "" : "s") + " already had the price in the file."));
+    if (s.restored) more.appendChild(el("li", null, s.restored + " previously unavailable product" + (s.restored === 1 ? "" : "s") + " came back with a price."));
+    if (s.case2Count) {
+      more.appendChild(el("li", null, s.case2Count + " product" + (s.case2Count === 1 ? " was" : "s were") + " missing from the file: " +
+        (s.case2Choice === "delete" ? "deleted." : s.case2Choice === "unavailable" ? "kept and marked unavailable." : "left untouched.")));
+    }
+    if (s.case3Count) {
+      more.appendChild(el("li", null, s.case3Count + " product" + (s.case3Count === 1 ? " was" : "s were") + " only in the file: " +
+        (s.case3Choice === "add"
+          ? "added (hidden, in “" + catLabel(PLACEHOLDER_CAT) + "”)" + (s.addedExisted ? "; " + s.addedExisted + " already existed" : "") + "."
+          : "not added.")));
+    }
+    box.appendChild(more);
+
+    if (plan.skipped && plan.skipped.length) box.appendChild(skippedBox(plan.skipped));
+
+    if (plan.backup) {
+      var p = el("p", "admin-hint");
+      p.appendChild(document.createTextNode("A backup of the previous prices (and of any products that could be deleted) was saved before the changes. "));
+      var a = el("a", null, "Download backup");
+      a.href = "api/pricing-backup.php?f=" + encodeURIComponent(plan.backup);
+      p.appendChild(a);
+      box.appendChild(p);
+    }
+    return box;
   }
 
   /* ==========================================================  ENQUIRIES  */
@@ -1655,6 +1902,7 @@
   setupTabs();
   setupProducts();
   setupEnquiries();
+  setupPricing();
   setupAnalytics();
   setupContent();
   setupCodes();

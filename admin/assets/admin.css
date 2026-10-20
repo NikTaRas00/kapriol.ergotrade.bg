@@ -162,6 +162,24 @@
 .admin-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; }
 @media (max-width: 560px) { .admin-row { grid-template-columns: 1fr; } }
 
+/* ------------------------------------------------------- Pricing tab ---- */
+.admin-pricing__upload { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 8px 0 4px; }
+.admin-alert {
+  border: 1px solid var(--stroke-soft); border-radius: var(--r-card);
+  background: var(--surface); padding: 16px 18px; margin: 16px 0; font-size: .95rem;
+}
+.admin-alert p { margin: 0 0 10px; }
+.admin-alert--red { border-color: var(--red); background: rgba(232,0,13,0.06); }
+.admin-alert--ok { border-color: #1d6b32; background: rgba(29,107,50,0.07); }
+.admin-alert__list {
+  max-height: 240px; overflow: auto; margin: 10px 0 14px; padding: 8px 8px 8px 28px;
+  background: var(--surface); border: 1px solid var(--hairline); border-radius: 8px;
+  font-family: ui-monospace, Consolas, monospace; font-size: .85rem;
+}
+.admin-alert__actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.admin-alert__actions .btn { white-space: normal; text-align: left; max-width: 100%; }
+.admin-report { margin: 0 0 12px; padding-left: 22px; }
+
 /* Best-seller product pickers (Site content tab) */
 .admin-best { margin-bottom: 16px; }
 .admin-best__prev { display: flex; align-items: center; gap: 10px; margin-top: 8px; min-height: 28px; }

@@ -15,7 +15,7 @@
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/saira-stencil-latin.woff2" crossorigin />
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/inter-latin.woff2" crossorigin />
 <script>document.documentElement.className+=" js";</script>
-<link rel="stylesheet" href="assets/css/style.css?v=73" />
+<link rel="stylesheet" href="assets/css/style.css?v=74" />
 </head>
 
 <body data-page="product">
@@ -68,6 +68,12 @@
           <div>
             <span class="pd__tag" id="pdTag"></span>
             <h1 id="pdName"></h1>
+            <!-- Filled by main.js from the product record: "20.00 €" with a
+                 "with VAT" label under it, or an "Unavailable" banner. -->
+            <div class="pd__price" id="pdPrice" hidden>
+              <span class="pd__price-num" id="pdPriceNum"></span>
+              <span class="pd__price-vat" id="pdPriceVat">with VAT</span>
+            </div>
             <p class="pd__desc" id="pdDesc"></p>
             <div class="pd__badges" id="pdBadges"></div>
             <div class="specs" id="pdSpecs"></div>
@@ -144,6 +150,6 @@
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=74"></script>
+<script src="assets/js/main.js?v=75"></script>
 </body>
 </html>
