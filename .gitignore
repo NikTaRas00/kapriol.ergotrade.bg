@@ -18,6 +18,8 @@ deploy/
 .impeccable/
 .archive/
 share-folder/
+kapriol-pictures-1/
+products-slugs*.json
 
 # ---------------------------------------------------------------------------
 # Host-owned / admin-mutable — a git pull must NEVER touch these. The admin

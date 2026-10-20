@@ -247,11 +247,30 @@
     return BASE + p.img + (p.imgV ? "?v=" + encodeURIComponent(p.imgV) : "");
   }
 
-  function galleryOf(p) {
+  /* Placement (in-use) photos are told apart by file name: "<slug>-p1.webp".
+     The gallery is one flat list in the database, so the suffix is the only
+     marker. Studio shots feed the gallery by the title; placement shots feed
+     the strip beside the long description. */
+  var PLACEMENT_RE = /-p\d+\.(?:webp|jpe?g|png)$/i;
+
+  function shotsOf(p) {
     var list = (p && Array.isArray(p.images) && p.images.length) ? p.images.slice()
              : (p && p.img ? [p.img] : []);
     var v = p && p.imgV ? "?v=" + encodeURIComponent(p.imgV) : "";
-    return list.map(function (src) { return BASE + src + v; });
+    return list.map(function (src) { return { src: BASE + src + v, scene: PLACEMENT_RE.test(src) }; });
+  }
+
+  function galleryOf(p) {
+    var all = shotsOf(p);
+    var studio = all.filter(function (s) { return !s.scene; });
+    // A product with only placement photos still needs a main image.
+    return (studio.length ? studio : all).map(function (s) { return s.src; });
+  }
+
+  function sceneOf(p) {
+    var all = shotsOf(p);
+    var hasStudio = all.some(function (s) { return !s.scene; });
+    return hasStudio ? all.filter(function (s) { return s.scene; }).map(function (s) { return s.src; }) : [];
   }
 
   function catLabel(id) {
@@ -1576,6 +1595,40 @@
     /* contact CTA carries the product so the enquiry arrives with context */
     var cta = $("#pdCta");
     if (cta) { cta.href = "contact.html?p=" + encodeURIComponent(p.slug); }
+
+    /* placement photos beside the long copy */
+    var scene = $("#pdScene");
+    if (scene) {
+      var pics = sceneOf(p);
+      scene.innerHTML = "";
+      scene.hidden = !pics.length;
+      if (pics.length) {
+        var big = new Image();
+        big.src = pics[0]; big.alt = p.name + " in use"; big.loading = "lazy"; big.decoding = "async";
+        var bigWrap = el("div", "pd__scenemain");
+        bigWrap.appendChild(big);
+        if (pics.length > 1) {
+          var row = el("div", "pd__scenethumbs");
+          pics.forEach(function (src, i) {
+            var b = el("button", "pd__scenethumb");
+            b.type = "button";
+            b.setAttribute("aria-label", "View in-use photo " + (i + 1) + " of " + pics.length);
+            b.setAttribute("aria-current", i === 0 ? "true" : "false");
+            var im = new Image();
+            im.src = src; im.alt = ""; im.loading = "lazy"; im.decoding = "async";
+            b.appendChild(im);
+            b.addEventListener("click", function () {
+              big.src = src;
+              $$(".pd__scenethumb", row).forEach(function (o) { o.setAttribute("aria-current", "false"); });
+              b.setAttribute("aria-current", "true");
+            });
+            row.appendChild(b);
+          });
+          scene.appendChild(row);
+        }
+        scene.appendChild(bigWrap);
+      }
+    }
 
     /* long-form copy */
     var bodyBlock = $("#pdBody");
