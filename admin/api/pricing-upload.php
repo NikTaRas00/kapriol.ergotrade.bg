@@ -1,19 +1,19 @@
 <?php
 /**
- * pricing-upload.php — "Upload all pricing", step one.
+ * pricing-upload.php — "Upload all pricing".
  *
- * Auth + CSRF protected. Takes a multipart upload (field `file`, .xlsx or .csv:
- * one column of slugs, one of prices). It does, in this order:
+ * Auth + CSRF protected. Takes a multipart upload (field `file`, .xlsx or .csv)
+ * keyed by ARTICLE CODE: an Item/Code column and a price column. In this order:
  *
  *   1. read and validate the file,
- *   2. classify every slug into case 1 / 2 / 3 BEFORE touching anything
- *      (see _pricing.php for the rules),
+ *   2. classify everything BEFORE touching anything (see _pricing.php),
  *   3. write a backup snapshot to private/price-backups/,
- *   4. apply case 1 (price updates) straight away,
- *   5. save the plan so pricing-apply.php can run cases 2 and 3 on the admin's
- *      say-so, against exactly these numbers.
+ *   4. apply: code prices, products' first-code price, and visibility (products
+ *      with no code in the file are hidden; ones this flow hid and that are
+ *      listed again are shown),
+ *   5. return the report in the same response.
  *
- * Returns { success, plan } — see kap_price_plan_view().
+ * Returns { success, report }.
  */
 require __DIR__ . '/_guard.php';
 require __DIR__ . '/_pricing.php';
@@ -25,8 +25,8 @@ if (empty($_FILES['file']) || !is_uploaded_file($_FILES['file']['tmp_name'])
     || $_FILES['file']['error'] !== UPLOAD_ERR_OK) {
     json_out(array('success' => false, 'error' => 'No file received. Choose an .xlsx or .csv file and try again.'), 422);
 }
-if ($_FILES['file']['size'] > 2 * 1024 * 1024) {
-    json_out(array('success' => false, 'error' => 'The file is larger than 2 MB.'), 422);
+if ($_FILES['file']['size'] > 8 * 1024 * 1024) {
+    json_out(array('success' => false, 'error' => 'The file is larger than 8 MB.'), 422);
 }
 
 $origName = basename((string) $_FILES['file']['name']);
@@ -39,71 +39,50 @@ $pdo = kap_db();
 try {
     if (!kap_price_schema_ready($pdo)) {
         json_out(array('success' => false,
-            'error' => 'The database has no price columns yet. Run the pricing migration SQL first.'), 500);
+            'error' => 'The database is not ready for code prices yet. Run the codes migration SQL first.'), 500);
     }
 
     $class = kap_price_classify($pdo, $rows);
-    if (!$class['valid']) {
+
+    // Nothing in the file matches a code on the site: almost certainly the wrong
+    // file or the wrong column, and applying it would hide the whole catalogue.
+    $matched = $class['unchanged'] + count($class['updates']);
+    if (!$class['valid'] || $matched === 0) {
         json_out(array('success' => false,
-            'error' => 'No usable price rows were found in the file, so nothing was changed. '
-                     . 'Expected one column of slugs and one of prices.',
+            'error' => 'None of the codes in the file match a code on the site, so nothing was changed. '
+                     . 'Expected a column of article codes (e.g. 144330) and a column of prices.',
             'skipped' => $class['skipped']), 422);
     }
 
-    $backup = kap_price_write_backup($pdo, $class, $origName);
+    $backup = kap_price_write_backup($pdo, $origName);
     if ($backup === '') {
         json_out(array('success' => false,
             'error' => 'Could not write the backup file, so nothing was changed.'), 500);
     }
 
-    list($updated, $unchanged, $restored, $details) = kap_price_apply_case1($pdo, $class);
+    $done = kap_price_apply($pdo, $class);
 } catch (Exception $e) {
     error_log('kapriol pricing-upload: ' . $e->getMessage());
-    json_out(array('success' => false, 'error' => 'Upload failed: nothing further was changed.'), 500);
+    json_out(array('success' => false, 'error' => 'Upload failed and was rolled back. Nothing was changed.'), 500);
 }
 
-kap_price_plan_sweep();
-
-$plan = array(
-    'token'   => bin2hex(random_bytes(16)),
-    'created' => time(),
+$report = array(
     'file'    => $origName,
     'backup'  => $backup,
-    'case2'   => $class['case2'],
-    'case3'   => $class['case3'],
-    'case2Info' => kap_price_case2_info($class),
     'skipped' => $class['skipped'],
-    // Per-product detail for the report: who changed and by how much. The
-    // deleted / unavailable / added lists fill in as the admin picks.
-    'changes' => array(
-        'updated'     => $details,
-        'deleted'     => array(),
-        'unavailable' => array(),
-        'added'       => array(),
-    ),
+    'missing' => array_slice($class['missing'], 0, 300),
+    'changes' => $done,
     'stats'   => array(
-        'rows'        => $class['rowsInFile'],
-        'valid'       => count($class['valid']),
-        'updated'     => $updated,
-        'unchanged'   => $unchanged,
-        'restored'    => $restored,
-        'case2Count'  => count($class['case2']),
-        'case3Count'  => count($class['case3']),
-        'case2Choice' => '',
-        'case3Choice' => '',
-        'deleted'     => 0,
-        'unavailable' => 0,
-        'added'       => 0,
-        'addedExisted' => 0,
+        'rows'          => $class['rowsInFile'],
+        'valid'         => count($class['valid']),
+        'codesChanged'  => count($class['updates']),
+        'codesSame'     => $class['unchanged'],
+        'productsPriced' => count($done['updated']),
+        'hidden'        => count($done['hidden']),
+        'shown'         => count($done['shown']),
+        'notOnSite'     => $class['notOnSite'],
+        'missing'       => count($class['missing']),
     ),
 );
-$plan['step'] = kap_price_next_step($plan, 'start');
 
-if (!kap_price_plan_save($plan)) {
-    json_out(array('success' => false,
-        'error' => 'Prices were updated (case 1), but the follow-up plan could not be saved. '
-                 . 'Upload the same file again to continue with the remaining products.'), 500);
-}
-$_SESSION['price_plan'] = $plan['token'];
-
-json_out(array('success' => true, 'plan' => kap_price_plan_view($plan)), 200);
+json_out(array('success' => true, 'report' => $report), 200);

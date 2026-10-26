@@ -4,28 +4,35 @@
  * product editor needs.
  *
  * ──────────────────────────────────────────────────────────────────────────
- *  Shared by pricing-upload.php, pricing-apply.php, pricing-backup.php and
- *  products-save.php. Never an entry point — denied by the root .htaccess
- *  (^_.*\.php). Requires _guard.php to have been included first (KAP_PRIVATE_DIR,
- *  atomic_write_json, kap_product_delete from private/catalog.php via kap_db()).
+ *  Shared by pricing-upload.php, pricing-backup.php and products-save.php.
+ *  Never an entry point — denied by the root .htaccess (^_.*\.php). Requires
+ *  _guard.php to have been included first (KAP_PRIVATE_DIR, atomic_write_json,
+ *  kap_db()).
  *
- *  THE FLOW
+ *  THE FLOW (one step, no questions)
  *
- *    1. pricing-upload.php reads the .xlsx/.csv, then CLASSIFIES every slug
- *       before changing anything:
- *         case 1  slug in file (valid price) and in the DB  -> price update
- *         case 2  slug in the DB but nowhere in the file     -> admin decides
- *         case 3  slug in file (valid price) but not in DB   -> admin decides
- *       A slug that appears in the file but cannot be applied (bad price,
- *       duplicated) is "protected": it is reported as skipped and is NEVER
- *       treated as missing, so a typo in the sheet can't get a product deleted.
- *    2. A backup snapshot is written, then case 1 is applied immediately.
- *    3. The plan (case 2 / case 3 lists, stats) is kept in private/price-plans/
- *       for an hour; pricing-apply.php carries out the admin's button choices
- *       against exactly that plan, one case at a time.
+ *    The sheet is keyed by ARTICLE CODE (the supplier's "Item" column, which is
+ *    our code with a leading "1"), not by slug. Each code has its own price in
+ *    product_article_code.price. A product shows the price of its first priced
+ *    code.
  *
- *  PRICES: DECIMAL(8,2) in products.price, euros, VAT included. `unavailable`
- *  products have price NULL and show a banner instead of a number.
+ *    1. pricing-upload.php reads the .xlsx/.csv and classifies everything before
+ *       changing anything.
+ *    2. A backup snapshot is written.
+ *    3. In one transaction: codes found in the sheet get the sheet's price;
+ *       products with NO code anywhere in the sheet are hidden (hidden_by_upload
+ *       = 1); products the upload hid earlier that are listed again are shown
+ *       again. A product hidden by hand in the admin is never touched.
+ *    4. The report is returned in the same response.
+ *
+ *    A code that is in the sheet but cannot be applied (bad price, conflicting
+ *    duplicate rows) is reported as skipped and still counts as "in the sheet",
+ *    so a typo can never cause a product to be hidden. Codes in the sheet that
+ *    are not on the site are ignored (the supplier list is far bigger than our
+ *    catalogue) and only counted. Codes of a listed product that are missing
+ *    from the sheet are left as they are and listed in the report.
+ *
+ *  PRICES: DECIMAL(8,2), euros, VAT included.
  * ──────────────────────────────────────────────────────────────────────────
  */
 
@@ -34,8 +41,7 @@ define('KAP_PRICING_LOADED', true);
 
 define('KAP_PLACEHOLDER_CAT', 'unsorted');
 define('KAP_PRICE_MAX', 99999.99);
-define('KAP_PLAN_TTL', 3600);
-define('KAP_PRICE_MAX_ROWS', 5000);
+define('KAP_PRICE_MAX_ROWS', 20000);
 define('KAP_NS_MAIN', 'http://schemas.openxmlformats.org/spreadsheetml/2006/main');
 define('KAP_NS_REL',  'http://schemas.openxmlformats.org/officeDocument/2006/relationships');
 
@@ -257,29 +263,56 @@ function kap_price_read_csv($path) {
 }
 
 /**
- * Turn a grid into flat rows: array(array(row, slug, price, isNumeric)).
- * A first row whose cells say "slug(s)" / "price(s)" is a header (and tells us
- * which columns to use); otherwise column A is the slug and B the price.
+ * Turn a grid into flat rows: array(array(row, code, price, num, color)).
+ *
+ * Finds the header row (a cell reading Item / Code / Article within the first 20
+ * rows) and takes the price from the column headed Price, else from the
+ * rightmost header cell that is not the code, description or colour column
+ * (the supplier's sheet heads it with a price-list name such as "1028 NEW").
+ * Rows above the header (a date line, say) are ignored. With no header at all,
+ * column A is the code and B the price.
  */
 function kap_price_grid_rows($grid) {
-    $slugCol = 0; $priceCol = 1; $skipFirst = false;
-    if ($grid) {
-        $firstKey = key($grid);
-        foreach ($grid[$firstKey] as $col => $cell) {
-            $t = strtolower(trim($cell[0]));
-            if ($t === 'slug' || $t === 'slugs')   { $slugCol = $col;  $skipFirst = true; }
-            if ($t === 'price' || $t === 'prices') { $priceCol = $col; $skipFirst = true; }
-        }
-    }
-    $rows = array();
-    $first = true;
+    $codeCol = 0; $priceCol = 1; $colorCol = null; $headerRow = null;
+
+    $seen = 0;
     foreach ($grid as $rowNo => $cells) {
-        if ($first && $skipFirst) { $first = false; continue; }
-        $first = false;
-        $slug  = isset($cells[$slugCol])  ? $cells[$slugCol][0]  : '';
+        if (++$seen > 20) { break; }
+        $cc = null;
+        foreach ($cells as $col => $cell) {
+            $t = strtolower(trim($cell[0]));
+            if (in_array($t, array('item', 'code', 'codes', 'article', 'article code', 'item code', 'артикул', 'код'), true)) {
+                $cc = $col; break;
+            }
+        }
+        if ($cc === null) { continue; }
+
+        $codeCol = $cc; $headerRow = $rowNo; $colorCol = null;
+        $named = null; $rightmost = null;
+        foreach ($cells as $col => $cell) {
+            if ($col === $cc) { continue; }
+            $t = strtolower(trim($cell[0]));
+            if (preg_match('/desc|описание/u', $t)) { continue; }
+            if (preg_match('/colou?r|цвят/u', $t))  { $colorCol = $col; continue; }
+            if (preg_match('/price|цена/u', $t))    { $named = $col; }
+            if ($rightmost === null || $col > $rightmost) { $rightmost = $col; }
+        }
+        $priceCol = $named !== null ? $named : ($rightmost !== null ? $rightmost : 1);
+        break;
+    }
+
+    $rows = array();
+    foreach ($grid as $rowNo => $cells) {
+        if ($headerRow !== null && $rowNo <= $headerRow) { continue; }
+        $code  = isset($cells[$codeCol])  ? trim($cells[$codeCol][0])  : '';
         $price = isset($cells[$priceCol]) ? $cells[$priceCol][0] : '';
         $isNum = isset($cells[$priceCol]) ? $cells[$priceCol][1] : false;
-        $rows[] = array('row' => $rowNo, 'slug' => $slug, 'price' => $price, 'num' => $isNum);
+        // A numeric code cell can come back as "144330.0".
+        if (isset($cells[$codeCol]) && $cells[$codeCol][1]) { $code = preg_replace('/\.0+$/', '', $code); }
+        $rows[] = array(
+            'row'   => $rowNo, 'code' => $code, 'price' => $price, 'num' => $isNum,
+            'color' => ($colorCol !== null && isset($cells[$colorCol])) ? trim($cells[$colorCol][0]) : '',
+        );
         if (count($rows) > KAP_PRICE_MAX_ROWS) { break; }
     }
     return $rows;
@@ -301,7 +334,7 @@ function kap_price_read_upload($tmpPath, $origName) {
 }
 
 /* ========================================================================== *
- *  CLASSIFY, BACK UP, APPLY CASE 1
+ *  CLASSIFY, BACK UP, APPLY
  * ========================================================================== */
 
 function kap_price_private_sub($sub) {
@@ -310,307 +343,198 @@ function kap_price_private_sub($sub) {
     return $d;
 }
 
-/** True once the migration has added products.price / products.unavailable. */
+/** True once the codes migration has added the two columns this flow needs. */
 function kap_price_schema_ready(PDO $pdo) {
     $n = 0;
-    foreach ($pdo->query("SHOW COLUMNS FROM products WHERE Field IN ('price','unavailable')") as $r) { $n++; }
+    foreach ($pdo->query("SHOW COLUMNS FROM product_article_code WHERE Field = 'price'") as $r) { $n++; }
+    foreach ($pdo->query("SHOW COLUMNS FROM products WHERE Field = 'hidden_by_upload'") as $r) { $n++; }
     return $n === 2;
 }
 
+/** The price a product shows: that of its first code that has one. */
+function kap_price_first(array $codes) {
+    foreach ($codes as $c) { if ($c['price'] !== null) { return $c['price']; } }
+    return null;
+}
+
 /**
- * Work out which slug lands in which case. Pure: reads the DB, changes nothing.
+ * Work out what an upload would change. Pure: reads the DB, changes nothing.
  *
  * @param  array $rows from kap_price_read_upload
  * @return array {
- *   skipped: [{row, slug, reason}], rowsInFile, valid: slug=>price,
- *   case1: [realSlug => newPrice], case2: [slug], case3: [{slug,price}],
- *   old: lowerSlug => {slug, price, unavailable}
+ *   skipped, rowsInFile, valid: code=>price, notOnSite (int),
+ *   updates: [{slug, code, from, to}]   article rows whose price changes,
+ *   unchanged (int),
+ *   products: slug => {name, hidden, byUpload, inFile, codes: [{code,size,price,inFile}]},
+ *   hide: [slug], show: [slug], missing: [{slug, code, size}]
  * }
  */
 function kap_price_classify(PDO $pdo, array $rows) {
-    $skipped = array();
-    $inFile  = array();        // every slug the sheet mentions (protected from case 2)
-    $count   = array();        // occurrences per slug
-    $parsed  = array();        // lowerSlug => array(price|null, reason, firstRow)
-    $rowsInFile = 0;
+    $skipped = array(); $inFile = array(); $parsed = array(); $rowsInFile = 0;
 
     foreach ($rows as $r) {
-        $slug = strtolower(trim($r['slug']));
+        $code = $r['code'];
         $priceTxt = trim($r['price']);
-        if ($slug === '' && $priceTxt === '') { continue; }          // blank line
+        if ($code === '' && $priceTxt === '') { continue; }          // blank line
         $rowsInFile++;
-        if ($slug === '') {
-            $skipped[] = array('row' => $r['row'], 'slug' => '', 'reason' => 'missing slug');
+        if ($code === '') {
+            $skipped[] = array('row' => $r['row'], 'code' => '', 'reason' => 'missing code');
             continue;
         }
-        $inFile[$slug] = true;
-        $count[$slug] = (isset($count[$slug]) ? $count[$slug] : 0) + 1;
-        if (!isset($parsed[$slug])) {
-            list($p, $why) = kap_price_parse($r['price'], $r['num']);
-            $parsed[$slug] = array($p, $why, $r['row']);
+        if (!preg_match('/^[A-Za-z0-9._-]{1,100}$/', $code)) {
+            $skipped[] = array('row' => $r['row'], 'code' => $code, 'reason' => 'not a valid code');
+            continue;
         }
+        $inFile[$code] = true;          // protects the code's product from being hidden
+        list($p, $why) = kap_price_parse($r['price'], $r['num']);
+        $parsed[$code][] = array($p, $why, $r['row']);
     }
 
-    // Duplicates are ambiguous (which price is right?), so none of their rows apply.
+    // A code listed twice is fine when every row agrees; conflicting rows are
+    // ambiguous, so none of them applies.
     $valid = array();
-    foreach ($parsed as $slug => $info) {
-        if ($count[$slug] > 1) {
-            $skipped[] = array('row' => $info[2], 'slug' => $slug,
-                'reason' => 'listed ' . $count[$slug] . ' times in the file');
-        } elseif ($info[0] === null) {
-            $skipped[] = array('row' => $info[2], 'slug' => $slug, 'reason' => $info[1]);
+    foreach ($parsed as $code => $list) {
+        $bad = null; $prices = array();
+        foreach ($list as $e) {
+            if ($e[0] === null) { $bad = $e; break; }
+            $prices[number_format($e[0], 2, '.', '')] = true;
+        }
+        if ($bad !== null) {
+            $skipped[] = array('row' => $bad[2], 'code' => $code, 'reason' => $bad[1]);
+        } elseif (count($prices) > 1) {
+            $skipped[] = array('row' => $list[0][2], 'code' => $code,
+                'reason' => 'listed ' . count($list) . ' times with different prices');
         } else {
-            $valid[$slug] = $info[0];
+            $valid[$code] = $list[0][0];
         }
     }
 
-    $old = array();
-    foreach ($pdo->query('SELECT slug, name, price, unavailable FROM products') as $p) {
-        $old[strtolower($p['slug'])] = array(
-            'slug' => $p['slug'],
-            'name' => (string) $p['name'],
-            'price' => $p['price'] === null ? null : (float) $p['price'],
-            'unavailable' => (int) $p['unavailable'],
-        );
-    }
-
-    $case1 = array(); $case2 = array(); $case3 = array();
-    foreach ($valid as $slug => $price) {
-        if (isset($old[$slug])) { $case1[$old[$slug]['slug']] = $price; continue; }
-        if (preg_match('/^[a-z0-9][a-z0-9-]*$/', $slug) && strlen($slug) <= 100) {
-            $case3[] = array('slug' => $slug, 'price' => $price);
-        } else {
-            $skipped[] = array('row' => $parsed[$slug][2], 'slug' => $slug,
-                'reason' => 'not in the database and not a valid slug, so it cannot be created');
+    $products = array(); $onSite = array();
+    $sql = 'SELECT a.slug, a.code, a.size, a.price, p.name, p.hidden, p.hidden_by_upload
+            FROM product_article_code a JOIN products p ON p.slug = a.slug
+            ORDER BY a.slug, a.ord';
+    foreach ($pdo->query($sql) as $r) {
+        $s = $r['slug'];
+        if (!isset($products[$s])) {
+            $products[$s] = array('name' => (string) $r['name'], 'hidden' => (int) $r['hidden'],
+                                  'byUpload' => (int) $r['hidden_by_upload'], 'codes' => array(), 'inFile' => false);
         }
-    }
-    foreach ($old as $low => $o) {
-        if (!isset($inFile[$low])) { $case2[] = $o['slug']; }
+        $listed = isset($inFile[$r['code']]);
+        if ($listed) { $products[$s]['inFile'] = true; }
+        $onSite[$r['code']] = true;
+        $products[$s]['codes'][] = array('code' => $r['code'], 'size' => (string) $r['size'],
+            'price' => $r['price'] === null ? null : (float) $r['price'], 'inFile' => $listed);
     }
 
-    usort($skipped, function ($a, $b) { return $a['row'] - $b['row']; });
+    // Products with no article code at all have nothing to be listed by; they
+    // are left alone rather than hidden.
+    $updates = array(); $unchanged = 0; $hide = array(); $show = array(); $missing = array();
+    foreach ($products as $slug => $p) {
+        foreach ($p['codes'] as $c) {
+            if (isset($valid[$c['code']])) {
+                $to = $valid[$c['code']];
+                if ($c['price'] !== null && abs($c['price'] - $to) < 0.004) { $unchanged++; }
+                else { $updates[] = array('slug' => $slug, 'code' => $c['code'], 'from' => $c['price'], 'to' => $to); }
+            } elseif ($p['inFile'] && !$c['inFile']) {
+                $missing[] = array('slug' => $slug, 'code' => $c['code'], 'size' => $c['size']);
+            }
+        }
+        if (!$p['inFile'] && !$p['hidden'])                  { $hide[] = $slug; }
+        if ($p['inFile'] && $p['hidden'] && $p['byUpload'])  { $show[] = $slug; }
+    }
+
+    $notOnSite = 0;
+    foreach ($valid as $code => $_) { if (!isset($onSite[$code])) { $notOnSite++; } }
+
     return array(
-        'skipped' => $skipped, 'rowsInFile' => $rowsInFile, 'valid' => $valid,
-        'case1' => $case1, 'case2' => $case2, 'case3' => $case3, 'old' => $old,
+        'skipped' => $skipped, 'rowsInFile' => $rowsInFile, 'valid' => $valid, 'notOnSite' => $notOnSite,
+        'updates' => $updates, 'unchanged' => $unchanged, 'products' => $products,
+        'hide' => $hide, 'show' => $show, 'missing' => $missing,
     );
 }
 
-/** Raw rows of the given products and their child tables, for a true restore. */
-function kap_price_raw_dump(PDO $pdo, array $slugs) {
-    $out = array('products' => array(), 'product_list' => array(),
-                 'product_article_code' => array(), 'product_spec_code' => array());
-    foreach (array_chunk($slugs, 200) as $chunk) {
-        $in = implode(',', array_fill(0, count($chunk), '?'));
-        foreach (array_keys($out) as $table) {
-            $st = $pdo->prepare('SELECT * FROM ' . $table . ' WHERE slug IN (' . $in . ')');
-            $st->execute($chunk);
-            foreach ($st as $row) { $out[$table][] = $row; }
-        }
-    }
-    return $out;
-}
-
 /**
- * Snapshot written BEFORE anything changes: every product's current price and
- * availability, plus the complete rows of every product that could be deleted
- * in case 2. Returns the file name (inside private/price-backups/) or ''.
+ * Snapshot written BEFORE anything changes: every code's price and every
+ * product's visibility flags. Returns the file name (in private/price-backups/)
+ * or ''.
  */
-function kap_price_write_backup(PDO $pdo, array $class, $uploadName) {
+function kap_price_write_backup(PDO $pdo, $uploadName) {
     $dir = kap_price_private_sub('price-backups');
     if ($dir === '') { return ''; }
 
-    $prices = array();
-    foreach ($class['old'] as $o) {
-        $prices[] = array('slug' => $o['slug'], 'price' => $o['price'], 'unavailable' => $o['unavailable']);
+    $codes = array();
+    foreach ($pdo->query('SELECT slug, code, price FROM product_article_code ORDER BY slug, ord') as $r) {
+        $codes[] = array('slug' => $r['slug'], 'code' => $r['code'],
+                         'price' => $r['price'] === null ? null : (float) $r['price']);
+    }
+    $prods = array();
+    foreach ($pdo->query('SELECT slug, hidden, hidden_by_upload, price FROM products') as $r) {
+        $prods[] = array('slug' => $r['slug'], 'hidden' => (int) $r['hidden'],
+                         'hidden_by_upload' => (int) $r['hidden_by_upload'],
+                         'price' => $r['price'] === null ? null : (float) $r['price']);
     }
     $name = 'pricing-backup-' . date('Ymd-His') . '.json';
     $data = array(
-        'created'      => date('c'),
-        'uploadedFile' => $uploadName,
-        'note'         => 'prices = state of every product before this upload. '
-                        . 'case2Products = full rows of products that the admin could delete in step 2.',
-        'prices'       => $prices,
-        'case2Products' => kap_price_raw_dump($pdo, $class['case2']),
+        'created' => date('c'), 'uploadedFile' => $uploadName,
+        'note' => 'codes = price of every article code before this upload; '
+                . 'products = visibility flags (and stored price) of every product before it.',
+        'codes' => $codes, 'products' => $prods,
     );
     return atomic_write_json($dir . '/' . $name, $data) ? $name : '';
 }
 
 /**
- * Case 1: set the new price on every product present in both places.
- * Also clears `unavailable`, so a product that was withdrawn and reappears in a
- * later sheet comes back with its price.
+ * Apply an upload in one transaction: code prices, then products.price (first
+ * priced code), then visibility (hide products with no code in the file; show
+ * again the ones the upload itself had hidden).
  *
- * @return array(updated, unchanged, restored, details) where details lists every
- *         product that was touched: {slug, name, from (float|null), to, restored}.
+ * @return array {updated:[{slug,name,codes,from,to}], hidden:[{slug,name}], shown:[{slug,name}]}
  */
-function kap_price_apply_case1(PDO $pdo, array $class) {
-    $updated = 0; $unchanged = 0; $restored = 0;
-    $details = array();
-    $upd = $pdo->prepare('UPDATE products SET price = ?, unavailable = 0 WHERE slug = ?');
+function kap_price_apply(PDO $pdo, array $class) {
+    $upd  = $pdo->prepare('UPDATE product_article_code SET price = ? WHERE slug = ? AND code = ?');
+    $hide = $pdo->prepare('UPDATE products SET hidden = 1, hidden_by_upload = 1 WHERE slug = ?');
+    $show = $pdo->prepare('UPDATE products SET hidden = 0, hidden_by_upload = 0 WHERE slug = ?');
+
+    $touched = array();
+    foreach ($class['updates'] as $u) { $touched[$u['slug']] = true; }
+    $before = array();
+    foreach (array_keys($touched) as $slug) { $before[$slug] = kap_price_first($class['products'][$slug]['codes']); }
+
     $pdo->beginTransaction();
     try {
-        foreach ($class['case1'] as $slug => $price) {
-            $o = $class['old'][strtolower($slug)];
-            $priceSame = ($o['price'] !== null && abs($o['price'] - $price) < 0.004);
-            if ($priceSame && !$o['unavailable']) { $unchanged++; continue; }
-            $upd->execute(array(number_format($price, 2, '.', ''), $slug));
-            if (!$priceSame)         { $updated++; }
-            if ($o['unavailable'])   { $restored++; }
-            $details[] = array('slug' => $slug, 'name' => $o['name'], 'from' => $o['price'],
-                               'to' => $price, 'restored' => (bool) $o['unavailable']);
+        foreach ($class['updates'] as $u) {
+            $upd->execute(array(number_format($u['to'], 2, '.', ''), $u['slug'], $u['code']));
         }
+        foreach (array_keys($touched) as $slug) { kap_sync_product_price($pdo, $slug); }
+        foreach ($class['hide'] as $slug) { $hide->execute(array($slug)); }
+        foreach ($class['show'] as $slug) { $show->execute(array($slug)); }
         $pdo->commit();
     } catch (Exception $e) {
         if ($pdo->inTransaction()) { $pdo->rollBack(); }
         throw $e;
     }
-    return array($updated, $unchanged, $restored, $details);
-}
 
-/**
- * What each case 2 product looked like before the admin's choice, for the
- * report ("deleted: X, was 20.00 €"). Keyed lookups into the classify() result.
- */
-function kap_price_case2_info(array $class) {
-    $out = array();
-    foreach ($class['case2'] as $slug) {
-        $o = $class['old'][strtolower($slug)];
-        $out[] = array('slug' => $slug, 'name' => $o['name'], 'price' => $o['price']);
+    // Per-product report: how many codes changed and what the product now shows.
+    $perProduct = array();
+    foreach ($class['updates'] as $u) {
+        $s = $u['slug'];
+        if (!isset($perProduct[$s])) { $perProduct[$s] = array('codes' => 0, 'new' => array()); }
+        $perProduct[$s]['codes']++;
+        $perProduct[$s]['new'][$u['code']] = $u['to'];
     }
-    return $out;
-}
-
-/* ========================================================================== *
- *  THE PENDING PLAN (survives between the admin's button clicks)
- * ========================================================================== */
-
-function kap_price_plan_path($token) {
-    if (!preg_match('/^[a-f0-9]{32}$/', $token)) { return ''; }
-    $dir = kap_price_private_sub('price-plans');
-    return $dir === '' ? '' : $dir . '/plan-' . $token . '.json';
-}
-
-function kap_price_plan_save(array $plan) {
-    $path = kap_price_plan_path($plan['token']);
-    return $path !== '' && atomic_write_json($path, $plan);
-}
-
-/** The plan for a token, or null if unknown, expired or not this session's. */
-function kap_price_plan_load($token) {
-    if (empty($_SESSION['price_plan']) || !is_string($token)
-        || !hash_equals($_SESSION['price_plan'], $token)) { return null; }
-    $path = kap_price_plan_path($token);
-    if ($path === '') { return null; }
-    $plan = read_json($path, null);
-    if (!is_array($plan) || empty($plan['created'])) { return null; }
-    if (time() - (int) $plan['created'] > KAP_PLAN_TTL) { @unlink($path); return null; }
-    return $plan;
-}
-
-/** Drop plan files older than a day (they would otherwise pile up). */
-function kap_price_plan_sweep() {
-    $dir = kap_price_private_sub('price-plans');
-    if ($dir === '') { return; }
-    foreach ((array) glob($dir . '/plan-*.json') as $f) {
-        if (@filemtime($f) < time() - 86400) { @unlink($f); }
-    }
-}
-
-/** The first step that still has something for the admin to decide. */
-function kap_price_next_step(array $plan, $after) {
-    if ($after === 'start' && count($plan['case2'])) { return 'case2'; }
-    if (($after === 'start' || $after === 'case2') && count($plan['case3'])) { return 'case3'; }
-    return 'done';
-}
-
-/** The slice of the plan the browser needs (no file paths, no old-price map). */
-function kap_price_plan_view(array $plan) {
-    return array(
-        'token'   => $plan['token'],
-        'step'    => $plan['step'],
-        'file'    => $plan['file'],
-        'backup'  => $plan['backup'],
-        'case2'   => $plan['case2'],
-        'case3'   => $plan['case3'],
-        'skipped' => $plan['skipped'],
-        'stats'   => $plan['stats'],
-        'changes' => isset($plan['changes']) ? $plan['changes'] : array(),
-        'expires' => (int) $plan['created'] + KAP_PLAN_TTL,
-    );
-}
-
-/* ========================================================================== *
- *  CASE 2 AND CASE 3 ACTIONS
- * ========================================================================== */
-
-/**
- * Case 2, "delete": remove the product rows (child rows go with them through
- * ON DELETE CASCADE). Image FILES are deliberately left on the server so a
- * deleted product can be rebuilt from the backup.
- */
-function kap_price_case2_delete(PDO $pdo, array $slugs) {
-    $n = 0;
-    $pdo->beginTransaction();
-    try {
-        foreach ($slugs as $slug) { if (kap_product_delete($pdo, $slug)) { $n++; } }
-        $pdo->commit();
-    } catch (Exception $e) {
-        if ($pdo->inTransaction()) { $pdo->rollBack(); }
-        throw $e;
-    }
-    return $n;
-}
-
-/** Case 2, "keep, unavailable": clear the price and raise the flag. */
-function kap_price_case2_unavailable(PDO $pdo, array $slugs) {
-    $n = 0;
-    $st = $pdo->prepare('UPDATE products SET price = NULL, unavailable = 1 WHERE slug = ?');
-    $pdo->beginTransaction();
-    try {
-        foreach ($slugs as $slug) { $st->execute(array($slug)); if ($st->rowCount() > 0) { $n++; } }
-        $pdo->commit();
-    } catch (Exception $e) {
-        if ($pdo->inTransaction()) { $pdo->rollBack(); }
-        throw $e;
-    }
-    return $n;
-}
-
-/**
- * Case 3, "add": create bare products — slug as the title, no photos or text,
- * HIDDEN, in the placeholder category — carrying the price from the file. The
- * admin finishes each one in the Products tab (category is editable there) and
- * unticks "Hide from the public site" when it is ready.
- *
- * @return array(added, alreadyExisted, addedItems) or string error message
- */
-function kap_price_case3_add(PDO $pdo, array $items) {
-    $st = $pdo->prepare('SELECT id FROM categories WHERE id = ?');
-    $st->execute(array(KAP_PLACEHOLDER_CAT));
-    if (!$st->fetch()) {
-        return 'The placeholder category "' . KAP_PLACEHOLDER_CAT . '" is missing. Run the pricing migration SQL first.';
-    }
-
-    $added = 0; $existed = 0; $addedItems = array();
-    $chk = $pdo->prepare('SELECT 1 FROM products WHERE slug = ?');
-    $ord = $pdo->prepare('SELECT COALESCE(MAX(sort_order), -1) + 1 FROM products WHERE category_id = ?');
-    $ins = $pdo->prepare('INSERT INTO products (slug, category_id, sort_order, name, hidden, is_new, price, unavailable)
-                          VALUES (?,?,?,?,1,0,?,0)');
-    $pdo->beginTransaction();
-    try {
-        foreach ($items as $it) {
-            $chk->execute(array($it['slug']));
-            if ($chk->fetch()) { $existed++; continue; }
-            $ord->execute(array(KAP_PLACEHOLDER_CAT));
-            $ins->execute(array($it['slug'], KAP_PLACEHOLDER_CAT, (int) $ord->fetchColumn(),
-                                $it['slug'], number_format($it['price'], 2, '.', '')));
-            $added++;
-            $addedItems[] = array('slug' => $it['slug'], 'price' => $it['price']);
+    $updated = array();
+    foreach ($perProduct as $slug => $info) {
+        $codes = $class['products'][$slug]['codes'];
+        foreach ($codes as $i => $c) {
+            if (isset($info['new'][$c['code']])) { $codes[$i]['price'] = $info['new'][$c['code']]; }
         }
-        $pdo->commit();
-    } catch (Exception $e) {
-        if ($pdo->inTransaction()) { $pdo->rollBack(); }
-        throw $e;
+        $updated[] = array('slug' => $slug, 'name' => $class['products'][$slug]['name'],
+                           'codes' => $info['codes'], 'from' => $before[$slug], 'to' => kap_price_first($codes));
     }
-    return array($added, $existed, $addedItems);
+    $label = function ($slug) use ($class) {
+        return array('slug' => $slug, 'name' => $class['products'][$slug]['name']);
+    };
+    return array('updated' => $updated,
+                 'hidden'  => array_map($label, $class['hide']),
+                 'shown'   => array_map($label, $class['show']));
 }

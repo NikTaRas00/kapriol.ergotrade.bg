@@ -26,7 +26,7 @@ $csrf = admin_csrf_token();
   <title>Admin | Kapriol Bulgaria</title>
   <link rel="icon" href="../assets/img/favicon.ico" sizes="any" />
   <link rel="stylesheet" href="assets/base.css?v=2" />
-  <link rel="stylesheet" href="assets/admin.css?v=5" />
+  <link rel="stylesheet" href="assets/admin.css?v=6" />
   <link rel="stylesheet" href="assets/theme.css?v=2" />
 </head>
 <body class="admin">
@@ -101,7 +101,7 @@ $csrf = admin_csrf_token();
       <div class="admin-section__head">
         <h2 class="admin-h2">Pricing</h2>
       </div>
-      <p class="admin-meta">Upload one Excel (.xlsx) or CSV file with a <strong>slugs</strong> column and a <strong>prices</strong> column (euros, VAT included, decimals allowed, e.g. 12.50 or 12,50). Prices are applied straight away; if some products are missing from the file, or only in the file, you will be asked what to do with them. A backup of the previous prices is saved first.</p>
+      <p class="admin-meta">Upload one Excel (.xlsx) or CSV file with an <strong>Item</strong> column (the article code, e.g. 144330) and a <strong>price</strong> column (euros, VAT included, decimals allowed, e.g. 12.50 or 12,50). Every code has its own price; a product shows the price of its first code. Prices are applied straight away. Products that have <strong>no code at all</strong> in the file are hidden from the site (they come back when a later file lists them again; products you hid yourself are never touched). Codes in the file that are not on the site are ignored. A backup of the previous prices is saved first.</p>
       <div class="admin-pricing__upload">
         <input type="file" id="priceFile" accept=".xlsx,.csv" aria-label="Pricing file (.xlsx or .csv)" />
         <button class="btn btn--red" type="button" id="priceUpload">Upload all pricing</button>
@@ -254,6 +254,6 @@ $csrf = admin_csrf_token();
   </main>
 </div>
 
-<script src="assets/admin.js?v=9" defer></script>
+<script src="assets/admin.js?v=10" defer></script>
 </body>
 </html>

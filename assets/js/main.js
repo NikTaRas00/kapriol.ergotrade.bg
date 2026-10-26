@@ -1804,10 +1804,18 @@
     wrap.hidden = false;
 
     var hasSize = rows.some(function (r) { return r.size; });
+    var hasColor = rows.some(function (r) { return r.color; });
+    var hasPrice = rows.some(function (r) { return typeof r.price === "number"; });
     var html = '<table class="codes"><thead><tr><th scope="col">Article code</th>' +
-      (hasSize ? '<th scope="col">Size</th>' : "") + "</tr></thead><tbody>";
+      (hasSize ? '<th scope="col">Size</th>' : "") +
+      (hasColor ? '<th scope="col">Colour</th>' : "") +
+      (hasPrice ? '<th scope="col" class="codes__num">Price</th>' : "") + "</tr></thead><tbody>";
     rows.forEach(function (r) {
-      html += "<tr><td>" + esc(r.code) + "</td>" + (hasSize ? "<td>" + esc(r.size || "") + "</td>" : "") + "</tr>";
+      html += "<tr><td>" + esc(r.code) + "</td>" +
+        (hasSize ? "<td>" + esc(r.size || "") + "</td>" : "") +
+        (hasColor ? "<td>" + esc(r.color || "") + "</td>" : "") +
+        (hasPrice ? '<td class="codes__num">' + (typeof r.price === "number" ? esc(r.price.toFixed(2)) + " €" : "") + "</td>" : "") +
+        "</tr>";
     });
     html += "</tbody></table>";
     $(".codes__wrap", wrap).innerHTML = html;

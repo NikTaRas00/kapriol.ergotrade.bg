@@ -194,7 +194,6 @@
         if (name === "analytics" && !anLoaded) loadAnalytics();
         if (name === "content" && !contentLoaded) loadContent();
         if (name === "codes" && !codesRendered) { codesRendered = true; ensureAttrs(renderCodes); }
-        if (name === "pricing" && !priceLoaded) loadPricingState();
       });
     });
   }
@@ -448,7 +447,7 @@
     row.appendChild(delBtn(row));
     return row;
   }
-  // Repeatable {code, size} pairs (articleCodes).
+  // Repeatable {code, size, color, price} rows (articleCodes).
   function pairField(key, label, arr) {
     var wrap = el("div", "field");
     wrap.appendChild(el("label", null, label));
@@ -467,7 +466,9 @@
     var row = el("div", "admin-rows__row admin-pair");
     var code = document.createElement("input"); code.type = "text"; code.placeholder = "Article code"; code.value = o.code == null ? "" : o.code; code.setAttribute("data-code", "1");
     var size = document.createElement("input"); size.type = "text"; size.placeholder = "Size"; size.value = o.size == null ? "" : o.size; size.setAttribute("data-size", "1");
-    row.appendChild(code); row.appendChild(size); row.appendChild(delBtn(row));
+    var color = document.createElement("input"); color.type = "text"; color.placeholder = "Colour"; color.value = o.color == null ? "" : o.color; color.setAttribute("data-color", "1");
+    var price = document.createElement("input"); price.type = "text"; price.inputMode = "decimal"; price.placeholder = "Price €"; price.value = o.price == null ? "" : Number(o.price).toFixed(2); price.setAttribute("data-price", "1");
+    row.appendChild(code); row.appendChild(size); row.appendChild(color); row.appendChild(price); row.appendChild(delBtn(row));
     return row;
   }
   function delBtn(row) {
@@ -877,7 +878,12 @@
     var box = document.querySelector('[data-pairs="' + key + '"]');
     if (!box) return [];
     return Array.prototype.map.call(box.querySelectorAll(".admin-rows__row"), function (row) {
-      return { code: row.querySelector("[data-code]").value.trim(), size: row.querySelector("[data-size]").value.trim() };
+      return {
+        code: row.querySelector("[data-code]").value.trim(),
+        size: row.querySelector("[data-size]").value.trim(),
+        color: row.querySelector("[data-color]").value.trim(),
+        price: row.querySelector("[data-price]").value.trim()
+      };
     }).filter(function (o) { return o.code !== "" || o.size !== ""; });
   }
 
@@ -995,25 +1001,14 @@
   }
 
   /* ===========================================================  PRICING  */
-  /* "Upload all pricing": the upload applies case 1 (price updates) on the
-     server and returns a plan. This tab then walks the admin through case 2
-     (products missing from the file) and case 3 (products only in the file),
-     one red box at a time, and ends with a written report. The server owns the
-     plan; the browser only sends { token, action }. */
-  var priceLoaded = false;
+  /* "Upload all pricing": one request. The sheet is keyed by article code; the
+     server applies it (code prices, products with no code in the sheet get
+     hidden) and sends back the report this tab renders. */
   var priceBusy = false;
 
   function setupPricing() {
     var btn = $("#priceUpload");
     if (btn) btn.addEventListener("click", uploadPricing);
-  }
-
-  // Reopening the tab (or reloading the page) mid-flow picks the plan back up.
-  function loadPricingState() {
-    priceLoaded = true;
-    postJSON("api/pricing-apply.php", { action: "status" }).then(function (res) {
-      if (res && res.success && res.plan) renderPricing(res.plan);
-    }).catch(function () { /* nothing pending is not an error */ });
   }
 
   function fmtEur(n) { return Number(n).toFixed(2) + " €"; }
@@ -1039,8 +1034,8 @@
       priceBusy = false; btn.disabled = false;
       if (res && res.success) {
         inp.value = "";
-        status(st, "Prices from the file were applied. Read the notices below.", "ok");
-        renderPricing(res.plan);
+        status(st, "Done. Read the report below.", "ok");
+        renderPricing(res.report);
       } else {
         status(st, (res && res.error) || "Upload failed.", "error");
         if (res && res.skipped && res.skipped.length) {
@@ -1053,44 +1048,13 @@
     });
   }
 
-  function priceAction(plan, action) {
-    if (priceBusy) return;
-    var st = $("#priceStatus");
-    priceBusy = true;
-    Array.prototype.forEach.call(document.querySelectorAll("#priceResult button"), function (b) { b.disabled = true; });
-    status(st, "Working…", "ok");
-    postJSON("api/pricing-apply.php", { token: plan.token, action: action }).then(function (res) {
-      priceBusy = false;
-      if (res && res.plan) renderPricing(res.plan);   // also on a 409: show the real current step
-      if (res && res.success) status(st, "Done.", "ok");
-      else status(st, (res && res.error) || "That step failed.", "error");
-    }).catch(function (err) {
-      priceBusy = false;
-      status(st, err.message || "That step failed.", "error");
-      renderPricing(plan);   // buttons come back
-    });
-  }
-
-  function priceNote(cls, html) {
-    var d = el("div", "admin-alert " + cls);
-    d.innerHTML = html;
-    return d;
-  }
-
-  function slugList(items, withPrice) {
-    var ul = el("ul", "admin-alert__list");
-    items.forEach(function (it) {
-      ul.appendChild(el("li", null, withPrice ? it.slug + " — " + fmtEur(it.price) : it));
-    });
-    return ul;
-  }
-
-  // A collapsible list of the products a step touched, one line each.
+  // A collapsible list of what a step touched, one line each.
   // `lines` is already-built plain text, so nothing here needs escaping.
-  function detailList(title, lines) {
+  function detailList(title, lines, open) {
     if (!lines || !lines.length) return null;
     var d = document.createElement("details");
     d.className = "admin-detail";
+    if (open) d.open = true;
     d.appendChild(el("summary", null, title + " (" + lines.length + ")"));
     var ul = el("ul", "admin-alert__list");
     lines.forEach(function (t) { ul.appendChild(el("li", null, t)); });
@@ -1100,22 +1064,6 @@
   function prodLabel(x) {
     return x.name && x.name !== x.slug ? x.name + " (" + x.slug + ")" : x.slug;
   }
-  function changeLines(ch) {
-    ch = ch || {};
-    return {
-      updated: (ch.updated || []).map(function (x) {
-        return prodLabel(x) + ": " + (x.from == null ? "no price" : fmtEur(x.from)) + " → " + fmtEur(x.to) +
-          (x.restored ? " (was unavailable)" : "");
-      }),
-      deleted: (ch.deleted || []).map(function (x) {
-        return prodLabel(x) + " — was " + (x.price == null ? "without a price" : fmtEur(x.price));
-      }),
-      unavailable: (ch.unavailable || []).map(function (x) {
-        return prodLabel(x) + " — price removed (was " + (x.price == null ? "none" : fmtEur(x.price)) + ")";
-      }),
-      added: (ch.added || []).map(function (x) { return x.slug + " — " + fmtEur(x.price); })
-    };
-  }
 
   function skippedBox(skipped) {
     var box = el("div", "admin-alert");
@@ -1123,129 +1071,62 @@
       " skipped and changed nothing. Fix them in the file if they should be applied:"));
     var ul = el("ul", "admin-alert__list");
     skipped.forEach(function (s) {
-      ul.appendChild(el("li", null, "row " + s.row + (s.slug ? " (" + s.slug + ")" : "") + " — " + s.reason));
+      ul.appendChild(el("li", null, "row " + s.row + (s.code ? " (" + s.code + ")" : "") + " — " + s.reason));
     });
     box.appendChild(ul);
     return box;
   }
 
-  function actionBtn(label, cls, onClick) {
-    var b = el("button", "btn btn--sm " + cls, label);
-    b.type = "button";
-    b.addEventListener("click", onClick);
-    return b;
-  }
-
-  function renderPricing(plan) {
+  function renderPricing(rep) {
     var root = $("#priceResult");
     root.innerHTML = "";
-    var s = plan.stats;
+    var s = rep.stats, ch = rep.changes;
+    function pl(n, one, many) { return n + " " + (n === 1 ? one : many); }
 
-    // Case 1 has already happened by the time any plan exists.
-    var line = "<strong>" + esc(plan.file) + "</strong>: " + s.rows + " rows read, " + s.valid +
-      " with a usable price. <strong>" + s.updated + "</strong> price" + (s.updated === 1 ? "" : "s") + " changed" +
-      (s.unchanged ? ", " + s.unchanged + " already had that price" : "") +
-      (s.restored ? ", " + s.restored + " unavailable product" + (s.restored === 1 ? "" : "s") + " came back with a price" : "") + ".";
-    var note = priceNote("", line);
-    // On the last step the report below carries this list; before that, show it
-    // here so the admin can see what case 1 already changed.
-    if (plan.step !== "done") {
-      var upd = detailList("Prices changed", changeLines(plan.changes).updated);
-      if (upd) note.appendChild(upd);
-    }
-    root.appendChild(note);
-
-    if (plan.step === "case2") {
-      var b2 = el("div", "admin-alert admin-alert--red");
-      b2.appendChild(el("p", null, "the products with the following slugs were not found on the uploaded file")).style.fontWeight = "700";
-      b2.appendChild(slugList(plan.case2, false));
-      var a2 = el("div", "admin-alert__actions");
-      a2.appendChild(actionBtn("delete these products", "btn--red", function () {
-        if (!window.confirm("Delete " + plan.case2.length + " product" + (plan.case2.length === 1 ? "" : "s") +
-          " permanently?\n\nTheir photos stay on the server and a backup of the products was saved, " +
-          "but they disappear from the catalogue and the admin.")) return;
-        priceAction(plan, "delete");
-      }));
-      a2.appendChild(actionBtn("keep these products on Data Base and Website, do not show a price number and show the banner ‘unavailable’ where their prices should sit", "btn--outline", function () {
-        priceAction(plan, "unavailable");
-      }));
-      a2.appendChild(actionBtn("Nevermind, keep these products untouched", "btn--ghost", function () {
-        priceAction(plan, "keep");
-      }));
-      b2.appendChild(a2);
-      root.appendChild(b2);
-    } else if (plan.step === "case3") {
-      var b3 = el("div", "admin-alert admin-alert--red");
-      b3.appendChild(el("p", null, "the products with the following slugs were not found on the Data Base")).style.fontWeight = "700";
-      b3.appendChild(slugList(plan.case3, true));
-      b3.appendChild(el("p", null, "the system can create these products and attribute them the given prices but they will have no pictures or text. " +
-        "their title will be their slug. please go to the products' section of admin panel and add their informations if you choose to add these products to Data Base and Website"));
-      b3.appendChild(el("p", "admin-hint", "They are created hidden, in the “" + catLabel(PLACEHOLDER_CAT) +
-        "” category. In the Products tab, pick a range, fill in the details and untick “Hide from the public site” to publish each one."));
-      var a3 = el("div", "admin-alert__actions");
-      a3.appendChild(actionBtn("add these products to the Data Base and Website on given conditions", "btn--red", function () {
-        priceAction(plan, "add");
-      }));
-      a3.appendChild(actionBtn("nevermind, do not add these products now", "btn--ghost", function () {
-        priceAction(plan, "skip");
-      }));
-      b3.appendChild(a3);
-      root.appendChild(b3);
-    } else {
-      root.appendChild(reportBox(plan));
-    }
-
-    // Skipped rows stay visible next to whichever step is showing.
-    if (plan.skipped && plan.skipped.length && plan.step !== "done") root.appendChild(skippedBox(plan.skipped));
-  }
-
-  function reportBox(plan) {
-    var s = plan.stats;
     var box = el("div", "admin-alert admin-alert--ok");
     box.appendChild(el("p", null, "Pricing report")).style.fontWeight = "700";
     var ul = el("ol", "admin-report");
-    ul.appendChild(el("li", null, "Products whose price changed: " + s.updated));
-    ul.appendChild(el("li", null, "Products deleted: " + s.deleted));
-    ul.appendChild(el("li", null, "Products that became unavailable: " + s.unavailable));
-    ul.appendChild(el("li", null, "Products added to the Data Base: " + s.added));
+    ul.appendChild(el("li", null, "Codes whose price changed: " + s.codesChanged + " (in " + pl(s.productsPriced, "product", "products") + ")"));
+    ul.appendChild(el("li", null, "Products hidden (no code in the file): " + s.hidden));
+    ul.appendChild(el("li", null, "Products shown again (listed again after an earlier upload hid them): " + s.shown));
     box.appendChild(ul);
 
     var more = el("ul", "admin-report");
-    more.appendChild(el("li", null, "Rows read from the file: " + s.rows + " (" + s.valid + " with a usable price, " +
-      (plan.skipped ? plan.skipped.length : 0) + " skipped)."));
-    if (s.unchanged) more.appendChild(el("li", null, s.unchanged + " product" + (s.unchanged === 1 ? "" : "s") + " already had the price in the file."));
-    if (s.restored) more.appendChild(el("li", null, s.restored + " previously unavailable product" + (s.restored === 1 ? "" : "s") + " came back with a price."));
-    if (s.case2Count) {
-      more.appendChild(el("li", null, s.case2Count + " product" + (s.case2Count === 1 ? " was" : "s were") + " missing from the file: " +
-        (s.case2Choice === "delete" ? "deleted." : s.case2Choice === "unavailable" ? "kept and marked unavailable." : "left untouched.")));
-    }
-    if (s.case3Count) {
-      more.appendChild(el("li", null, s.case3Count + " product" + (s.case3Count === 1 ? " was" : "s were") + " only in the file: " +
-        (s.case3Choice === "add"
-          ? "added (hidden, in “" + catLabel(PLACEHOLDER_CAT) + "”)" + (s.addedExisted ? "; " + s.addedExisted + " already existed" : "") + "."
-          : "not added.")));
-    }
+    more.appendChild(el("li", null, rep.file + ": " + s.rows + " rows read, " + s.valid + " codes with a usable price, " +
+      rep.skipped.length + " skipped."));
+    if (s.codesSame) more.appendChild(el("li", null, pl(s.codesSame, "code already had", "codes already had") + " the price in the file."));
+    if (s.notOnSite) more.appendChild(el("li", null, pl(s.notOnSite, "code in the file is", "codes in the file are") + " not on this site (ignored)."));
+    if (s.missing) more.appendChild(el("li", null, pl(s.missing, "code of a listed product is", "codes of listed products are") +
+      " missing from the file; they keep their current price (listed below)."));
     box.appendChild(more);
 
-    // Which products, and what exactly happened to each.
-    var cl = changeLines(plan.changes);
-    [["Prices changed", cl.updated], ["Deleted", cl.deleted],
-     ["Made unavailable", cl.unavailable], ["Added", cl.added]].forEach(function (pair) {
-      var d = detailList(pair[0], pair[1]);
+    var lines = {
+      updated: ch.updated.map(function (x) {
+        return prodLabel(x) + ": " + (x.from == null ? "no price" : fmtEur(x.from)) + " → " +
+          (x.to == null ? "no price" : fmtEur(x.to)) + " (" + pl(x.codes, "code", "codes") + " changed)";
+      }),
+      hidden: ch.hidden.map(prodLabel),
+      shown: ch.shown.map(prodLabel),
+      missing: (rep.missing || []).map(function (m) { return m.code + (m.size ? " (" + m.size + ")" : "") + " — " + m.slug; })
+    };
+    [["Products hidden", lines.hidden, true], ["Products shown again", lines.shown, false],
+     ["Product prices changed", lines.updated, false], ["Codes missing from the file", lines.missing, false]
+    ].forEach(function (t) {
+      var d = detailList(t[0], t[1], t[2]);
       if (d) box.appendChild(d);
     });
 
-    if (plan.skipped && plan.skipped.length) box.appendChild(skippedBox(plan.skipped));
+    if (rep.skipped && rep.skipped.length) box.appendChild(skippedBox(rep.skipped));
 
-    if (plan.backup) {
+    if (rep.backup) {
       var p = el("p", "admin-hint");
-      p.appendChild(document.createTextNode("A backup of the previous prices (and of any products that could be deleted) was saved before the changes. "));
+      p.appendChild(document.createTextNode("A backup of the previous prices and visibility was saved before the changes. "));
       var a = el("a", null, "Download backup");
-      a.href = "api/pricing-backup.php?f=" + encodeURIComponent(plan.backup);
+      a.href = "api/pricing-backup.php?f=" + encodeURIComponent(rep.backup);
       p.appendChild(a);
       box.appendChild(p);
     }
-    return box;
+    root.appendChild(box);
   }
 
   /* ==========================================================  ENQUIRIES  */

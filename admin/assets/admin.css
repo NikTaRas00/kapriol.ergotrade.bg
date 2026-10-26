@@ -226,8 +226,9 @@
 }
 .admin-rows__add:hover { border-color: var(--red); color: var(--red-ink); }
 
-/* article codes = code + size pair */
-.admin-pair { display: grid; grid-template-columns: 1fr 110px auto; gap: 8px; }
+/* article codes = code + size + colour + price */
+.admin-pair { display: grid; grid-template-columns: 1fr 80px 1fr 90px auto; gap: 8px; }
+@media (max-width: 600px) { .admin-pair { grid-template-columns: 1fr 1fr auto; } }
 
 /* image upload field */
 .admin-img { display: flex; gap: 16px; align-items: flex-start; }

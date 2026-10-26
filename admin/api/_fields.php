@@ -128,14 +128,18 @@ function kap_product_fields($in) {
             if (!is_array($row)) { continue; }
             $code = kap_clean_str(isset($row['code']) ? $row['code'] : '', 100);
             $size = kap_clean_str(isset($row['size']) ? $row['size'] : '', 100);
-            // `color` is import-era residue on 5 rows. It has a column so those
-            // values survive, but the editor has no field for it, so a save
-            // that omits it must not destroy it — hence it is carried through
-            // when present rather than defaulted away.
+            // colour and price are editable per code. A key that is ABSENT means
+            // "leave what is stored" (kap_put_articles carries it forward); a key
+            // that is present but empty clears it.
             $entry = array('code' => $code, 'size' => $size);
-            if (isset($row['color'])) {
-                $c = kap_clean_str($row['color'], 100);
-                if ($c !== '') { $entry['color'] = $c; }
+            if (array_key_exists('color', $row)) {
+                $entry['color'] = kap_clean_str($row['color'], 100);
+            }
+            if (array_key_exists('price', $row)) {
+                $pr = trim((string) $row['price']);
+                $pr = str_replace(',', '.', $pr);
+                if ($pr === '') { $entry['price'] = null; }
+                elseif (is_numeric($pr) && (float) $pr > 0 && (float) $pr <= 99999.99) { $entry['price'] = round((float) $pr, 2); }
             }
             if ($code !== '' || $size !== '') { $codes[] = $entry; }
             if (count($codes) >= 200) { break; }
