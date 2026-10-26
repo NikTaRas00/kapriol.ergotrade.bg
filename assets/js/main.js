@@ -676,7 +676,7 @@
       body.appendChild(el("p", "card__price card__price--na", "Unavailable"));
     } else if (typeof p.price === "number" && p.price > 0) {
       var pr = el("p", "card__price");
-      pr.appendChild(el("span", "card__price-num", p.price.toFixed(2) + " €"));
+      pr.appendChild(el("span", "card__price-num", "From " + p.price.toFixed(2) + " €"));
       pr.appendChild(el("span", "card__price-vat", "with VAT"));
       body.appendChild(pr);
     }
@@ -1561,7 +1561,16 @@
 
     /* headline block */
     var tag = $("#pdTag"); if (tag) { tag.textContent = catLabel(p.category); }
-    var h1 = $("#pdName"); if (h1) { h1.textContent = p.name; }
+    var h1 = $("#pdName");
+    if (h1) {
+      h1.textContent = p.name;
+      // the product's first article code, small, right after the name
+      var firstCode = Array.isArray(p.articleCodes) && p.articleCodes[0] && p.articleCodes[0].code;
+      if (firstCode) {
+        h1.appendChild(document.createTextNode(" "));
+        h1.appendChild(el("span", "pd__code", String(firstCode)));
+      }
+    }
 
     /* price: "20.00 €" + "with VAT", or the Unavailable banner in its place.
        A product with neither (no price loaded yet) shows nothing at all. */
@@ -1575,7 +1584,7 @@
         priceBox.classList.add("pd__price--na");
         priceBox.hidden = false;
       } else if (typeof p.price === "number" && p.price > 0) {
-        priceNum.textContent = p.price.toFixed(2) + " €";
+        priceNum.textContent = "From " + p.price.toFixed(2) + " €";
         priceVat.hidden = false;
         priceBox.hidden = false;
       } else {
@@ -1602,8 +1611,13 @@
     }
 
     /* spec rows: only fields the product actually carries */
+    /* The spec table (Range, Material, Sole, ... Standards) is switched off: the
+       data stays in the database and in the records, only the rendering is
+       skipped. Set SHOW_SPEC_ROWS to true to bring the table back. */
+    var SHOW_SPEC_ROWS = false;
     var specs = $("#pdSpecs");
-    if (specs) {
+    if (specs && !SHOW_SPEC_ROWS) { specs.hidden = true; }
+    else if (specs) {
       specs.innerHTML = "";
       function row(label, value) {
         if (!value) { return; }
